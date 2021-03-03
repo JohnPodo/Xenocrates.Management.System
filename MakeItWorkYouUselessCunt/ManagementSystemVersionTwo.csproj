@@ -381,13 +381,13 @@
     <Content Include="Views\Role\AddRoleToApplicationUser.cshtml" />
     <Content Include="Views\Worker\CreateWorkerForApplicationUser.cshtml" />
     <Content Include="Views\Department\CreateDepartment.cshtml" />
+    <Content Include="Views\Display\ViewAllWorkers.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="ContractOfEmployments\" />
     <Folder Include="CVs\" />
     <Folder Include="ProfPics\" />
-    <Folder Include="Views\Display\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

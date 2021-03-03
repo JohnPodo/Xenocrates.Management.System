@@ -59,7 +59,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditDepartment([Bind(Include = "ID,City,Address")] Department department)
+        public ActionResult EditDepartment(Department department)
         {
             if (ModelState.IsValid)
             {
