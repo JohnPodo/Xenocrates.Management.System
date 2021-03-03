@@ -1,0 +1,13 @@
+﻿@model ManagementSystemVersionTwo.ViewModels.AddRoleToUser
+@{
+    ViewBag.Title = "AddRoleToApplicationUser";
+}
+
+<h2>AddRoleToApplicationUser</h2>
+@using (@Html.BeginForm())
+{ 
+@Html.AntiForgeryToken()
+@Html.HiddenFor(s=>s.UserID)
+@Html.DropDownListFor(s => Model.SelectedRole, new SelectList(Model.Roles, "ID", "Name"), new { @class = "" })
+    <input type="submit" />
+}

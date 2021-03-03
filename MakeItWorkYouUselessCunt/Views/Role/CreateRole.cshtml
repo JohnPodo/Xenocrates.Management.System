@@ -1,0 +1,13 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+@{
+    ViewBag.Title = "CreateRole";
+}
+
+<h2>CreateRole</h2>
+
+@using (@Html.BeginForm())
+{ 
+@Html.AntiForgeryToken()
+    @Html.DisplayFor(s => Model.Name)  @Html.TextBoxFor(s => Model.Name)
+    <input type="submit" value="Submit" />
+}
