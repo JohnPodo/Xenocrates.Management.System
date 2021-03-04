@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ManagementSystemVersionTwo.Models;
@@ -28,6 +29,10 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult CreateWorkerForApplicationUser(ApplicationUser user)
         {
+            //if (user == null)
+            //{
+            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            //} Otan Teleiwsei to Front End na to Vgalw apo ta sxolia
             CreateWorker f2 = new CreateWorker() {
                 AllDepartments= _data.AllDepartments(),
                 userID=user.Id
