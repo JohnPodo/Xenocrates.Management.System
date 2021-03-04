@@ -74,6 +74,11 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+            //Elenxei an o User pou dexetai exei eidi rolo An exei akyrwnei tin diadikasia
+            if (user.Roles.Count != 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             AddRoleToUser f2 = new AddRoleToUser()
             {
                 UserID = user.Id,

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity.ModelConfiguration.Conventions;
+using System.IO;
 using System.Linq;
 using System.Web;
 using ManagementSystemVersionTwo.Models;
@@ -8,7 +9,7 @@ using ManagementSystemVersionTwo.ViewModels;
 
 namespace ManagementSystemVersionTwo.Services.WorkerServices
 {
-    public class ExternalServicesWorker:IDisposable
+    public class ExternalServicesWorker : IDisposable
     {
         private ApplicationDbContext _db;
 
@@ -17,7 +18,7 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
             _db = new ApplicationDbContext();
         }
 
-        public void CreateWorker(CreateWorker f2,Department f2dep)
+        public void CreateWorker(CreateWorker f2, Department f2dep)
         {
             var worker = new Worker()
             {
@@ -34,10 +35,43 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
                 Department = _db.Departments.Single(s => s.ID == f2dep.ID),
                 DepartmentID = _db.Departments.Single(s => s.ID == f2dep.ID).ID,
                 ApplicationUser = _db.Users.Find(f2.userID)
-                
+
             };
             _db.Workers.Add(worker);
             _db.SaveChanges();
+        }
+
+        public void DeleteProfPicOfWorker(string fileName)
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ProfPics/");
+            // Check if file exists with its full path    
+            if (File.Exists(Path.Combine(path, fileName)))
+            {
+                // If file found, delete it    
+                File.Delete(Path.Combine(path, fileName));
+            }
+        }
+
+        public void DeleteCVOfWorker(string fileName)
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/CVs/");
+            // Check if file exists with its full path    
+            if (File.Exists(Path.Combine(path, fileName)))
+            {
+                // If file found, delete it    
+                File.Delete(Path.Combine(path, fileName));
+            }
+        }
+
+        public void DeleteContractOfEmployementOfWorker(string fileName)
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ContractOfEmployments/");
+            // Check if file exists with its full path    
+            if (File.Exists(Path.Combine(path, fileName)))
+            {
+                // If file found, delete it    
+                File.Delete(Path.Combine(path, fileName));
+            }
         }
         public void Dispose()
         {
