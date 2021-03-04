@@ -26,7 +26,7 @@ namespace ManagementSystemVersionTwo.Services.Data
         #endregion
 
         #region RoleData
-        public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).ToList();
+        public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).Where(s=>s.Name!="Admin").ToList();
 
         public IdentityRole FindRoleByID(string id) => _context.Roles.Include(r => r.Users).Single(s => s.Id == id);
 

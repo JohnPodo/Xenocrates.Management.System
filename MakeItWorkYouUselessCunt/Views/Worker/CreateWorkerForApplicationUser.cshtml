@@ -36,6 +36,10 @@
             @Html.DropDownListFor(m => Model.IdOfDepartment, new SelectList(Model.AllDepartments, "ID", "City"), "Select Department", new { @class = "form-control" })
         </div>
         <div class="input-box">
+            <span class="details">Role</span>
+            @Html.DropDownListFor(s => Model.SelectedRole, new SelectList(Model.Roles, "ID", "Name"), "Select Role", new { @class = "form-control" })
+        </div>
+        <div class="input-box">
             <span class="details">Date of Birth</span>
             @Html.EditorFor(m => Model.DateOfBirth, new { @class = "" })
             @Html.ValidationMessageFor(m => Model.DateOfBirth, "", new { @class = "" })

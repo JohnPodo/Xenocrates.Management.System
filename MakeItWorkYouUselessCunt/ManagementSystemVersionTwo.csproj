@@ -198,6 +198,10 @@
     <Compile Include="Migrations\202103031200034_FirstStadiumOfDatabase.designer.cs">
       <DependentUpon>202103031200034_FirstStadiumOfDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103041755501_SmallChangesToFirstStadium.cs" />
+    <Compile Include="Migrations\202103041755501_SmallChangesToFirstStadium.Designer.cs">
+      <DependentUpon>202103041755501_SmallChangesToFirstStadium.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Department.cs" />
@@ -210,7 +214,6 @@
     <Compile Include="Services\Data\DataRepository.cs" />
     <Compile Include="Services\DepartmentServices\CRUDDepartment.cs" />
     <Compile Include="Services\Role\CRUDRole.cs" />
-    <Compile Include="Services\Role\ExternalServices.cs" />
     <Compile Include="Services\WorkerServices\ConventionsOfHttpPostedFileBase.cs" />
     <Compile Include="Services\WorkerServices\ExternalServicesWorker.cs" />
     <Compile Include="Startup.cs" />
@@ -406,6 +409,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202103031200034_FirstStadiumOfDatabase.resx">
       <DependentUpon>202103031200034_FirstStadiumOfDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103041755501_SmallChangesToFirstStadium.resx">
+      <DependentUpon>202103041755501_SmallChangesToFirstStadium.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

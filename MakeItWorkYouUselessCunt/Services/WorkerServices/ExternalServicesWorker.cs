@@ -6,20 +6,27 @@ using System.Linq;
 using System.Web;
 using ManagementSystemVersionTwo.Models;
 using ManagementSystemVersionTwo.ViewModels;
+using Microsoft.AspNet.Identity;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ManagementSystemVersionTwo.Services.WorkerServices
 {
     public class ExternalServicesWorker : IDisposable
     {
         private ApplicationDbContext _db;
+        private UserStore<ApplicationUser> _store;
+        private UserManager<ApplicationUser> _manager;
 
         public ExternalServicesWorker()
         {
             _db = new ApplicationDbContext();
+            _store = new UserStore<ApplicationUser>(_db);
+            _manager = new UserManager<ApplicationUser>(_store);
         }
 
-        public void CreateWorker(CreateWorker f2, Department f2dep)
+        public void CreateWorker(CreateWorker f2, Department f2dep, string role)
         {
+            _manager.AddToRole(f2.userID, role);
             var worker = new Worker()
             {
                 Address = f2.Address,
@@ -73,9 +80,14 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
                 File.Delete(Path.Combine(path, fileName));
             }
         }
+
+
+
         public void Dispose()
         {
             _db.Dispose();
+            _store.Dispose();
+            _manager.Dispose();
         }
     }
 }

@@ -33,9 +33,15 @@ namespace ManagementSystemVersionTwo.Controllers
             //{
             //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             //} Otan Teleiwsei to Front End na to Vgalw apo ta sxolia
+            //Elenxei an o User pou dexetai exei eidi rolo An exei akyrwnei tin diadikasia
+            if (user.Roles.Count != 0)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
             CreateWorker f2 = new CreateWorker() {
                 AllDepartments= _data.AllDepartments(),
-                userID=user.Id
+                userID=user.Id,
+                Roles = _data.AllRoles()
             };
             return View(f2);
         }
@@ -47,7 +53,7 @@ namespace ManagementSystemVersionTwo.Controllers
             if (ModelState.IsValid)
             {
                 var dep = _data.FindDepartmentByID(f2.IdOfDepartment);
-                _external.CreateWorker(f2, dep);
+                _external.CreateWorker(f2, dep, _data.FindRoleByID(f2.SelectedRole).Name);
                 return RedirectToAction("ViewAllWorkers","Display");
             }
             else

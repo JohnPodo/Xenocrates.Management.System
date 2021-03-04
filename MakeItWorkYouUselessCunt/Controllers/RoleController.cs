@@ -17,20 +17,17 @@ namespace ManagementSystemVersionTwo.Controllers
     {
         private CRUDRole _crud;
         private DataRepository _data;
-        private ExternalServices _external;
 
         public RoleController()
         {
             _crud=new CRUDRole();
             _data=new DataRepository();
-            _external = new ExternalServices();
         }
 
         protected override void Dispose(bool disposing)
         {
             _crud.Dispose();
             _data.Dispose();
-            _external.Dispose();
         }
 
         public ActionResult CreateRole()
@@ -65,34 +62,6 @@ namespace ManagementSystemVersionTwo.Controllers
         {
             _crud.DeleteRole(role);
             return RedirectToAction("ViewAllRoles", "Display");
-        }
-
-        public ActionResult AddRoleToApplicationUser(ApplicationUser user)
-        {
-            
-            if (string.IsNullOrEmpty(user.Id))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            //Elenxei an o User pou dexetai exei eidi rolo An exei akyrwnei tin diadikasia
-            if (user.Roles.Count != 0)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            AddRoleToUser f2 = new AddRoleToUser()
-            {
-                UserID = user.Id,
-                Roles= _data.AllRoles()
-            };
-            return View(f2);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult AddRoleToApplicationUser(AddRoleToUser f2)
-        {
-            _external.AddRoleToUser(f2.UserID, _data.FindRoleByID(f2.SelectedRole).Name);
-            return RedirectToAction("CreateWorkerForApplicationUser", "Worker",_data.FindUserByID(f2.UserID));
         }
     }
 }
