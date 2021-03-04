@@ -20,7 +20,7 @@ namespace ManagementSystemVersionTwo.Services.Data
         #region DepartmentData
         public List<Department> AllDepartments() => _context.Departments.Include(s => s.WorkersInThisDepartment).ToList();
 
-        public Department FindDepartmentByID(int id) => _context.Departments.Include(s => s.WorkersInThisDepartment).Single(s => s.ID == id);
+        public Department FindDepartmentByID(int id) => _context.Departments.Include(s => s.WorkersInThisDepartment).SingleOrDefault(s => s.ID == id);
 
         public Department FindDepartmentByCity(string City) => _context.Departments.Include(s => s.WorkersInThisDepartment).Single(s => s.City == City);
         #endregion

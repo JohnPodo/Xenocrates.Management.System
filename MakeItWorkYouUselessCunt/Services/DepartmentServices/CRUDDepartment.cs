@@ -30,7 +30,8 @@ namespace ManagementSystemVersionTwo.Services.DepartmentServices
 
         public void DeleteDepartment(Department x)
         {
-            _context.Departments.Remove(x);
+            var dep = _context.Departments.Find(x.ID); //Mprabo re file , prepei na ths to broume :)
+            _context.Departments.Remove(dep);
             _context.SaveChanges();
         }
 
