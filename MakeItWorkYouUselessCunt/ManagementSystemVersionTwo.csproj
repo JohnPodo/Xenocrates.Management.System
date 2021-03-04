@@ -381,7 +381,6 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Role\CreateRole.cshtml" />
-    <Content Include="Views\Role\AddRoleToApplicationUser.cshtml" />
     <Content Include="Views\Worker\CreateWorkerForApplicationUser.cshtml" />
     <Content Include="Views\Department\CreateDepartment.cshtml" />
     <Content Include="Views\Department\EditDepartment.cshtml" />
