@@ -41,11 +41,29 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(_data.AllRoles());
         }
 
+        public ActionResult FindWorkerByName(string searchName)
+        {
+            if (string.IsNullOrEmpty(searchName))
+            {
+                return View("ViewAllWorkers", _data.AllWorkers());
+            }
+            else
+            {
+                return View("ViewAllWorkers", _data.FindWorkerByName(searchName));
+            }
+        }
 
-        
+        public ActionResult SortedWorkers(string sorting)
+        {
+            return View("ViewAllWorkers", _data.SortWorker(sorting));
+        }
 
 
-       
+
+
+
+
+
 
     }
 }

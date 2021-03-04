@@ -35,6 +35,20 @@ namespace ManagementSystemVersionTwo.Services.Data
         #region WorkerData
 
         public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).ToList();
+        
+        public List<Worker> FindWorkerByName(string search) => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Where(w=>w.FullName.Contains(search)).ToList();
+
+        public List<Worker> SortWorker(string sort) {
+            switch (sort)
+            {
+                case "City Of Department":
+                    return _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).OrderBy(w => w.Department.City).ToList();
+                case "Full Name":
+                    return _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).OrderBy(w=>w.FullName).ToList();
+                default:
+                    return AllWorkers();
+            }
+        }
 
         #endregion
 
