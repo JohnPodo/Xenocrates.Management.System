@@ -381,6 +381,9 @@
     <Content Include="Views\Role\AddRoleToApplicationUser.cshtml" />
     <Content Include="Views\Worker\CreateWorkerForApplicationUser.cshtml" />
     <Content Include="Views\Department\CreateDepartment.cshtml" />
+    <Content Include="Views\Department\EditDepartment.cshtml" />
+    <Content Include="Views\Department\DeleteDepartment.cshtml" />
+    <Content Include="Views\Department\DetailsDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
