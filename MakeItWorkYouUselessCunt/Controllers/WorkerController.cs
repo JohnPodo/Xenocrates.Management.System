@@ -17,8 +17,8 @@ namespace ManagementSystemVersionTwo.Controllers
         DataRepository _data;
         public WorkerController()
         {
-            _external=new ExternalServicesWorker();
-            _data=new DataRepository();
+            _external = new ExternalServicesWorker();
+            _data = new DataRepository();
         }
 
         protected override void Dispose(bool disposing)
@@ -38,9 +38,10 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            CreateWorker f2 = new CreateWorker() {
-                AllDepartments= _data.AllDepartments(),
-                userID=user.Id,
+            CreateWorker f2 = new CreateWorker()
+            {
+                AllDepartments = _data.AllDepartments(),
+                userID = user.Id,
                 Roles = _data.AllRoles()
             };
             return View(f2);
@@ -54,17 +55,77 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 var dep = _data.FindDepartmentByID(f2.IdOfDepartment);
                 _external.CreateWorker(f2, dep, _data.FindRoleByID(f2.SelectedRole).Name);
-                return RedirectToAction("ViewAllWorkers","Display");
+                return RedirectToAction("ViewAllWorkers", "Display");
             }
             else
             {
-                 f2 = new CreateWorker()
+                f2 = new CreateWorker()
                 {
                     AllDepartments = _data.AllDepartments(),
                     userID = f2.userID
                 };
                 return View(f2);
             }
+        }
+        public ActionResult EditWorker(string userID)
+        {
+            if (string.IsNullOrEmpty(userID))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = _data.FindUserByID(userID);
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            EditWorker f2 = _external.FillEditWorkerViewModel(user);
+            return View(f2);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditWorker(EditWorker f2)
+        {
+            if (ModelState.IsValid)
+            {
+                _external.EditWorker(f2);
+                return RedirectToAction("ViewAllWorkers", "Display");
+            }
+            else
+            {
+                f2 = _external.FillEditWorkerViewModel(_data.FindUserByID(f2.UserID));
+                return View(f2);
+            }
+        }
+
+        public ActionResult DeleteWorker(string userID)
+        {
+            if (string.IsNullOrEmpty(userID))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = _data.FindUserByID(userID);
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(_data.FindUserByID(user.Id));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult DeleteWorkerConfirmed(string userID)
+        {
+            if (string.IsNullOrEmpty(userID))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = _data.FindUserByID(userID);
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            _external.DeleteWorkersApplicationUser(userID);
+            return RedirectToAction("ViewAllWorkers", "Display");
         }
     }
 }

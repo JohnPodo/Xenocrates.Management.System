@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Data.Entity.ModelConfiguration.Conventions;
 using System.IO;
 using System.Linq;
@@ -81,8 +82,81 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
             }
         }
 
+        public void DeleteWorkersApplicationUser(string id)
+        {
+            var user = _db.Users.Find(id);
+            _db.Workers.Remove(user.Worker);
+            _manager.Delete(user);
+            _db.SaveChanges();
+        }
+        public void EditWorkersApplicationUser(string id)
+        {
+            var user = _db.Users.Find(id);
+            _manager.Update(user);
+        }
 
+        public EditWorker FillEditWorkerViewModel(ApplicationUser user)
+        {
+            EditWorker f2 = new EditWorker()
+            {
+                UserID = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                FirstName = user.Worker.FirstName,
+                LastName = user.Worker.LastName,
+                DateOfBirth = user.Worker.DateOfBirth,
+                Gender = user.Worker.Gender,
+                Address = user.Worker.Address,
+                BankAccount = user.Worker.BankAccount,
+                Salary = user.Worker.Salary,
+                IdOfDepartment = user.Worker.DepartmentID,
+                SelectedRole = _db.Roles.Find(user.Roles.First().RoleId).Name,
+                AllDepartments = _db.Departments.ToList(),
+                Roles = _db.Roles.ToList()
+            };
+            return f2;
+        }
 
+        public void EditWorker(EditWorker editworker)
+        {
+            var workerInDb = _db.Users.Find(editworker.UserID);
+            if (workerInDb.Roles.FirstOrDefault(r => r.RoleId == editworker.SelectedRole) != null)
+            {
+                workerInDb.Roles.First().RoleId = editworker.SelectedRole;
+            }
+            if (workerInDb.Worker.Department.ID != editworker.IdOfDepartment)
+            {
+                workerInDb.Worker.Department = _db.Departments.Find(editworker.IdOfDepartment);
+                workerInDb.Worker.DepartmentID = editworker.IdOfDepartment;
+            }
+            if (editworker.ProfilePicture != null)
+            {
+                DeleteProfPicOfWorker(workerInDb.Worker.Pic);
+                workerInDb.Worker.Pic = ConventionsOfHttpPostedFileBase.ForPostedPicture(editworker.ProfilePicture);
+            }
+            if (editworker.CV != null)
+            {
+                DeleteCVOfWorker(workerInDb.Worker.CV);
+                workerInDb.Worker.Pic = ConventionsOfHttpPostedFileBase.ForCV(editworker.CV);
+            }
+            if (editworker.ContractOfEmployment != null)
+            {
+                DeleteContractOfEmployementOfWorker(workerInDb.Worker.ContractOfEmployment);
+                workerInDb.Worker.Pic = ConventionsOfHttpPostedFileBase.ForContractOfEmployments(editworker.ContractOfEmployment);
+            }
+            workerInDb.UserName = editworker.Username;
+            workerInDb.Email = editworker.Email;
+            workerInDb.Worker.FirstName = editworker.FirstName;
+            workerInDb.Worker.LastName = editworker.LastName;
+            workerInDb.Worker.DateOfBirth = editworker.DateOfBirth;
+            workerInDb.Worker.Gender = editworker.Gender;
+            workerInDb.Worker.Address = editworker.Address;
+            workerInDb.Worker.BankAccount = editworker.BankAccount;
+            workerInDb.Worker.Salary = editworker.Salary;
+            EditWorkersApplicationUser(workerInDb.Id);
+            _db.Entry(workerInDb.Worker).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
         public void Dispose()
         {
             _db.Dispose();
