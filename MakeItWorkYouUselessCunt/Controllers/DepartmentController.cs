@@ -95,31 +95,6 @@ namespace ManagementSystemVersionTwo.Controllers
             return RedirectToAction("ViewAllDepartments", "Display");
         }
 
-        public ActionResult ViewDepartmentWithWorkers(int? id, string city)
-        {
-            if (id == null && string.IsNullOrEmpty(city))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            if (id != null)
-            {
-                var dep = _data.FindDepartmentByID((int)id);
-                if (dep == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(dep);
-            }
-            if (!string.IsNullOrEmpty(city))
-            {
-                var dep = _data.FindDepartmentByCity(city);
-                if (dep == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(dep);
-            }
-            return View("ViewAllDepartments");
-        }
+        
     }
 }
