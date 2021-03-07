@@ -3,14 +3,23 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
-using System.Web.Mvc;
 using ManagementSystemVersionTwo.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace ManagementSystemVersionTwo.ViewModels
 {
-    public class CreateWorker
+    public class EditWorker
     {
+        public string UserID { get; set; }
+        [Required]
+        [EmailAddress]
+        [Display(Name = "Email")]
+        public string Email { get; set; }
+
+        [Required]
+        [Display(Name = "Username")]
+        public string Username { get; set; }
+
         [Required(ErrorMessage = "Necessary")]
         [RegularExpression("^[A-Za-z]+$", ErrorMessage = "Only Letters")]
         public string FirstName { get; set; }
@@ -38,13 +47,10 @@ namespace ManagementSystemVersionTwo.ViewModels
         [Required(ErrorMessage = "Necessary")]
         [Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "Positive Numbers Only")]
         public decimal Salary { get; set; }
-        [Required(ErrorMessage = "Necessary")]
         public HttpPostedFileBase ProfilePicture { get; set; }
 
-        [Required(ErrorMessage = "Necessary")]
         public HttpPostedFileBase CV { get; set; }
 
-        [Required(ErrorMessage = "Necessary")]
         public HttpPostedFileBase ContractOfEmployment { get; set; }
 
         public List<Department> AllDepartments { get; set; }
@@ -53,6 +59,5 @@ namespace ManagementSystemVersionTwo.ViewModels
         public List<IdentityRole> Roles { get; set; }
         [Required(ErrorMessage = "Necessary")]
         public string SelectedRole { get; set; }
-        public string userID { get; set; }
     }
 }

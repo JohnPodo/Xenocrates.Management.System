@@ -67,7 +67,6 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
             /// </summary>
             public static string ForContractOfEmployments(HttpPostedFileBase ContractOfEmployment)
             {
-                //Check If File Name Description Images Exists and If Not He make It
                 string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ContractOfEmployments/");
                 if (ContractOfEmployment != null)
                 {

@@ -20,13 +20,13 @@ namespace ManagementSystemVersionTwo.Services.Data
         #region DepartmentData
         public List<Department> AllDepartments() => _context.Departments.Include(s => s.WorkersInThisDepartment).ToList();
 
-        public Department FindDepartmentByID(int id) => _context.Departments.Include(s => s.WorkersInThisDepartment).Single(s => s.ID == id);
+        public Department FindDepartmentByID(int id) => _context.Departments.Include(s => s.WorkersInThisDepartment).SingleOrDefault(s => s.ID == id);
 
         public Department FindDepartmentByCity(string City) => _context.Departments.Include(s => s.WorkersInThisDepartment).Single(s => s.City == City);
         #endregion
 
         #region RoleData
-        public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).ToList();
+        public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).Where(s=>s.Name!="Admin").ToList();
 
         public IdentityRole FindRoleByID(string id) => _context.Roles.Include(r => r.Users).Single(s => s.Id == id);
 

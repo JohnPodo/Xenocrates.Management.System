@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -6,7 +7,7 @@ using System.Web;
 
 namespace ManagementSystemVersionTwo.Models
 {
-    public class Department
+    public class Department 
     {
 
         public int ID { get; set; }

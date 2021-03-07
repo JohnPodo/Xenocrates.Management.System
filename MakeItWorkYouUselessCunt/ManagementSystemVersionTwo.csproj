@@ -198,6 +198,10 @@
     <Compile Include="Migrations\202103031200034_FirstStadiumOfDatabase.designer.cs">
       <DependentUpon>202103031200034_FirstStadiumOfDatabase.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103041755501_SmallChangesToFirstStadium.cs" />
+    <Compile Include="Migrations\202103041755501_SmallChangesToFirstStadium.Designer.cs">
+      <DependentUpon>202103041755501_SmallChangesToFirstStadium.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Department.cs" />
@@ -210,12 +214,12 @@
     <Compile Include="Services\Data\DataRepository.cs" />
     <Compile Include="Services\DepartmentServices\CRUDDepartment.cs" />
     <Compile Include="Services\Role\CRUDRole.cs" />
-    <Compile Include="Services\Role\ExternalServices.cs" />
     <Compile Include="Services\WorkerServices\ConventionsOfHttpPostedFileBase.cs" />
     <Compile Include="Services\WorkerServices\ExternalServicesWorker.cs" />
     <Compile Include="Startup.cs" />
     <Compile Include="ViewModels\AddRoleToUser.cs" />
     <Compile Include="ViewModels\CreateWorker.cs" />
+    <Compile Include="ViewModels\EditWorker.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\bootstrap-grid.css" />
@@ -379,9 +383,11 @@
     <Content Include="Scripts\popper-utils.min.js.map" />
     <Content Include="Scripts\popper-utils.js.map" />
     <Content Include="Views\Role\CreateRole.cshtml" />
-    <Content Include="Views\Role\AddRoleToApplicationUser.cshtml" />
     <Content Include="Views\Worker\CreateWorkerForApplicationUser.cshtml" />
     <Content Include="Views\Department\CreateDepartment.cshtml" />
+    <Content Include="Views\Department\EditDepartment.cshtml" />
+    <Content Include="Views\Department\DeleteDepartment.cshtml" />
+    <Content Include="Views\Department\DetailsDepartment.cshtml" />
     <Content Include="Views\Display\ViewAllWorkers.cshtml" />
   </ItemGroup>
   <ItemGroup>
@@ -404,6 +410,9 @@
   <ItemGroup>
     <EmbeddedResource Include="Migrations\202103031200034_FirstStadiumOfDatabase.resx">
       <DependentUpon>202103031200034_FirstStadiumOfDatabase.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103041755501_SmallChangesToFirstStadium.resx">
+      <DependentUpon>202103041755501_SmallChangesToFirstStadium.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

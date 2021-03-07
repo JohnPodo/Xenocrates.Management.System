@@ -94,5 +94,7 @@ namespace ManagementSystemVersionTwo.Controllers
             _crud.DeleteDepartment(department);
             return RedirectToAction("ViewAllDepartments", "Display");
         }
+
+        
     }
 }
