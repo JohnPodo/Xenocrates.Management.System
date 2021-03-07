@@ -13,14 +13,14 @@
         Value = "Full Name"
     });
 }
-
+@Styles.Render("~/Content/viewWorkerStyle.css")
 <h2>ViewAllWorkers</h2>
 
 <div class="container">
     <div class="row">
         <div class="col-md-2">
             <dl>
-                <dt>@Html.ActionLink("Create Worker", "Register","Account",null, new { @class = "btn btn-primary" })</dt>
+                <dt>@Html.ActionLink("Create Worker", "Register", "Account", null, new { @class = "btn btn-primary" })</dt>
                 <dt>@Html.ActionLink("Supervisors", "ViewAllSupervisors", "Display", new { @class = "btn btn-primary" })</dt>
                 <dt>@Html.ActionLink("Departments", "ViewAllDepartments", "Display", new { @class = "btn btn-primary" })</dt>
                 <dt>@Html.ActionLink("Employees", "ViewAllEmployees", "Display", new { @class = "btn btn-primary" })</dt>
@@ -40,8 +40,8 @@
                 <div class="">
                     @using (Html.BeginForm("FindWorkerByName", "Display"))
                     {
-                        @Html.Label("Search Fullname :",new {@class="" }) @Html.TextBox("Fullname","",new { @class="" })
-                        <input type="submit" value="Search" class=""/>
+                        @Html.Label("Search Fullname :", new { @class = "" }) @Html.TextBox("Fullname", "", new { @class = "" })
+                        <input type="submit" value="Search" class="" />
                     }
                 </div>
             </div>
@@ -52,11 +52,13 @@
                         <div class="card" style="width: 18rem;">
                             <img src="~/ProfPics/@worker.Pic" class="card-img-top" alt="Profile Pic Of User">
                             <div class="card-body">
-                                <h5 class="card-title">@Html.DisplayFor(w => worker.FullName)</h5>
-                                <p class="card-text">Department in @Html.DisplayFor(w => worker.Department.City)</p>
-                                @Html.ActionLink("Edit", "EditWorker", "Worker", new { id = worker.ID }, new { @class = "btn btn-primary" })
-                                @Html.ActionLink("Delete", "DeleteWorker", "Worker", new { id = worker.ID }, new { @class = "btn btn-primary" })
-                            </div>
+                                <h5 class="card-title details1">@Html.DisplayFor(w => worker.FullName)</h5>
+                                <p class="card-text details1">Department in @Html.DisplayFor(w => worker.Department.City)</p>
+                                <div class="details1">
+                                @Html.ActionLink("Edit", "EditWorker", "Worker", new { id = worker.ID }, new { @class = "btn btn-primary details1" })
+                                @Html.ActionLink("Delete", "DeleteWorker", "Worker", new { id = worker.ID }, new { @class = "btn btn-primary details1" })
+                           </div>
+                                </div>
                         </div>
                     </div>
                 }
