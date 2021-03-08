@@ -229,6 +229,7 @@
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
     <Content Include="Content\navStyle.css" />
+    <Content Include="Content\viewWorkerStyle.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
@@ -388,6 +389,8 @@
     <Content Include="Views\Department\DeleteDepartment.cshtml" />
     <Content Include="Views\Department\DetailsDepartment.cshtml" />
     <Content Include="Views\Display\ViewAllWorkers.cshtml" />
+    <Content Include="Views\Display\ViewAllDepartments.cshtml" />
+    <Content Include="Views\Display\ViewAllRoles.cshtml" />
     <Content Include="Views\Display\ViewAllRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
