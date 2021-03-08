@@ -180,7 +180,7 @@ DocProject/Help/html
 publish/
 CVs/
 ProfPics/
-ContractOfEmployments
+ContractOfEmployments/
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
