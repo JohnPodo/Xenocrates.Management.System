@@ -178,7 +178,9 @@ DocProject/Help/html
 
 # Click-Once directory
 publish/
-
+CVs/
+ProfPics/
+ContractOfEmployments
 # Publish Web Output
 *.[Pp]ublish.xml
 *.azurePubxml
