@@ -390,6 +390,7 @@
     <Content Include="Views\Department\DetailsDepartment.cshtml" />
     <Content Include="Views\Display\ViewAllWorkers.cshtml" />
     <Content Include="Views\Display\ViewAllDepartments.cshtml" />
+    <Content Include="Views\Display\ViewAllRoles.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

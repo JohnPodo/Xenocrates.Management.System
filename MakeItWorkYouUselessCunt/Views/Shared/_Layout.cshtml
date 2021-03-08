@@ -23,7 +23,10 @@
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Create Role", "../Role/CreateRole", "Home")</li>
                     <li>@Html.ActionLink("Create Department", "../Department/CreateDepartment", "Home")</li>
-                    <li>@Html.ActionLink("Create Employee", "../Worker/CreateWorkerForApplicationUser", "Home")</li>
+                    <li>@Html.ActionLink("Create Employee", "../Account/Register", "Home")</li>
+                    <li>@Html.ActionLink("View Roles", "../Role/CreateRole", "Home")</li>
+                    <li>@Html.ActionLink("View Departments", "../Display/ViewAllDepartments", "Home")</li>
+                    <li>@Html.ActionLink("View Employees", "../Display/ViewAllWorkers", "Home")</li>
                 </ul>
                 @Html.Partial("_LoginPartial")
             </div>
