@@ -1,0 +1,24 @@
+﻿@model List<ManagementSystemVersionTwo.Models.Department>
+@{
+    ViewBag.Title = "ViewAllDepartments";
+}
+
+<h2>ViewAllDepartments</h2>
+
+<div class="row">
+    @foreach (var department in Model)
+    {
+        <div class="col-md-4">
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                    <h5 class="card-title details1">@Html.DisplayFor(d => department.City)</h5>
+                    <h5 class="card-title details1">@Html.DisplayFor(d => department.Adress)</h5>
+                    <div class="details1">
+                        @Html.ActionLink("Edit", "EditDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
+                        @Html.ActionLink("Delete", "DeleteDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
+</div>
