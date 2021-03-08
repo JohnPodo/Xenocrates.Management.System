@@ -1,0 +1,11 @@
+﻿@model List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@{
+    ViewBag.Title = "ViewAllRoles";
+}
+
+<h2>ViewAllRoles</h2>
+
+@foreach (var role in Model)
+            {
+<span>@Html.DisplayNameFor(n => role.Name)</span>      @Html.DisplayFor(r => role.Name) <br />
+            }
