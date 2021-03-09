@@ -392,6 +392,10 @@
     <Content Include="Views\Display\ViewAllDepartments.cshtml" />
     <Content Include="Views\Display\ViewAllRoles.cshtml" />
     <Content Include="Views\Display\ViewAllRoles.cshtml" />
+    <Content Include="Views\Role\DeleteRole.cshtml" />
+    <Content Include="Views\Role\EditRole.cshtml" />
+    <Content Include="Views\Worker\DeleteWorker.cshtml" />
+    <Content Include="Views\Worker\EditWorker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

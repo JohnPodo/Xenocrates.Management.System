@@ -1,0 +1,34 @@
+﻿@model ManagementSystemVersionTwo.Models.Worker
+@{
+    ViewBag.Title = "DeleteWorker";
+}
+
+<h2>DeleteWorker</h2>
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <h4>Worker</h4>
+        <hr />
+        @Html.HiddenFor(model => model.ID)
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.FirstName)</dt>
+            <dd>@Html.DisplayFor(model => model.FirstName)</dd>
+            <dt>@Html.DisplayNameFor(model => model.LastName)</dt>
+            <dd>@Html.DisplayFor(model => model.LastName)</dd>
+            <dt>@Html.DisplayNameFor(model => model.DateOfBirth)</dt>
+            <dd>@Html.DisplayFor(model => model.DateOfBirth)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Address)</dt>
+            <dd>@Html.DisplayFor(model => model.Address)</dd>
+            <dt>@Html.DisplayNameFor(model => model.Salary)</dt>
+            <dd>@Html.DisplayFor(model => model.Salary)</dd>
+        </dl>
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" />
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>
