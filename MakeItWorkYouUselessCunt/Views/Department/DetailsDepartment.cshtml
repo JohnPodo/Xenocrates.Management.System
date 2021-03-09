@@ -13,18 +13,18 @@
             Address
         </th>
     </tr>
-@foreach(var item in Model)
-{
-<tr>
-    <td>
-        @Html.DisplayFor(modelItem => item.City)
-    </td>
-    <td>
-        @Html.DisplayFor(modelItem => item.Adress)
-    </td>
-</tr>
-}
-    </table>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.City)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Adress)
+            </td>
+        </tr>
+    }
+</table>
 <div>
     @Html.ActionLink("Back to All Departments", "Index")
 </div>
