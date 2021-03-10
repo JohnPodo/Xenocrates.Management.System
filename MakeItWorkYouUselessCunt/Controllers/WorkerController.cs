@@ -108,23 +108,23 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            return View(_data.FindUserByID(user.Id));
+            return View(user);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteWorkerConfirmed(string userID)
+        public ActionResult DeleteWorkerConfirmed(ApplicationUser userToDelete) // Doulevei
         {
-            if (string.IsNullOrEmpty(userID))
+            if (string.IsNullOrEmpty(userToDelete.Id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = _data.FindUserByID(userID);
+            var user = _data.FindUserByID(userToDelete.Id);
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            _external.DeleteWorkersApplicationUser(userID);
+            _external.DeleteWorkersApplicationUser(userToDelete.Id);
             return RedirectToAction("ViewAllWorkers", "Display");
         }
     }
