@@ -85,6 +85,9 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
         public void DeleteWorkersApplicationUser(string id)
         {
             var user = _db.Users.Find(id);
+            DeleteProfPicOfWorker(user.Worker.ContractOfEmployment);
+            DeleteCVOfWorker(user.Worker.ContractOfEmployment);
+            DeleteContractOfEmployementOfWorker(user.Worker.ContractOfEmployment);
             _db.Workers.Remove(user.Worker);
             _manager.Delete(user);
             _db.SaveChanges();
