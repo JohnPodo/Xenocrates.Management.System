@@ -35,6 +35,10 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(_data.AllWorkers());
         }
 
+        public ActionResult ViewAllWorkersList()
+        {
+            return View(_data.AllWorkers());
+        }
 
         public ActionResult ViewAllRoles()
         {
