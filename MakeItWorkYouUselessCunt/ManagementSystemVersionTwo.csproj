@@ -426,6 +426,12 @@
       <DependentUpon>202103041755501_SmallChangesToFirstStadium.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ValidationsThroughApi\ValidationsThroughApi.csproj">
+      <Project>{a1e0d407-ee86-4e45-80df-f0c9c0a44c49}</Project>
+      <Name>ValidationsThroughApi</Name>
+    </ProjectReference>
+  </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
