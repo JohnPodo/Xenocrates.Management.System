@@ -86,7 +86,10 @@ namespace ManagementSystemVersionTwo.Controllers
         }
 
 
-
+        public ActionResult ViewAllProjects()
+        {
+            return View(_data.AllProjects());
+        }
 
 
 

@@ -26,6 +26,9 @@ namespace ManagementSystemVersionTwo.Services.Data
         #endregion
 
         #region RoleData
+
+        public IdentityRole FindRoleByName(string name) => _context.Roles.Include(r => r.Users).Single(s => s.Name == name);
+
         public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).Where(s=>s.Name!="Admin").ToList();
 
         public IdentityRole FindRoleByID(string id) => _context.Roles.Include(r => r.Users).Single(s => s.Id == id);
@@ -33,6 +36,7 @@ namespace ManagementSystemVersionTwo.Services.Data
         #endregion
 
         #region WorkerData
+
 
         public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).ToList();
         
@@ -53,9 +57,24 @@ namespace ManagementSystemVersionTwo.Services.Data
         #endregion
 
         #region ApplicationUserData
+        public List<ApplicationUser> WorkersPerDepartment(int id) => _context.Users.Include(w => w.Worker).Include(r => r.Roles).Where(u => u.Worker.DepartmentID == id).ToList();
+
+
         public ApplicationUser FindUserByID(string id) => _context.Users.Find(id);
 
         #endregion
+
+        #region ProjectData
+
+        public Project FindProjectById(int id) => _context.Projects.Include(s => s.WorkersInMe).SingleOrDefault(p => p.ID == id);
+
+        public List<Project> AllProjects() => _context.Projects.Include(s => s.WorkersInMe).ToList();
+
+        public List<Project> AllActiveProjects() => _context.Projects.Include(s => s.WorkersInMe).Where(s=>s.Finished==false).ToList();
+
+        public List<Project> AllFinishedProjects() => _context.Projects.Include(s => s.WorkersInMe).Where(s=>s.Finished==true).ToList();
+        #endregion
+
 
         public void Dispose()
         {
