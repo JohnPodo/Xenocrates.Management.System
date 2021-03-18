@@ -33,6 +33,8 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         public IdentityRole FindRoleByID(string id) => _context.Roles.Include(r => r.Users).Single(s => s.Id == id);
 
+        public IdentityRole FindRoleByName(string name) => _context.Roles.Include(r => r.Users).Single(s => s.Name == name);
+
         #endregion
 
         #region WorkerData
@@ -61,6 +63,21 @@ namespace ManagementSystemVersionTwo.Services.Data
 
 
         public ApplicationUser FindUserByID(string id) => _context.Users.Find(id);
+        public ApplicationUser FindUserByID(string id) => _context.Users.Include(w=>w.Worker).Include(w=>w.Roles).Single(w=>w.Id==id);
+
+        public List<ApplicationUser> FindUserPerDepartment(int depId, string name) => _context.Users.Include(w => w.Worker).Where(w => w.Worker.DepartmentID == depId).ToList();
+
+        public List<ProjectsAssignedToEmployee> ProjectsPerEmployee(int id) => _context.ProjectsToEmployees.Include(s => s.Project).Include(w=>w.Worker).Where(s => s.WorkerID == id).ToList();
+
+        public List<Project> AllActiveProjects()=> _context.Projects.Include(s => s.WorkersInMe).Where(s => s.Finished == false).ToList();
+
+        public List<ProjectsAssignedToEmployee> ActiveProjectsPerEmployee(int workerId, int projectId) => _context.ProjectsToEmployees.Include(s => s.Worker).Include(p => p.Project).Where(s => s.WorkerID == workerId).Where(p => p.ProjectID == projectId).ToList();
+
+
+       
+
+
+
 
         #endregion
 
