@@ -388,6 +388,7 @@
     <Content Include="Views\Department\DeleteDepartment.cshtml" />
     <Content Include="Views\Department\DetailsDepartment.cshtml" />
     <Content Include="Views\Display\ViewAllWorkers.cshtml" />
+    <Content Include="Views\Display\ViewSupervisorsPerDepartment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

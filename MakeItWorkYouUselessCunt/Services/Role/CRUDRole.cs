@@ -24,6 +24,11 @@ namespace ManagementSystemVersionTwo.Services.Role
             _roleManager.Create(role);
         }
 
+        public void UpdateRole(IdentityRole role)
+        {
+            _roleManager.Update(role);
+        }
+
         public void DeleteRole(IdentityRole role)
         {
             _roleManager.Delete(role);

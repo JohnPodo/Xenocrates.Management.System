@@ -157,6 +157,9 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
             _db.Entry(workerInDb.Worker).State = EntityState.Modified;
             _db.SaveChanges();
         }
+
+        public void FinalizeProject(int id) => _db.Projects.SingleOrDefault(p => p.ID == id).Finished = true;
+
         public void Dispose()
         {
             _db.Dispose();
