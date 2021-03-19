@@ -53,25 +53,6 @@ var lightColor = getComputedStyle(document.body).getPropertyValue('--light');
       $("#sidebar > .nav > .nav-item").find('.collapse.show').collapse('hide');
     });
 
-    function appendBanner() {
-
-        $("body").addClass("purchase-banner-active");
-        $("body").prepend('\
-          <div class= "item-purchase-banner">\
-            <p class="banner-text">Get tons of UI components, Plugins, multiple layouts, 20+ sample pages, and more!            </p>\
-              <a href="https://www.bootstrapdash.com/product/star-admin-pro?utm_source=organic&utm_medium=banner&utm_campaign=free-preview" target="_blank" class= "banner-button btn btn-primary btn-icon">\
-                <i class="mdi mdi-cart"></i> Check Pro Version\
-              </a>\
-              <span class="toggler-close"><i class="mdi mdi-close"></i></span>\
-          </div>\
-        ')
-        $(".item-purchase-banner .toggler-close").on("click", function () {
-          $(".item-purchase-banner").slideUp(300);
-          $("body").removeClass("purchase-banner-active");
-        });
-    }
-
-    appendBanner();
 
     //checkbox and radios
     $(".form-check label,.form-radio label").append('<i class="input-helper"></i>');

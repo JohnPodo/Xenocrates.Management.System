@@ -9720,31 +9720,6 @@ ul {
       margin-right: 0;
       margin-left: 1rem; }
 
-.item-purchase-banner {
-  position: fixed;
-  top: 0px;
-  width: 100%;
-  height: 55px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding: 10px 15px;
-  z-index: 9990;
-  background: #000;
-  color: #ffffff; }
-  .item-purchase-banner .banner-text {
-    margin-bottom: 0;
-    margin-left: auto;
-    margin-right: 15px;
-    font-weight: 400;
-    color: #ffffff; }
-  .item-purchase-banner .banner-button {
-    background-image: linear-gradient(109.6deg, #0b85ea 11.2%, #223fc9 91.1%);
-    border: none;
-    color: #ffffff; }
-  .item-purchase-banner .toggler-close {
-    margin-left: auto;
-    color: #ffffff; }
 
 /*-------------------------------------------------------------------*/
 /* === Landing screens === */
@@ -9757,10 +9732,10 @@ ul {
 .auth {
   min-height: 100vh; }
   .auth.auth-bg-1 {
-    background: url("../../images/auth/login_1.jpg");
+    background: url("../EIKONES/login_1.jpg");
     background-size: cover; }
   .auth.register-bg-1 {
-    background: url("../../images/auth/register.jpg") center center no-repeat;
+    background: url("../EIKONES/register.jpg") center center no-repeat;
     background-size: cover; }
   .auth.theme-one .auto-form-wrapper {
     background: #fff;

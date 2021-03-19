@@ -242,10 +242,15 @@
     <Content Include="Content\vendor.bundle.addons.css" />
     <Content Include="Content\vendor.bundle.base.css" />
     <Content Include="EIKONES\face8.jpg" />
+    <Content Include="EIKONES\login_1.jpg" />
+    <Content Include="EIKONES\login_2.jpg" />
     <Content Include="EIKONES\logo-mini.svg" />
     <Content Include="EIKONES\logo.svg" />
+    <Content Include="EIKONES\register.jpg" />
+    <Content Include="EIKONES\register_2.jpg" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
+    <Content Include="fonts\materialdesignicons-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.bundle.js" />
@@ -276,6 +281,10 @@
     <Content Include="fonts\fontawesome-webfont.woff" />
     <Content Include="fonts\fontawesome-webfont.ttf" />
     <Content Include="fonts\fontawesome-webfont.eot" />
+    <Content Include="fonts\materialdesignicons-webfont.eot" />
+    <Content Include="fonts\materialdesignicons-webfont.ttf" />
+    <Content Include="fonts\materialdesignicons-webfont.woff" />
+    <Content Include="fonts\materialdesignicons-webfont.woff2" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
@@ -414,7 +423,6 @@
     <Content Include="Views\Department\DetailsDepartment.cshtml" />
     <Content Include="Views\Display\ViewAllWorkers.cshtml" />
     <Content Include="Views\Display\ViewAllDepartments.cshtml" />
-    <Content Include="Views\Display\ViewAllRoles.cshtml" />
     <Content Include="Views\Display\ViewAllRoles.cshtml" />
     <Content Include="Views\Role\DeleteRole.cshtml" />
     <Content Include="Views\Role\EditRole.cshtml" />

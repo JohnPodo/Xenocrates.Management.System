@@ -27,9 +27,6 @@
 
 
 
-
-
-
 <div class="container-scroller">
     <!-- partial:../../partials/_navbar.html -->
     <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -58,7 +55,6 @@
                         </div>
                         <a class="dropdown-item">My Profile<i class="dropdown-item-icon ti-dashboard"></i></a>
                         <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
-                        <a class="dropdown-item">Activity<i class="dropdown-item-icon ti-location-arrow"></i></a>
                         <a class="dropdown-item">FAQ<i class="dropdown-item-icon ti-help-alt"></i></a>
                         <a class="dropdown-item">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
                     </div>
@@ -81,32 +77,32 @@
                             <div class="dot-indicator bg-success"></div>
                         </div>
                         <div class="text-wrapper">
-                            <p class="profile-name">Mark Zuckerberg</p>
+                            <!--  <p class="profile-name">ViewBag.User</p> -->
                             <p class="designation">Admin</p>
                         </div>
                     </a>
                 </li>
                 <li class="nav-item nav-category">Admin Menu</li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="@Url.Action("Index", "Home" )">
                         <i class="menu-icon typcn typcn-document-text"></i>
                         <span class="menu-title">Dashboard</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="@Url.Action("ViewAllRoles", "Display" )">
                         <i class="menu-icon typcn typcn-shopping-bag"></i>
                         <span class="menu-title">Roles</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display")">
                         <i class="menu-icon typcn typcn-th-large-outline"></i>
                         <span class="menu-title">Workers</span>
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#">
+                    <a class="nav-link" href="@Url.Action("ViewAllDepartments", "Display" )">
                         <i class="menu-icon typcn typcn-bell"></i>
                         <span class="menu-title">Departments</span>
                     </a>
@@ -178,7 +174,7 @@
                                                 </tr>
                                             }
 
-                                            </tbody>
+                                        </tbody>
                                     </table>
                                 </div>
                             </div>

@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ManagementSystemVersionTwo.Services.Data;
+using Microsoft.AspNet.Identity;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -32,6 +33,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult ViewAllWorkers()
         {
+            ViewBag.User = _data.FindUserByID(User.Identity.GetUserId()).UserName;
             return View(_data.AllWorkers());
         }
 
