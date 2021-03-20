@@ -1,193 +1,59 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Department>
 @{
-    ViewBag.Title = "ViewAllDepartments"; Layout = null;
+    ViewBag.Title = "ViewAllDepartments"; 
 }
-@Styles.Render("~/Content/materialdesignicons.min.css")
-@Styles.Render("~/Content/ionicons.css")
-@Styles.Render("~/Content/flag-icon.min.css")
-@Styles.Render("~/Content/vendor.bundle.base.css")
-@Styles.Render("~/Content/vendor.bundle.addons.css")
-@Styles.Render("~/Content/style.css")
-@Styles.Render("~/Content/style1.css")
-@Styles.Render("~/Content/favicon.ico")
 
-<div class="container-scroller">
-    <!-- partial:../../partials/_navbar.html -->
-    <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-        <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-            <a class="navbar-brand brand-logo" href="#">
-                <img src="../EIKONES/logo.svg" alt="logo" />
-            </a>
-            <a class="navbar-brand brand-logo-mini" href="#">
-                <img src="../EIKONES/logo-mini.svg" alt="logo" />
-            </a>
-        </div>
-        <div class="navbar-menu-wrapper d-flex align-items-center">
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div style="margin: auto;" class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                    <h3 style="text-align: center;">Departments View</h3>
 
-            <ul class="navbar-nav ml-auto">
-
-
-                <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
-                    <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                        <img class="img-xs rounded-circle" src="../EIKONES/face8.jpg" alt="Profile image">
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                        <div class="dropdown-header text-center">
-                            <img class="img-md rounded-circle" src="../EIKONES/face8.jpg" alt="Profile image">
-                            <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
-                            <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
-                        </div>
-                        <a class="dropdown-item">My Profile<i class="dropdown-item-icon ti-dashboard"></i></a>
-                        <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
-                        <a class="dropdown-item">FAQ<i class="dropdown-item-icon ti-help-alt"></i></a>
-                        <a class="dropdown-item">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
-                        @Html.Partial("_LoginPartial")
+                    <div>
+                        <a href="@Url.Action("CreateDepartment", "Department" )" style="font-size: 12px;" class="btn-add-add">Create New Department</a>
                     </div>
-                </li>
-            </ul>
-            <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                <span class="mdi mdi-menu"></span>
-            </button>
-        </div>
-    </nav>
-    <!-- partial -->
-    <div class="container-fluid page-body-wrapper">
-        <!-- partial:../../partials/_sidebar.html -->
-        <nav class="sidebar sidebar-offcanvas" id="sidebar">
-            <ul class="nav">
-                <li class="nav-item nav-profile">
-                    <a href="#" class="nav-link">
-                        <div class="profile-image">
-                            <img class="img-xs rounded-circle" src="../EIKONES/face8.jpg" alt="profile image">
-                            <div class="dot-indicator bg-success"></div>
-                        </div>
-                        <div class="text-wrapper">
-                            <!--  <p class="profile-name">ViewBag.User</p> -->
-                            <p class="designation">Admin</p>
-                        </div>
-                    </a>
-                </li>
-                <li class="nav-item nav-category">Admin Menu</li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("Index", "Home" )">
-                        <i class="menu-icon typcn typcn-document-text"></i>
-                        <span class="menu-title">Dashboard</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("ViewAllRoles", "Display" )">
-                        <i class="menu-icon typcn typcn-shopping-bag"></i>
-                        <span class="menu-title">Roles</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display")">
-                        <i class="menu-icon typcn typcn-th-large-outline"></i>
-                        <span class="menu-title">Workers</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="@Url.Action("ViewAllDepartments", "Display" )">
-                        <i class="menu-icon typcn typcn-bell"></i>
-                        <span class="menu-title">Departments</span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        <i class="menu-icon typcn typcn-user-outline"></i>
-                        <span class="menu-title">Projects</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
-        <!-- partial -->
-        <div class="main-panel">
-            <div class="content-wrapper">
-                <div class="row">
-                    <div class="col-12 grid-margin">
-                        <div style="margin: auto;" class="col-lg-6 grid-margin stretch-card">
-                            <div style="margin: auto;" class="card">
-                                <div class="card-body">
-                                    <h3 style="text-align: center;">Departments View</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>City</th>
+                                <th>Address</th>
+                                <th>Employees</th>
+                                <th>View</th>
+                            </tr>
+                        </thead>
+                        <tbody>
 
-                                    <div>
-                                        <a href="@Url.Action("CreateDepartment", "Department" )" style="font-size: 12px;" class="btn-add-add">Create New Department</a>
-                                    </div>
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>City</th>
-                                                <th>Address</th>
-                                                <th>Employees</th>
-                                                <th>View</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                            @foreach (var department in Model)
+                            {
 
-                                            @foreach (var department in Model)
-                                            {
-
-                                                <tr>
-                                                    <td>
-                                                        @Html.DisplayFor(d => department.City)
-                                                    </td>
-                                                    <td>
-                                                        @Html.DisplayFor(d => department.Adress)
-                                                    </td>
-                                                    <td class="text-primary">
-                                                        5
-                                                    </td>
-                                                    <td>
-                                                        @Html.ActionLink("Edit", "EditDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
-                                                    </td>
-                                                    <td>
-                                                        @Html.ActionLink("Delete", "DeleteDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-
-
-
-                    </div>
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(d => department.City)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(d => department.Adress)
+                                    </td>
+                                    <td class="text-primary">
+                                        5
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "EditDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Delete", "DeleteDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
             </div>
-            <!-- content-wrapper ends -->
-            <!-- partial:../../partials/_footer.html -->
-            <footer class="footer">
-                <div class="container-fluid clearfix">
-                    <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Xenocrates 2021</span>
-
-                </div>
-            </footer>
-            <!-- partial -->
         </div>
-        <!-- main-panel ends -->
+        </div>
     </div>
-    <!-- page-body-wrapper ends -->
-</div>
 
 
 
 
 
-
-
-
-@section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/vendor.bundle.base.js")
-    @Scripts.Render("~/Scripts/vendor.bundle.addons.js")
-    @Scripts.Render("~/Scripts/off-canvas.js")
-    @Scripts.Render("~/Scripts/misc.js")
-    @Scripts.Render("~/Scripts/jquery.cookie.js")
-
-}
