@@ -9983,8 +9983,12 @@ background-color:rgb(2, 2, 66);
   .user-card{
     margin: auto;
   }
-  .card{
+.card-workers {
     margin: 380px 280px;
+}
+  .card-department{
+    margin: auto;
+    max-width: 60%;
   }
    .second-row .user-card .card .first-col .our-team .picture::before {
     content: "";
