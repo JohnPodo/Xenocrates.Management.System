@@ -27,23 +27,26 @@
                             @foreach (var department in Model)
                             {
 
-                                <tr>
-                                    <td>
-                                        @Html.DisplayFor(d => department.City)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(d => department.Adress)
-                                    </td>
-                                    <td class="text-primary">
-                                        5
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "EditDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Delete", "DeleteDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
-                                    </td>
-                                </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(d => department.City)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(d => department.Adress)
+                                </td>
+                                <td class="text-primary">
+                                    @department.WorkersInThisDepartment.Count
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Details", "DetailsDepartment", "Display", new { id = department.ID }, new { @class = "btn btn-primary details1" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Edit", "EditDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
+                                </td>
+                                <td>
+                                    @Html.ActionLink("Delete", "DeleteDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
+                                </td>
+                            </tr>
                             }
                         </tbody>
                     </table>

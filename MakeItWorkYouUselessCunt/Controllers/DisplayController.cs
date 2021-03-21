@@ -34,7 +34,11 @@ namespace ManagementSystemVersionTwo.Controllers
         {
             return View(_data.AllWorkers());
         }
-
+        //View per Role
+        public ActionResult ViewAllWorkersPerRole(string roleName)
+        {
+            return View();
+        }
 
         public ActionResult ViewAllRoles()
         {
@@ -121,6 +125,22 @@ namespace ManagementSystemVersionTwo.Controllers
             var activeProjects = _data.AllActiveProjects();
             return View("ActiveProjectsPerEmployee");
         }
+
+        public ActionResult DetailsDepartment(int? id)
+        {
+            
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var department = _data.FindDepartmentByID((int)id);
+            if(department == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(department);
+        }
+
 
         //public ActionResult FinalizeProject(int? id)
         //{
