@@ -1,0 +1,40 @@
+﻿@model ManagementSystemVersionTwo.Models.ApplicationUser
+@{
+    ViewBag.Title = "DeleteWorker";
+}
+
+<h2>DeleteWorker</h2>
+@using (Html.BeginForm("DeleteWorkerConfirmed","Worker",FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+    <div>
+        <h4>Worker</h4>
+        <hr />
+        @Html.HiddenFor(model => Model.Id)
+    <dl class="dl-horizontal">
+        <dt>@Html.DisplayNameFor(model => model.UserName)</dt>
+        <dd>@Html.DisplayFor(model => model.UserName)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+        <dd>@Html.DisplayFor(model => model.Email)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Worker.FullName)</dt>
+        <dd>@Html.DisplayFor(model => model.Worker.FullName)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
+        <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Worker.DateOfBirth)</dt>
+        <dd>@Html.DisplayFor(model => model.Worker.DateOfBirth)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
+        <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Worker.Salary)</dt>
+        <dd>@Html.DisplayFor(model => model.Worker.Salary)</dd>
+        <dt>@Html.DisplayNameFor(model => model.Worker.Department)</dt>
+        <dd>@Html.DisplayFor(model => model.Worker.Department.City)</dd>
+    </dl>
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" />
+        </div>
+    </div>
+}
+<div>
+    @Html.ActionLink("Back to List", "../Display/ViewAllWorkers")
+</div>

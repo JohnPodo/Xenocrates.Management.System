@@ -1,0 +1,32 @@
+﻿@model ManagementSystemVersionTwo.Models.Department
+@{
+    ViewBag.Title = "DeleteDepartment";
+}
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <h2>DeleteDepartment</h2>
+        @using (Html.BeginForm())
+        {
+            @Html.AntiForgeryToken()
+            <div>
+                <h4>Department</h4>
+                <hr />
+                @Html.HiddenFor(model => model.ID)
+                <dl class="dl-horizontal">
+                    <dt>@Html.DisplayNameFor(model => model.City)</dt>
+                    <dd>@Html.DisplayFor(model => model.City)</dd>
+                    <dt>@Html.DisplayNameFor(model => model.Adress)</dt>
+                    <dd>@Html.DisplayFor(model => model.Adress)</dd>
+                </dl>
+
+                <div class="form-actions no-color">
+                    <input type="submit" value="Delete" class="btn btn-default" />
+                </div>
+            </div>
+        }
+        <div>
+            @Html.ActionLink("Back to List", "../Display/ViewAllDepartments")
+        </div>
+        </div>
+</div>

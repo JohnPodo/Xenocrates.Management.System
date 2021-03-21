@@ -50,7 +50,9 @@ namespace ManagementSystemVersionTwo.ViewModels
         public List<Department> AllDepartments { get; set; }
         [Required(ErrorMessage = "Necessary")]
         public int IdOfDepartment { get; set; }
-
+        public List<IdentityRole> Roles { get; set; }
+        [Required(ErrorMessage = "Necessary")]
+        public string SelectedRole { get; set; }
         public string userID { get; set; }
     }
 }

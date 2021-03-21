@@ -1,0 +1,13 @@
+﻿@model ManagementSystemVersionTwo.Models.Department
+@{
+    ViewBag.Title = "DetailsDepartment";
+}
+
+<h2>DetailsDepartment</h2>
+@Html.DisplayFor(d => Model.City)
+@Html.DisplayFor(d => Model.Adress)
+@foreach(var d in Model.WorkersInThisDepartment)
+            {
+                @Html.DisplayFor(w => d.FullName)
+                @Html.DisplayFor(w => d.Address)
+            }

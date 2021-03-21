@@ -20,6 +20,16 @@ namespace ManagementSystemVersionTwo.Models
 
         public bool Finished { get; set; }
 
+        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Necessary")]
+        public DateTime StartDate { get; set; }
+
+        [DataType(DataType.Date)]
+        [Required(ErrorMessage = "Necessary")]
+        public DateTime EndDate { get; set; }
+
         public virtual ICollection<ProjectsAssignedToEmployee> WorkersInMe { get; set; }
+
+
     }
 }

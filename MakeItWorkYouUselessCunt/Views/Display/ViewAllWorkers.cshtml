@@ -1,0 +1,64 @@
+﻿@model List<ManagementSystemVersionTwo.Models.Worker>
+@{
+   
+}
+@{
+    ViewBag.Title = "ViewAllWorkers";
+    List<SelectListItem> listItems = new List<SelectListItem>();
+    listItems.Add(new SelectListItem
+    {
+        Text = "City Of Department",
+        Value = "City Of Department"
+    });
+    listItems.Add(new SelectListItem
+    {
+        Text = "Full Name",
+        Value = "Full Name"
+    });
+}
+
+                <div class="row">
+                    <a href="@Url.Action("Register", "Account" )" style="font-size: 12px;" class="btn-add-add">Create New Worker</a>
+                    <div class="col-12 grid-margin">
+                        <div class="col-md-12 row second-row">
+
+
+
+                            @foreach (var worker in Model)
+                            {
+
+
+
+                                <div class="user-card">
+                                    <div class="card  card-workers">
+                                        <div class="first-col">
+                                            <div class="our-team">
+                                                <div class="picture">
+                                                    <img class="img-fluid" src="~/ProfPics/@worker.Pic">
+                                                </div>
+                                                <div class="team-content">
+                                                    <h3 class="name">@Html.DisplayFor(w => worker.FullName)</h3>
+                                                    <h4 class="title">Department in @Html.DisplayFor(w => worker.Department.City)</h4>
+                                                </div>
+                                                <div class="button">
+                                                    <button class="a button-worker">@Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
+                                                    <button class="b button-worker">@Html.ActionLink("Delete", "DeleteWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
+                                                    <button class="c button-worker">Details</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                            }
+
+
+
+
+
+
+                        </div>
+                    </div>
+                </div>
+            
