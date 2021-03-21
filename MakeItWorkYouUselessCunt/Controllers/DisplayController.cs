@@ -5,7 +5,6 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ManagementSystemVersionTwo.Services.Data;
-using Microsoft.AspNet.Identity;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -33,14 +32,9 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult ViewAllWorkers()
         {
-            ViewBag.User = _data.FindUserByID(User.Identity.GetUserId()).UserName;
             return View(_data.AllWorkers());
         }
 
-        public ActionResult ViewAllWorkersList()
-        {
-            return View(_data.AllWorkers());
-        }
 
         public ActionResult ViewAllRoles()
         {
@@ -91,9 +85,52 @@ namespace ManagementSystemVersionTwo.Controllers
             return View("ViewAllDepartments");
         }
 
+        public ActionResult ViewSupervisorsPerDepartment(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
 
+            var supervisors = _data.FindUserPerDepartment((int)id,"Supervisor");
+            
+            if (supervisors == null)
+            {
+                return HttpNotFound();
+            }
+            return View(supervisors);
+        }
+        public ActionResult ViewAllProjects()
+        {
+            return View(_data.AllProjects());
+        }
 
+        public ActionResult ViewAllProjects(int? id)
+        {
+            if(id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var projects = _data.ProjectsPerEmployee((int)id);
 
+            return View("AllProjectsPerEmployee");
+        }
+
+        public ActionResult ViewAllActiveProjects()
+        {
+            var activeProjects = _data.AllActiveProjects();
+            return View("ActiveProjectsPerEmployee");
+        }
+
+        //public ActionResult FinalizeProject(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+        //    }
+        //    _data.FinalizeProject((int)id);
+        //        return RedirectToAction("AllProjectsPerEmployee");
+        //}
 
 
     }

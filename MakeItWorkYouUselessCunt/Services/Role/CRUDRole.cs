@@ -21,7 +21,15 @@ namespace ManagementSystemVersionTwo.Services.Role
 
         public void CreateRole(IdentityRole role)
         {
-            _roleManager.Create(role);
+            if (!_roleManager.RoleExists(role.Name)) {
+                _roleManager.Create(role);
+            }
+            
+        }
+
+        public void UpdateRole(IdentityRole role)
+        {
+            _roleManager.Update(role);
         }
 
         public void DeleteRole(IdentityRole role)

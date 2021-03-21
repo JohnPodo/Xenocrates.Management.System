@@ -35,9 +35,7 @@ namespace ManagementSystemVersionTwo.Models
 
         public virtual ICollection<ProjectsAssignedToEmployee> MyProjects { get; set; }
 
-        
-       // public string ApplicationUserID { get; set; }
-       [Required]
+        [Required]
         public virtual ApplicationUser ApplicationUser { get; set; }
     }
 }
