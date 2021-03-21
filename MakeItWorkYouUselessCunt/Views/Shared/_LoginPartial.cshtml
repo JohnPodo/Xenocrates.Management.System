@@ -1,22 +1,19 @@
 ﻿@using Microsoft.AspNet.Identity
 @if (Request.IsAuthenticated)
 {
-    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "navbar-right" }))
+    using (Html.BeginForm("LogOff", "Account", FormMethod.Post, new { id = "logoutForm", @class = "" }))
     {
         @Html.AntiForgeryToken()
-
-
-        <a style="text-decoration :none" class="dropdown-item">
-            @Html.ActionLink("Hello " + User.Identity.GetUserName() + "!", "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" })
-        </a>
-        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Log off</a>
-
+        
+            @Html.ActionLink("Manage " + User.Identity.GetUserName() + " Account" , "Index", "Manage", routeValues: null, htmlAttributes: new { title = "Manage" , @class = "dropdown-item" })
+       
+        <a class="dropdown-item" href="javascript:document.getElementById('logoutForm').submit()">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
         }
     }
     else
     {
 
-        <a>@Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink" })</a>
-        <a>@Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink" })</a>
+        @Html.ActionLink("Register", "Register", "Account", routeValues: null, htmlAttributes: new { id = "registerLink", @class = "dropdown-item" })
+        @Html.ActionLink("Log in", "Login", "Account", routeValues: null, htmlAttributes: new { id = "loginLink", @class = "dropdown-item  fa fa-sign-in" })
 
     }

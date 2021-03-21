@@ -244,7 +244,7 @@
     <Content Include="Content\style1.css" />
     <Content Include="Content\vendor.bundle.addons.css" />
     <Content Include="Content\vendor.bundle.base.css" />
-    <Content Include="EIKONES\face8.jpg" />
+    <Content Include="EIKONES\boss.png" />
     <Content Include="EIKONES\login_1.jpg" />
     <Content Include="EIKONES\login_2.jpg" />
     <Content Include="EIKONES\logo-mini.svg" />

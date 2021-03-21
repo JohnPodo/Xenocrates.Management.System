@@ -37,18 +37,16 @@
 
                     <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
                         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                            <img class="img-xs rounded-circle" src="~/EIKONES/face8.jpg" alt="Profile image">
+                            <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="Profile image">
                         </a>
                         <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
                             <div class="dropdown-header text-center">
-                                <img class="img-md rounded-circle" src="~/EIKONES/face8.jpg" alt="Profile image">
-                                <p class="mb-1 mt-3 font-weight-semibold">Allen Moreno</p>
-                                <p class="font-weight-light text-muted mb-0">allenmoreno@gmail.com</p>
+                                <img class="img-md rounded-circle" src="~/EIKONES/boss.png" alt="Profile image">
+                                <p class="mb-1 mt-3 font-weight-semibold">Pyravlos Boss</p>
+                                <p class="font-weight-light text-muted mb-0">teampyravlos@gmail.com</p>
                             </div>
-                            <a class="dropdown-item">My Profile<i class="dropdown-item-icon ti-dashboard"></i></a>
                             <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
-                            <a class="dropdown-item">FAQ<i class="dropdown-item-icon ti-help-alt"></i></a>
-                            <a class="dropdown-item">Sign Out<i class="dropdown-item-icon ti-power-off"></i></a>
+                            <a class="dropdown-item">Contact IT<i class="dropdown-item-icon ti-help-alt"></i></a>
                             @Html.Partial("_LoginPartial")
                         </div>
                     </li>
@@ -66,12 +64,12 @@
                     <li class="nav-item nav-profile">
                         <a href="#" class="nav-link">
                             <div class="profile-image">
-                                <img class="img-xs rounded-circle" src="~/EIKONES/face8.jpg" alt="profile image">
+                                <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="profile image">
                                 <div class="dot-indicator bg-success"></div>
                             </div>
                             <div class="text-wrapper">
                                 <!--  <p class="profile-name">ViewBag.User</p> -->
-                                <p class="designation">Admin</p>
+                                <p class="designation">@Html.DisplayName(User.Identity.Name)</p>
                             </div>
                         </a>
                     </li>

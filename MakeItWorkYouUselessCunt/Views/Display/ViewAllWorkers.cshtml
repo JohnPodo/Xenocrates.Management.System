@@ -30,7 +30,7 @@
 
 
                                 <div class="user-card">
-                                    <div class="card">
+                                    <div class="card  card-workers">
                                         <div class="first-col">
                                             <div class="our-team">
                                                 <div class="picture">
@@ -41,7 +41,7 @@
                                                     <h4 class="title">Department in @Html.DisplayFor(w => worker.Department.City)</h4>
                                                 </div>
                                                 <div class="button">
-                                                    <button class="a button-worker">@Html.ActionLink("Edit", "EditWorker", "Worker", new { id = worker.ID }, new { @class = "" })</button>
+                                                    <button class="a button-worker">@Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
                                                     <button class="b button-worker">@Html.ActionLink("Delete", "DeleteWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
                                                     <button class="c button-worker">Details</button>
                                                 </div>
