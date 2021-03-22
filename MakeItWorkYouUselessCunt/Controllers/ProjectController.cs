@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ManagementSystemVersionTwo.Models;
 using ManagementSystemVersionTwo.Services.Data;
 using ManagementSystemVersionTwo.Services.ProjectServices;
 using ManagementSystemVersionTwo.ViewModels;
@@ -49,20 +50,22 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             CreateProjectViewModel f2 = new CreateProjectViewModel()
             {
+                Project=new Project(),
                 Users=f3
             };
-            return View(f3);
+            return View(f2);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateProject(CreateProjectViewModel f2)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid&&f2.Users.Count!=0)
             {
                 _external.CreateProject(f2,User.Identity.GetUserId());
+                return RedirectToAction("ViewAllProjects", "Display");
             }
-            return View();
+            return RedirectToAction("CreateProject");
         }
 
         public ActionResult DeleteProject(int? id)

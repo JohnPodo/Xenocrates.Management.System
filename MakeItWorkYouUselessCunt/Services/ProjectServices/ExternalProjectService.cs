@@ -24,24 +24,33 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
 
         public void CreateProject(CreateProjectViewModel f2,string SupervisorID)
         {
-            Project tosave = new Project();
-            tosave = f2.Project;
-
-            tosave.WorkersInMe.Add(new ProjectsAssignedToEmployee() {
-                ProjectID=tosave.ID,
-                WorkerID=_db.Users.Find(SupervisorID).Worker.ID
+            var worker = _db.Users.Find(SupervisorID).Worker;
+            var project = new Project()
+            {
+                Title=f2.Project.Title,
+                Description=f2.Project.Description,
+                StartDate=f2.Project.StartDate,
+                EndDate=f2.Project.EndDate,
+                Finished=false,
+                WorkersInMe=new List<ProjectsAssignedToEmployee>()
+            };
+            project.WorkersInMe.Add(new ProjectsAssignedToEmployee() {
+                Project= project,
+                Worker= worker
             });
             foreach(var emp in f2.Users)
             {
                 if (emp.IsSelected)
                 {
-                    tosave.WorkersInMe.Add(new ProjectsAssignedToEmployee()
+                    worker = _db.Users.Find(emp.ID).Worker;
+                    project.WorkersInMe.Add(new ProjectsAssignedToEmployee()
                     {
-                        ProjectID = tosave.ID,
-                        WorkerID = _db.Users.Find(emp.ID).Worker.ID
+                        Project = project,
+                        Worker = worker
                     });
                 }
             }
+            _db.Projects.Add(project);
             _db.SaveChanges();
         }
 
