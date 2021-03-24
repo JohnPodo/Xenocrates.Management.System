@@ -7,8 +7,9 @@
 <div class="row">
     @using (Html.BeginForm())
     {
-        <p>
-            Search Worker By Fullname  : @Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
+    <div class="row">
+        <p class="col-md-5">
+            Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
 
             <datalist id="browsers">
                 @foreach (var item in ViewBag.Names)
@@ -17,14 +18,15 @@
                 }
             </datalist>
         </p>
-        <p>
+        <p class="col-md-3">
             Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
         </p>
-        <p>
+        <p class="col-md-4">
             See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "" }) in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "" }) Departments
         </p>
         <input type="submit" value="Search" />
-        @Html.ActionLink("Reset", "ViewAllWorkers", "Display",new {@class="btn btn-info" })
+        @Html.ActionLink("Reset", "ViewAllWorkers", "Display", new { @class = "btn btn-info" })
+    </div>
    }
 
 

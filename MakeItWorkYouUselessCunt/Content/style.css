@@ -1075,8 +1075,7 @@ pre {
     flex: 0 0 41.66667%;
     max-width: 41.66667%; }
   .col-lg-6 {
-    flex: 0 0 50%;
-    max-width: 50%; }
+    flex: 0 0 50%; }
   .col-lg-7 {
     flex: 0 0 58.33333%;
     max-width: 58.33333%; }
@@ -3462,7 +3461,6 @@ input[type="button"].btn-block {
   position: relative;
   display: flex;
   flex-direction: column;
-  min-width: 0;
   word-wrap: break-word;
   background-color: #fff;
   background-clip: border-box;
@@ -8009,9 +8007,6 @@ pre {
   display: flex;
   align-items: stretch;
   justify-content: stretch; }
-  .stretch-card > .card {
-    width: 100%;
-    min-width: 100%; }
 
 .dot-indicator {
   width: 10px;
