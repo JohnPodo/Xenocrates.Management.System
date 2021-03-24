@@ -9,7 +9,8 @@
                         <div class="card">
                             <div class="card-body">
                                 <h2 style="text-align: center;">Add New Person</h2>
-                                <img src="" alt="Profile Pic" class="" id="pic">
+                                
+                                <img src="" alt="Profile Pic"style="display: block; margin-left: auto; margin-right: auto; width: 250px; border: 2px solid #00ff21; border-radius: 4px;" class="" id="pic">
                                 @using (Html.BeginForm("CreateWorkerForApplicationUser", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" }))
                                 {
                                     @Html.AntiForgeryToken()
@@ -22,7 +23,7 @@
                                                     <label class="col-sm-3 col-form-label">First Name</label>
                                                     <div class="col-sm-9">
                                                         @Html.TextBoxFor(m => Model.FirstName, new { placeholder = "Enter your name", @class = "form-control" })
-                                                        @Html.ValidationMessageFor(m => Model.FirstName, "", new { @class = "" })
+                                                        @Html.ValidationMessageFor(m => Model.FirstName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -31,7 +32,7 @@
                                                     <label class="col-sm-3 col-form-label">Last Name</label>
                                                     <div class="col-sm-9">
                                                         @Html.TextBoxFor(m => Model.LastName, new { placeholder = "Enter your Last name", @class = "form-control" })
-                                                        @Html.ValidationMessageFor(m => Model.LastName, "", new { @class = "" })
+                                                        @Html.ValidationMessageFor(m => Model.LastName, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -42,7 +43,7 @@
                                                     <label class="col-sm-3 col-form-label">Gender</label>
                                                     <div class="col-sm-9">
                                                         @Html.DropDownListFor(s => Model.Gender, Model.DropDownDataForGender,"Select Gender", new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(m => Model.Gender, "", new { @class = "" })
+                                                        @Html.ValidationMessageFor(m => Model.Gender, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -51,7 +52,7 @@
                                                     <label class="col-sm-3 col-form-label">Date of Birth</label>
                                                     <div class="col-sm-9">
                                                         @Html.EditorFor(m => Model.DateOfBirth, new { @class = "form-control" })
-                                                        @Html.ValidationMessageFor(m => Model.DateOfBirth, "", new { @class = "" })
+                                                        @Html.ValidationMessageFor(m => Model.DateOfBirth, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -61,14 +62,6 @@
                                                     <div class="col-sm-9">
                                                         @Html.TextBoxFor(m => Model.Address, new { placeholder = "Enter your Address", @class = "form-control" })
                                                         @Html.ValidationMessageFor(m => Model.Address, "", new { @class = "text-danger" })
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-group row">
-                                                    <label class="col-sm-3 col-form-label">Telephone </label>
-                                                    <div class="col-sm-9">
-                                                        <input type="text" class="form-control" />
                                                     </div>
                                                 </div>
                                             </div>
@@ -106,7 +99,7 @@
                                                     <label class="col-sm-3 col-form-label">Bank Account</label>
                                                     <div class="col-sm-9">
                                                         @Html.TextBoxFor(m => Model.BankAccount, new { placeholder = "Enter your Card Number", @class = "form-control" })
-                                                        @Html.ValidationMessageFor(m => Model.BankAccount, "", new { @class = "" })
+                                                        @Html.ValidationMessageFor(m => Model.BankAccount, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -115,7 +108,7 @@
                                                     <label class="col-sm-3 col-form-label">Salary</label>
                                                     <div class="col-sm-9">
                                                         @Html.TextBoxFor(m => Model.Salary, new { placeholder = "Salary", @class = "form-control" })
-                                                        @Html.ValidationMessageFor(m => Model.Salary, "", new { @class = "" })
+                                                        @Html.ValidationMessageFor(m => Model.Salary, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -128,7 +121,7 @@
                                                     <div class="input-group col-md-12">
 
                                                         @Html.TextBoxFor(m => Model.CV, new { type = "file", accept = "application/pdf", @class = "form-control file-upload-info" })
-                                                        @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "" })
+                                                        @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "text-danger" })
 
                                                     </div>
                                                 </div>
@@ -139,7 +132,7 @@
                                                     <input type="file" name="img[]" class="file-upload-default">
                                                     <div class="input-group col-md-12">
                                                         @Html.TextBoxFor(m => Model.ContractOfEmployment, new { type = "file", accept = "application/pdf", @class = "form-control file-upload-info" })
-                                                        @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "" })
+                                                        @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -149,7 +142,7 @@
                                                     <input type="file" name="img[]" class="file-upload-default">
                                                     <div class="input-group col-md-12">
                                                         @Html.TextBoxFor(m => Model.ProfilePicture, new { onchange = "ChangePic(this)", type = "file", accept = "image/jpeg", @class = "form-control file-upload-info" })
-                                                        @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "" })
+                                                        @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -169,6 +162,7 @@
                
 
                 <script>
+                    document.getElementById("pic").style.display = "none";
             function ChangePic(input) {
                 var pic = document.getElementById("pic");
                 var temp = pic.src;
@@ -181,4 +175,5 @@
                 } else {
                     pic.src = temp;
                 }
+                pic.style.display = "block";
             }</script>
