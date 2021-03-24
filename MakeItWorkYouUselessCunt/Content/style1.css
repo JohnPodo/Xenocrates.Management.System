@@ -753,3 +753,13 @@
 .action-links-style{
     text-decoration:none;
 }
+
+
+.thead {
+    text-align: right;
+    font-weight: 520;
+}
+
+.identity {
+    padding-left: 40px;
+}
