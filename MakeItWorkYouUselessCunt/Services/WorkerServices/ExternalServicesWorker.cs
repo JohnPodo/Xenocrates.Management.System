@@ -123,9 +123,15 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
         public void EditWorker(EditWorker editworker)
         {
             var workerInDb = _db.Users.Find(editworker.UserID);
-            if (workerInDb.Roles.FirstOrDefault(r => r.RoleId == editworker.SelectedRole) != null)
+            var role = _db.Roles.Find(editworker.SelectedRole);
+            if (!workerInDb.Roles.Any(r=>r.RoleId== role.Id))
             {
-                workerInDb.Roles.First().RoleId = editworker.SelectedRole;
+                workerInDb.Roles.Remove(workerInDb.Roles.First());
+                workerInDb.Roles.Add(new IdentityUserRole()
+                {
+                    RoleId = role.Id,
+                    UserId = workerInDb.Id
+                }) ;
             }
             if (workerInDb.Worker.Department.ID != editworker.IdOfDepartment)
             {

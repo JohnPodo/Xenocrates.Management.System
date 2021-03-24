@@ -27,7 +27,7 @@
                                                     <td>@Html.DisplayFor(r => role.Name)</td>
                                                     <td>@role.Users.Count</td>
                                                     <td>
-                                                        <label style="font-size: 12px;" class="badge badge-success">View All</label>
+                                                        @Html.ActionLink("View All", "ViewAllWorkers","Display",new { roleSpec=role.Id },new {@class= "badge badge-success", style = "font-size: 12px;" })
                                                     </td>
                                                 </tr>
                                             }

@@ -30,21 +30,21 @@ namespace ManagementSystemVersionTwo.Controllers
         
         public ActionResult CreateProject()
         {
-            var employees = _data.WorkersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+            var employees = _data.UsersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
             var roleId = _data.FindRoleByName("Employee").Id;
             List<DummyForProject> f3 = new List<DummyForProject>();
-            foreach(var worker in employees)
+            for(int i=0;i<employees.Count;i++)
             {
-                if (worker.Roles.SingleOrDefault(r=>r.RoleId==roleId)==null) {
-                    employees.Remove(worker);
+                if (employees[i].Roles.SingleOrDefault(r=>r.RoleId==roleId)==null) {
+                    employees.Remove(employees[i]);
                 }
                 else
                 {
                     f3.Add(new DummyForProject()
                     {
-                        ID = worker.Id,
-                        Fullname = worker.Worker.FullName,
-                        CV = worker.Worker.CV
+                        ID = employees[i].Id,
+                        Fullname = employees[i].Worker.FullName,
+                        CV = employees[i].Worker.CV
                     });
                 }
             }
@@ -101,7 +101,7 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var employees = _data.WorkersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+            var employees = _data.UsersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
             var roleId = _data.FindRoleByName("Employee").Id;
             List<DummyForProject> f3 = new List<DummyForProject>();
             foreach (var worker in employees)
