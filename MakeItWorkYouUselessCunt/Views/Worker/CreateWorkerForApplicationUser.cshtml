@@ -1,6 +1,7 @@
 ﻿@model ManagementSystemVersionTwo.ViewModels.CreateWorker
 @{
     ViewBag.Title = "CreateWorkerForApplicationUser"; 
+
 }
 
                 <div class="row">
@@ -40,10 +41,8 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-3 col-form-label">Gender</label>
                                                     <div class="col-sm-9">
-                                                        <select class="form-control">
-                                                            <option>Male</option>
-                                                            <option>Female</option>
-                                                        </select>
+                                                        @Html.DropDownListFor(s => Model.Gender, Model.DropDownDataForGender,"Select Gender", new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.Gender, "", new { @class = "" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -81,6 +80,7 @@
                                                     <label class="col-sm-3 col-form-label">Department</label>
                                                     <div class="col-sm-9">
                                                         @Html.DropDownListFor(m => Model.IdOfDepartment, new SelectList(Model.AllDepartments, "ID", "City"), "Select Department", new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.IdOfDepartment, "", new { @class = "text-danger" })
                                                     </div>
                                                 </div>
                                             </div>
@@ -159,22 +159,7 @@
                                             <button class="btn btn-light">Cancel</button>
                                         </div>
 
-                                        <div class="gender-details">
-                                            @Html.RadioButtonFor(a => Model.Gender, "Male", new { @class = "", name = "gender", id = "dot-1" })
-                                            @Html.RadioButtonFor(a => Model.Gender, "Female", new { @class = "", name = "gender", id = "dot-2" })
-                                            @Html.ValidationMessageFor(m => Model.Gender, "", new { @class = "" })
-                                            <span class="gender-title">Gender</span>
-                                            <div class="category">
-                                                <label for="dot-1">
-                                                    <span class="dot one"></span>
-                                                    <span class="gender">Male</span>
-                                                </label>
-                                                <label for="dot-2">
-                                                    <span class="dot two"></span>
-                                                    <span class="gender">Female</span>
-                                                </label>
-                                            </div>
-                                        </div>
+                                       
                                     </form>
                                 }
                             </div>

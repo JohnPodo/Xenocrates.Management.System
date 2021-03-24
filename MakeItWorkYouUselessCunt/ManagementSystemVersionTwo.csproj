@@ -443,9 +443,9 @@
     <Content Include="Views\Role\EditRole.cshtml" />
     <Content Include="Views\Worker\DeleteWorker.cshtml" />
     <Content Include="Views\Worker\EditWorker.cshtml" />
-    <Content Include="Views\Display\ViewAllWorkersPerRole.cshtml" />
     <Content Include="Views\Display\DetailsDepartment.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
+    <Content Include="Views\Display\ViewAllProjects.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

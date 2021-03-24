@@ -54,5 +54,7 @@ namespace ManagementSystemVersionTwo.ViewModels
         [Required(ErrorMessage = "Necessary")]
         public string SelectedRole { get; set; }
         public string userID { get; set; }
+
+        public List<SelectListItem> DropDownDataForGender { get; set; }
     }
 }

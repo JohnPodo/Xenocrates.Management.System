@@ -17,6 +17,56 @@ namespace ManagementSystemVersionTwo.Services.Data
             _context = new ApplicationDbContext();
         }
 
+        #region Sorting And Filtering
+
+        public List<string> GetWorkerNamesForAutocomplete()
+        {
+            var names = _context.Workers
+                                .Select(st => new {
+                                    FirstName = st.FirstName,
+                                    LastName = st.LastName
+                                }).ToList();
+            List<string> data = new List<string>();
+            foreach (var name in names)
+            {
+                data.Add(name.FirstName+" "+name.LastName);
+            }
+            return data;
+        }
+
+        public List<Worker> FindWorkerByName(string search, List<Worker> data) => data.Where(w => (w.FirstName + " " +w.LastName).Contains(search)).ToList();
+
+        public List<Worker> SortWorker(string sort, List<Worker> data)
+        {
+            
+            switch (sort)
+            {
+                case "City Of Department":
+                    return data.OrderBy(w => w.Department.City).ToList();
+                case "Full Name":
+                    return data.OrderBy(w => (w.FirstName+" " +w.LastName).ToUpper()).ToList();
+                case "Age":
+                    return data.OrderBy(w => w.DateOfBirth).ToList();
+                case "Salary":
+                    return data.OrderBy(w => w.Salary).ToList();
+                case "Projects":
+                    return data.OrderBy(w => w.MyProjects.Count).ToList();
+                default:
+                    return AllWorkers();
+            }
+        }
+
+        public List<Worker> GetWorkersInRoleForSort(string roleID, List<Worker> data)
+        {
+            var workers = data.Where(r => r.ApplicationUser.Roles.SingleOrDefault(w => w.RoleId == roleID) != null).ToList();
+            return workers;
+        }
+
+        public List<Worker> GetWorkersPerDepartmentForSort(int id, List<Worker> data) =>data.Where(u => u.DepartmentID == id).ToList();
+
+
+        #endregion
+
         #region DepartmentData
         public List<Department> AllDepartments() => _context.Departments.Include(s => s.WorkersInThisDepartment).ToList();
 
@@ -38,31 +88,23 @@ namespace ManagementSystemVersionTwo.Services.Data
         #region WorkerData
 
 
-        public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).ToList();
-        
-        public List<Worker> FindWorkerByName(string search) => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Where(w=>w.FullName.Contains(search)).ToList();
+        public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(p=>p.MyProjects).ToList();
 
-        public List<Worker> SortWorker(string sort) {
-            switch (sort)
-            {
-                case "City Of Department":
-                    return _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).OrderBy(w => w.Department.City).ToList();
-                case "Full Name":
-                    return _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).OrderBy(w=>w.FullName).ToList();
-                default:
-                    return AllWorkers();
-            }
+        public List<Worker> GetWorkersInRole(string roleID)
+        {
+            var workers = _context.Workers.Where(r => r.ApplicationUser.Roles.SingleOrDefault(w => w.RoleId == roleID) != null).ToList();
+            return workers;
         }
+        
+        public List<Worker> GetWorkersPerDepartment(int id) => _context.Workers.Include(w => w.ApplicationUser).Include(s=>s.Department).Where(u => u.DepartmentID == id).ToList();
+
 
         #endregion
 
         #region ApplicationUserData
-        public List<ApplicationUser> WorkersPerDepartment(int id) => _context.Users.Include(w => w.Worker).Include(r => r.Roles).Where(u => u.Worker.DepartmentID == id).ToList();
+        public List<ApplicationUser> UsersPerDepartment(int id) => _context.Users.Include(w => w.Worker).Include(r => r.Roles).Where(u => u.Worker.DepartmentID == id).ToList();
 
         public ApplicationUser FindUserByID(string id) => _context.Users.Include(w=>w.Worker).Include(w=>w.Roles).Single(w=>w.Id==id);
-
-        public List<ApplicationUser> FindUserPerDepartment(int depId, string name) => _context.Users.Include(w => w.Worker).Where(w => w.Worker.DepartmentID == depId).ToList();
-
         public List<ProjectsAssignedToEmployee> ProjectsPerEmployee(int id) => _context.ProjectsToEmployees.Include(s => s.Project).Include(w=>w.Worker).Where(s => s.WorkerID == id).ToList();
         
         public List<ProjectsAssignedToEmployee> ActiveProjectsPerEmployee(int workerId, int projectId) => _context.ProjectsToEmployees.Include(s => s.Worker).Include(p => p.Project).Where(s => s.WorkerID == workerId).Where(p => p.ProjectID == projectId).ToList();
