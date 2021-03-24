@@ -1,15 +1,14 @@
 ﻿@model ManagementSystemVersionTwo.ViewModels.CreateProjectViewModel
-
 @{
-    ViewBag.Title = "CreateProject";
+    ViewBag.Title = "EditProject";
 }
 
-<h2>CreateProject</h2>
+<h2>EditProject</h2>
 
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(s=>s.Project.ID)
     <div class="form-horizontal">
         <h4>Project</h4>
         <hr />
@@ -49,11 +48,19 @@
 
             @for (int i = 0; i < Model.Users.Count; i++)
             {
-                <div class="col-md-2">
-                    @Html.HiddenFor(m => m.Users[i].ID)
-                    @Html.CheckBoxFor(m => m.Users[i].IsSelected) @Html.DisplayFor(m => m.Users[i].Fullname)
-                    @Html.DisplayFor(m => m.Users[i].CV)
-                </div>
+            <div class="col-md-2">
+                @Html.HiddenFor(m => m.Users[i].ID)
+                @if (Model.Users[i].IsSelected == true)
+                {
+                    @Html.CheckBoxFor(m => m.Users[i].IsSelected, new { @checked = "checked" })
+                }
+                else
+                {
+                    @Html.CheckBoxFor(m => m.Users[i].IsSelected)
+                }
+                @Html.DisplayFor(m => m.Users[i].Fullname)
+                @Html.DisplayFor(m => m.Users[i].CV)
+            </div>
             }
 
         </div>
@@ -66,5 +73,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "ViewAllProjects","Display")
+    @Html.ActionLink("Back to List", "ViewAllProjects", "Display")
 </div>

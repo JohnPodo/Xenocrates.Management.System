@@ -446,6 +446,8 @@
     <Content Include="Views\Display\DetailsDepartment.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
     <Content Include="Views\Display\ViewAllProjects.cshtml" />
+    <Content Include="Views\Project\DeleteProject.cshtml" />
+    <Content Include="Views\Project\EditProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
