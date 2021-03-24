@@ -1,70 +1,35 @@
 ﻿@model ManagementSystemVersionTwo.ViewModels.CreateProjectViewModel
-
 @{
     ViewBag.Title = "CreateProject";
+
+
 }
 
 <h2>CreateProject</h2>
-
-@using (Html.BeginForm())
+@using (Html.BeginForm("CreateProject", "Project", FormMethod.Post, new { autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
-
-    <div class="form-horizontal">
-        <h4>Project</h4>
-        <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Project.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Project.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Project.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Project.StartDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Project.EndDate, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Project.EndDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-
-            @for (int i = 0; i < Model.Users.Count; i++)
-            {
-                <div class="col-md-2">
-                    @Html.HiddenFor(m => m.Users[i].ID)
-                    @Html.CheckBoxFor(m => m.Users[i].IsSelected) @Html.DisplayFor(m => m.Users[i].Fullname)
-                    @Html.DisplayFor(m => m.Users[i].CV)
-                </div>
-            }
-
-        </div>
-        <div class="form-group">
-            <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
-            </div>
-        </div>
+    <span class="form-control">Title</span>
+    @Html.TextBoxFor(p => p.Project.Title, new { @class = "" })
+    @Html.ValidationMessageFor(p => p.Project.Title, "", new { @class = "" })
+    <span class="form-control">Description</span>
+    @Html.TextAreaFor(p => p.Project.Description, new { @class = "" })
+    @Html.ValidationMessageFor(p => p.Project.Description, "", new { @class = "" })
+    <span class="form-control">Start Date</span>
+    @Html.EditorFor(p => p.Project.StartDate, new { @class = "" })
+    @Html.ValidationMessageFor(p => p.Project.StartDate, "", new { @class = "" })
+    <span class="form-control">End Date</span>
+    @Html.EditorFor(p => p.Project.EndDate, new { @class = "" })
+    @Html.ValidationMessageFor(p => p.Project.EndDate, "", new { @class = "" })
+   
+     for(int i = 0; i<Model.Users.Count; i++) {
+        @Html.HiddenFor(p => Model.Users[i].ID)
+        @Html.CheckBoxFor(p => Model.Users[i].IsSelected) @Html.DisplayFor(p => Model.Users[i].Fullname)
+        }
+<div class="form-group">
+    <div class="col-md-offset-2 col-md-10">
+        <input type="submit" value="Create" class="btn btn-default" />
     </div>
+</div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>

@@ -1,0 +1,125 @@
+﻿@model ManagementSystemVersionTwo.Models.Worker
+@{
+    ViewBag.Title = "DetailWorker";
+}
+<div class="row">
+    <div style="margin:auto;" class="col-6 grid-margin">
+        <div style="margin:auto;" class="card">
+            <div class="card-body">
+                <div style="justify-content:center;">
+                    <img src="~/ProfPics/@Model.Pic"></img>
+                </div>
+                <table class="table table-striped">
+                    <tr>
+                        <td class="thead">Firstname</td>
+                        <td class="identity">@Html.DisplayFor(w => w.FirstName)</td>
+                    </tr>
+                    <tr>
+                        <td class="thead">Lastname</td>
+                        <td class="identity">@Html.DisplayFor(w => w.LastName)</td>
+                    </tr>
+                    <tr>
+                        <td class="thead">Age</td>
+                        <td class="identity">@Html.DisplayFor(w => w.DateOfBirth) </td>
+                    </tr>
+                    <tr>
+                        <td class="thead">Department</td>
+                        <td class="identity">@Html.DisplayFor(w => w.Department.City)</td>
+                    </tr>
+                    <tr>
+                        <td class="thead">Mobile Phone</td>
+                        <td class="identity">@Html.DisplayFor(w => w.ApplicationUser.PhoneNumber)</td>
+
+                    </tr>
+                    <tr>
+                        <td class="thead">Salary</td>
+                        <td class="identity">@Html.DisplayFor(w => w.Salary)</td>
+
+                    </tr>
+                    <tr>
+                        <td class="thead">Bank</td>
+                        <td class="identity">@Html.DisplayFor(w => w.BankAccount)</td>
+
+                    </tr>
+                    <tr>
+                        <td class="thead">Email</td>
+                        <td class="identity">@Html.DisplayFor(w => w.ApplicationUser.Email)</td>
+
+                    </tr>
+                    <tr>
+                        <td class="thead">Contract</td>
+                        <td class="identity">
+                            <button id="preview-contract"
+                                    class="preview">
+                                @Html.DisplayFor(w => w.ContractOfEmployment)
+                            </button>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="thead">Address</td>
+                        <td class="identity">@Html.DisplayFor(w => w.Address)</td>
+
+                    </tr>
+                    <tr>
+                        <td class="thead">CV</td>
+                        <td class="identity">
+                            <button id="preview-cv"
+                                    class="preview">
+                                @Html.DisplayFor(w => w.CV)
+                            </button>
+                        </td>
+
+                    </tr>
+                    <tr>
+                        <td class="thead">Projects</td>
+                        <td class="identity">
+                            <button class="preview"
+                                    data-modal-target="#project">
+                                Preview
+                            </button>
+                            <div class="modal" id="project">
+                                <div class="modal-header">
+
+                                    <button data-close-button class="close-button">&times;</button>
+                                </div>
+                                <div class="modal-body">
+                                    <!-- <button id="show-pdf-button">Show PDF</button> -->
+
+                                    <div id="pdf-main-container">
+                                        <div id="pdf-loader">Loading document ...</div>
+                                        <div id="pdf-contents">
+                                            <div id="pdf-meta">
+                                                <div id="pdf-buttons">
+                                                    <button class="preview"
+                                                            id="pdf-prev">
+                                                        Previous
+                                                    </button>
+                                                    <button class="preview"
+                                                            id="pdf-next">
+                                                        Next
+                                                    </button>
+                                                </div>
+                                                <div id="page-count-container">
+                                                    Page <div id="pdf-current-page"></div> of <div id="pdf-total-pages"></div>
+                                                </div>
+                                            </div>
+                                            <canvas id="pdf-canvas" width="600"></canvas>
+                                            <div id="page-loader">Loading page ...</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="overlay"></div>
+                        </td>
+                    </tr>
+                </table>
+                <div class="row edit-button">
+                    <button class="col-md-3 button">Edit</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</div>

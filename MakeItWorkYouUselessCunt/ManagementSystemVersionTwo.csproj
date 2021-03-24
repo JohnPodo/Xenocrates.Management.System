@@ -247,8 +247,8 @@
     <Content Include="EIKONES\boss.png" />
     <Content Include="EIKONES\login_1.jpg" />
     <Content Include="EIKONES\login_2.jpg" />
-    <Content Include="EIKONES\logo-mini.svg" />
-    <Content Include="EIKONES\logo.svg" />
+    <Content Include="EIKONES\logo-mini.png" />
+    <Content Include="EIKONES\logo.png" />
     <Content Include="EIKONES\register.jpg" />
     <Content Include="EIKONES\register_2.jpg" />
     <Content Include="favicon.ico" />
@@ -432,6 +432,8 @@
     <Content Include="Views\Worker\EditWorker.cshtml" />
     <Content Include="Views\Display\ViewAllWorkersPerRole.cshtml" />
     <Content Include="Views\Display\DetailsDepartment.cshtml" />
+    <Content Include="Views\Display\DetailWorker.cshtml" />
+    <Content Include="Views\Project\CreateProject.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
