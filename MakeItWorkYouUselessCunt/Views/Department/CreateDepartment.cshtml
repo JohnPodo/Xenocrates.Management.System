@@ -10,7 +10,7 @@
                         @using (Html.BeginForm())
                         {
                             @Html.AntiForgeryToken()
-                            <div class="card card-department">
+                            <div style="margin:auto; width: 50%;" class="card">
                                 <div class="card-body">
                                     <h2 style="text-align: center;">Add New Department</h2>
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
