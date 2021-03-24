@@ -87,7 +87,7 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult DeleteProject(int id)
         {
             _external.DeleteProject(id);
-            return View();
+            return RedirectToAction("ViewAllProjects","Display");
         }
 
         public ActionResult EditProject(int? id)
@@ -104,21 +104,21 @@ namespace ManagementSystemVersionTwo.Controllers
             var employees = _data.UsersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
             var roleId = _data.FindRoleByName("Employee").Id;
             List<DummyForProject> f3 = new List<DummyForProject>();
-            foreach (var worker in employees)
+            for(int i=0;i<employees.Count;i++)
             {
-                if (worker.Roles.SingleOrDefault(r => r.RoleId == roleId) == null)
+                if (employees[i].Roles.SingleOrDefault(r => r.RoleId == roleId) == null)
                 {
-                    employees.Remove(worker);
+                    employees.Remove(employees[i]);
                 }
                 else
                 {
-                    if (worker.Worker.MyProjects.SingleOrDefault(p => p.ID == pro.ID) != null)
+                    if (pro.WorkersInMe.FirstOrDefault(s=>s.WorkerID== employees[i].Worker.ID)!=null)
                     {
                         f3.Add(new DummyForProject()
                         {
-                            ID = worker.Id,
-                            Fullname = worker.Worker.FullName,
-                            CV = worker.Worker.CV,
+                            ID = employees[i].Id,
+                            Fullname = employees[i].Worker.FullName,
+                            CV = employees[i].Worker.CV,
                             IsSelected = true
                         });
                     }
@@ -126,9 +126,9 @@ namespace ManagementSystemVersionTwo.Controllers
                     {
                         f3.Add(new DummyForProject()
                         {
-                            ID = worker.Id,
-                            Fullname = worker.Worker.FullName,
-                            CV = worker.Worker.CV,
+                            ID = employees[i].Id,
+                            Fullname = employees[i].Worker.FullName,
+                            CV = employees[i].Worker.CV,
                             IsSelected = false
                         });
                     }
@@ -136,10 +136,12 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             CreateProjectViewModel f2 = new CreateProjectViewModel()
             {
-                Project=pro,
-                Users = f3
+                Project = new Project(),
+                Users =new List<DummyForProject>()
             };
-            return View(f3);
+            f2.Project = pro;
+            f2.Users = f3;
+            return View(f2);
         }
 
         [HttpPost]
@@ -149,6 +151,7 @@ namespace ManagementSystemVersionTwo.Controllers
             if (ModelState.IsValid)
             {
                 _external.EditProject(f2);
+                return RedirectToAction("ViewAllProjects", "Display");
             }
             return View();
         }

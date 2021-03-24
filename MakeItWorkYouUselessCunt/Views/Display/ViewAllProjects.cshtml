@@ -1,7 +1,57 @@
-﻿
+﻿@model List<ManagementSystemVersionTwo.Models.Project>
 @{
     ViewBag.Title = "ViewAllProjects";
 }
 
 <h2>ViewAllProjects</h2>
 
+<a href="@Url.Action("CreateProject", "Project" )" style="font-size: 12px;" class="btn-add-add">Create New Project</a>
+
+<table class="table table-light">
+    <thead>
+        <tr>
+            <th>
+                Title
+            </th>
+            <th>
+                Description
+            </th>
+            <th>
+                StartDate
+            </th>
+            <th>
+                EndDate
+            </th>
+            <th>
+                Workers
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var pro in Model)
+        {
+        <tr>
+            <td>
+                @pro.Title
+            </td>
+            <td>
+                @pro.Description
+            </td>
+            <td>
+                @pro.StartDate
+            </td>
+            <td>
+                @pro.EndDate
+            </td>
+            <td>
+                @pro.WorkersInMe.Count
+            </td>
+            <td>
+                @Html.ActionLink("Edit", "EditProject", "Project", new { id = pro.ID }, new { @class = "btn btn-primary" })
+                @Html.ActionLink("Delete", "DeleteProject", "Project", new { id = pro.ID }, new { @class = "btn btn-primary" })
+            </td>
+        </tr>
+            
+        }
+    </tbody>
+</table>

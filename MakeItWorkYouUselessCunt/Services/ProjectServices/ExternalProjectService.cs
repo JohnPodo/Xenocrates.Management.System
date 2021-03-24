@@ -64,17 +64,20 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
         public void EditProject(CreateProjectViewModel f2)
         {
             var pro = _db.Projects.Find(f2.Project.ID);
-            foreach(var workers in f2.Users)
+            
+            foreach (var workers in f2.Users)
             {
-                if (pro.WorkersInMe.SingleOrDefault(w => w.WorkerID == _db.Users.Find(workers.ID).Worker.ID) != null && workers.IsSelected == false)
+                var worker=_db.Workers.SingleOrDefault(s=>s.ApplicationUser.Id==workers.ID);
+                if (pro.WorkersInMe.SingleOrDefault(w => w.WorkerID == worker.ID) != null && workers.IsSelected == false)
                 {
-                    pro.WorkersInMe.Remove(_db.ProjectsToEmployees.Find(workers.ID));
+                    var protodel = _db.ProjectsToEmployees.SingleOrDefault(s => s.ProjectID == pro.ID && worker.ID == s.ID);
+                    pro.WorkersInMe.Remove(protodel);
                 }
                 if (pro.WorkersInMe.SingleOrDefault(w => w.WorkerID == _db.Users.Find(workers.ID).Worker.ID) == null && workers.IsSelected == true)
                 {
                     pro.WorkersInMe.Add(new ProjectsAssignedToEmployee() {
                         Project=pro,
-                        Worker = _db.Users.Find(workers.ID).Worker
+                        Worker = worker
                     });
                 }
                 pro.Description = f2.Project.Description;
