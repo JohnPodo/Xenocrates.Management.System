@@ -13,6 +13,10 @@ namespace ManagementSystemVersionTwo.ViewModels
 
         public string CV { get; set; }
 
+        public Decimal Salary { get; set; }
+
+        public string Pic { get; set; }
+
         public bool IsSelected { get; set; }
     }
 }

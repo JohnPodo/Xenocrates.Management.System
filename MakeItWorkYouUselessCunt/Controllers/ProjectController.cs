@@ -44,8 +44,10 @@ namespace ManagementSystemVersionTwo.Controllers
                     {
                         ID = employees[i].Id,
                         Fullname = employees[i].Worker.FullName,
-                        CV = employees[i].Worker.CV
-                    });
+                        CV = employees[i].Worker.CV,
+                        Salary = employees[i].Worker.Salary,
+                        Pic = employees[i].Worker.Pic
+                });
                 }
             }
             CreateProjectViewModel f2 = new CreateProjectViewModel()

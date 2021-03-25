@@ -216,6 +216,10 @@
     <Compile Include="Migrations\202103041755501_SmallChangesToFirstStadium.Designer.cs">
       <DependentUpon>202103041755501_SmallChangesToFirstStadium.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103251422172_ProjectAttachmentAdded.cs" />
+    <Compile Include="Migrations\202103251422172_ProjectAttachmentAdded.Designer.cs">
+      <DependentUpon>202103251422172_ProjectAttachmentAdded.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Department.cs" />
@@ -257,11 +261,13 @@
     <Content Include="Content\style1.css" />
     <Content Include="Content\vendor.bundle.addons.css" />
     <Content Include="Content\vendor.bundle.base.css" />
+    <Content Include="EIKONES\bg-01.jpg" />
+    <Content Include="EIKONES\bg-02.jpg" />
     <Content Include="EIKONES\boss.png" />
     <Content Include="EIKONES\login_1.jpg" />
     <Content Include="EIKONES\login_2.jpg" />
-    <Content Include="EIKONES\logo-mini.svg" />
-    <Content Include="EIKONES\logo.svg" />
+    <Content Include="EIKONES\logo-mini.png" />
+    <Content Include="EIKONES\logo.png" />
     <Content Include="EIKONES\register.jpg" />
     <Content Include="EIKONES\register_2.jpg" />
     <Content Include="favicon.ico" />
@@ -472,6 +478,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103041755501_SmallChangesToFirstStadium.resx">
       <DependentUpon>202103041755501_SmallChangesToFirstStadium.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103251422172_ProjectAttachmentAdded.resx">
+      <DependentUpon>202103251422172_ProjectAttachmentAdded.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.Entity;
+using System.IO;
 using System.Linq;
 using System.Web;
 using ManagementSystemVersionTwo.Models;
@@ -32,6 +33,7 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
                 StartDate=f2.Project.StartDate,
                 EndDate=f2.Project.EndDate,
                 Finished=false,
+                Attachments=DeserializeAttach(f2.Attach),
                 WorkersInMe=new List<ProjectsAssignedToEmployee>()
             };
             project.WorkersInMe.Add(new ProjectsAssignedToEmployee() {
@@ -57,9 +59,11 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
         public void DeleteProject(int id)
         {
             var pro = _db.Projects.Find(id);
+            DeleteProjectFiles(pro.Attachments);
             _db.Projects.Remove(pro);
             _db.SaveChanges();
         }
+
 
         public void EditProject(CreateProjectViewModel f2)
         {
@@ -86,6 +90,30 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
                 pro.EndDate = f2.Project.EndDate;
                 _db.Entry(pro).State = EntityState.Modified;
                 _db.SaveChanges();
+            }
+        }
+        public string DeserializeAttach(HttpPostedFileBase File)
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ProjectFiles/");
+            if (!Directory.Exists(path))
+            {
+                Directory.CreateDirectory(path);
+            }
+            if (File != null)
+            {
+                string fileName = Path.GetFileName(File.FileName);
+                File.SaveAs(path+fileName);
+                return fileName;
+            }
+            return null;
+        }
+
+        public void DeleteProjectFiles(string fileName)
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ProjectFiles/");
+            if (File.Exists(Path.Combine(path, fileName)))
+            {
+                File.Delete(Path.Combine(path, fileName));
             }
         }
     }
