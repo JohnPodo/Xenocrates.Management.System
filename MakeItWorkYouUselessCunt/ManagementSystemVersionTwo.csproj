@@ -240,6 +240,7 @@
     <Compile Include="ViewModels\CreateProjectViewModel.cs" />
     <Compile Include="ViewModels\CreateWorker.cs" />
     <Compile Include="ViewModels\DummyForProject.cs" />
+    <Compile Include="ViewModels\EditProjectViewModel.cs" />
     <Compile Include="ViewModels\EditWorker.cs" />
   </ItemGroup>
   <ItemGroup>

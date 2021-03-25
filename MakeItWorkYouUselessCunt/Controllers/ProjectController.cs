@@ -45,7 +45,6 @@ namespace ManagementSystemVersionTwo.Controllers
                         ID = employees[i].Id,
                         Fullname = employees[i].Worker.FullName,
                         CV = employees[i].Worker.CV,
-                        Salary = employees[i].Worker.Salary,
                         Pic = employees[i].Worker.Pic
                 });
                 }
@@ -121,6 +120,7 @@ namespace ManagementSystemVersionTwo.Controllers
                             ID = employees[i].Id,
                             Fullname = employees[i].Worker.FullName,
                             CV = employees[i].Worker.CV,
+                            Pic = employees[i].Worker.Pic,
                             IsSelected = true
                         });
                     }
@@ -131,12 +131,13 @@ namespace ManagementSystemVersionTwo.Controllers
                             ID = employees[i].Id,
                             Fullname = employees[i].Worker.FullName,
                             CV = employees[i].Worker.CV,
+                            Pic = employees[i].Worker.Pic,
                             IsSelected = false
                         });
                     }
                 }
             }
-            CreateProjectViewModel f2 = new CreateProjectViewModel()
+            EditProjectViewModel f2 = new EditProjectViewModel()
             {
                 Project = new Project(),
                 Users =new List<DummyForProject>()
@@ -148,7 +149,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProject(CreateProjectViewModel f2)
+        public ActionResult EditProject(EditProjectViewModel f2)
         {
             if (ModelState.IsValid)
             {

@@ -65,17 +65,21 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
         }
 
 
-        public void EditProject(CreateProjectViewModel f2)
+        public void EditProject(EditProjectViewModel f2)
         {
             var pro = _db.Projects.Find(f2.Project.ID);
-            
+            if (!(f2.Attach is null))
+            {
+                DeleteProjectFiles(pro.Attachments);
+                pro.Attachments = DeserializeAttach(f2.Attach);
+            }
             foreach (var workers in f2.Users)
             {
                 var worker=_db.Workers.SingleOrDefault(s=>s.ApplicationUser.Id==workers.ID);
                 if (pro.WorkersInMe.SingleOrDefault(w => w.WorkerID == worker.ID) != null && workers.IsSelected == false)
                 {
-                    var protodel = _db.ProjectsToEmployees.SingleOrDefault(s => s.ProjectID == pro.ID && worker.ID == s.ID);
-                    pro.WorkersInMe.Remove(protodel);
+                    var protodel = worker.MyProjects.SingleOrDefault(s=>s.ProjectID==pro.ID);
+                    _db.ProjectsToEmployees.Remove(protodel);
                 }
                 if (pro.WorkersInMe.SingleOrDefault(w => w.WorkerID == _db.Users.Find(workers.ID).Worker.ID) == null && workers.IsSelected == true)
                 {
@@ -84,13 +88,15 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
                         Worker = worker
                     });
                 }
-                pro.Description = f2.Project.Description;
-                pro.Title = f2.Project.Title;
-                pro.StartDate = f2.Project.StartDate;
-                pro.EndDate = f2.Project.EndDate;
-                _db.Entry(pro).State = EntityState.Modified;
-                _db.SaveChanges();
+                
             }
+            pro.Description = f2.Project.Description;
+            pro.Title = f2.Project.Title;
+            pro.StartDate = f2.Project.StartDate;
+            pro.EndDate = f2.Project.EndDate;
+            pro.Finished = f2.Project.Finished;
+            _db.Entry(pro).State = EntityState.Modified;
+            _db.SaveChanges();
         }
         public string DeserializeAttach(HttpPostedFileBase File)
         {
