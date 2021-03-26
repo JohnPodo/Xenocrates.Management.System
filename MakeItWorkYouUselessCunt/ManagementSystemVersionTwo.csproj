@@ -162,9 +162,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -202,9 +199,14 @@
     <Compile Include="Controllers\DisplayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
+    <Compile Include="CustomAnnotations\CheckFileIfItIsPDF.cs" />
+    <Compile Include="CustomAnnotations\CheckFileIfItIsPnG.cs" />
+    <Compile Include="CustomAnnotations\LegalAge.cs" />
+    <Compile Include="CustomAnnotations\ProjectEndDate.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -220,17 +222,23 @@
     <Compile Include="Migrations\202103251422172_ProjectAttachmentAdded.Designer.cs">
       <DependentUpon>202103251422172_ProjectAttachmentAdded.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103261240033_Payments.cs" />
+    <Compile Include="Migrations\202103261240033_Payments.Designer.cs">
+      <DependentUpon>202103261240033_Payments.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsAssignedToEmployee.cs" />
     <Compile Include="Models\Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Data\DataRepository.cs" />
     <Compile Include="Services\DepartmentServices\CRUDDepartment.cs" />
+    <Compile Include="Services\PaypalServices\ExternalPaymentServices.cs" />
     <Compile Include="Services\ProjectServices\ExternalProjectService.cs" />
     <Compile Include="Services\Role\CRUDRole.cs" />
     <Compile Include="Services\WorkerServices\ConventionsOfHttpPostedFileBase.cs" />
@@ -455,6 +463,9 @@
     <Content Include="Views\Display\ViewAllProjects.cshtml" />
     <Content Include="Views\Project\DeleteProject.cshtml" />
     <Content Include="Views\Project\EditProject.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Display\DetailWorker.cshtml" />
+    <Content Include="Views\Payment\PartialViewForPayment.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -483,8 +494,15 @@
     <EmbeddedResource Include="Migrations\202103251422172_ProjectAttachmentAdded.resx">
       <DependentUpon>202103251422172_ProjectAttachmentAdded.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103261240033_Payments.resx">
+      <DependentUpon>202103261240033_Payments.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Paypal\Paypal.csproj">
+      <Project>{37513404-3BB8-4792-8514-F1E886EA4F9D}</Project>
+      <Name>Paypal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ValidationsThroughApi\ValidationsThroughApi.csproj">
       <Project>{a1e0d407-ee86-4e45-80df-f0c9c0a44c49}</Project>
       <Name>ValidationsThroughApi</Name>
