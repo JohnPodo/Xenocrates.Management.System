@@ -87,6 +87,7 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         #region WorkerData
 
+        public Worker FindWorkerByID(int id) => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(w => w.MyProjects).Include(w => w.Payments).Single(w => w.ID == id);
 
         public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(p=>p.MyProjects).ToList();
 
@@ -121,6 +122,8 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         public List<Project> AllFinishedProjects() => _context.Projects.Include(s => s.WorkersInMe).Where(s=>s.Finished==true).ToList();
         #endregion
+
+        public int GetPaymentsCount() => _context.Payments.Count();
 
 
         public void Dispose()

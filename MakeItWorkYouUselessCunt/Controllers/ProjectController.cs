@@ -51,7 +51,6 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             CreateProjectViewModel f2 = new CreateProjectViewModel()
             {
-                Project=new Project(),
                 Users=f3
             };
             return View(f2);
@@ -139,7 +138,6 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             EditProjectViewModel f2 = new EditProjectViewModel()
             {
-                Project = new Project(),
                 Users =new List<DummyForProject>()
             };
             f2.Project = pro;
@@ -151,12 +149,12 @@ namespace ManagementSystemVersionTwo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult EditProject(EditProjectViewModel f2)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && f2.Users.Count != 0)
             {
                 _external.EditProject(f2);
                 return RedirectToAction("ViewAllProjects", "Display");
             }
-            return View();
+            return View(f2);
         }
     }
 }

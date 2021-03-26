@@ -1,0 +1,29 @@
+﻿@model List<ManagementSystemVersionTwo.Models.Worker>
+@{
+    ViewBag.Title = "Index";
+}
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fullname</th>
+            <th>Salary</th>
+            <th>Pay</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var wo in Model)
+        {
+            <tr>
+                <th>@wo.FullName</th>
+                <th>@wo.Salary</th>
+                <th>
+                    @{
+                        Html.RenderAction("ShowPartial", "Payment", new { id = wo.ID });
+                    }
+                </th>
+            </tr>
+        }
+    </tbody>
+</table>
+

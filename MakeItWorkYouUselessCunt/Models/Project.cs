@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using ManagementSystemVersionTwo.CustomAnnotations;
 
 namespace ManagementSystemVersionTwo.Models
 {
+    
     public class Project
     {
         public int ID { get; set; }
@@ -24,6 +26,7 @@ namespace ManagementSystemVersionTwo.Models
 
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Necessary")]
+        [ProjectEndDate(ErrorMessage ="Mipws Gamiesai?")]
         public DateTime StartDate { get; set; }
 
         [DataType(DataType.Date)]
