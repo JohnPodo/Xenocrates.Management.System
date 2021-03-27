@@ -119,22 +119,8 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(data);
         }
 
-        public ActionResult FindWorkerByName(string searchName)
-        {
-            if (string.IsNullOrEmpty(searchName))
-            {
-                return View("ViewAllWorkers", _data.AllWorkers());
-            }
-            else
-            {
-                return View("ViewAllWorkers", _data.FindWorkerByName(searchName));
-            }
-        }
-
-        public ActionResult SortedWorkers(string sorting)
-        {
-            return View("ViewAllWorkers", _data.SortWorker(sorting));
-        }
+        
+        
 
         public ActionResult ViewDepartmentWithWorkers(int? id, string city)
         {
@@ -163,21 +149,7 @@ namespace ManagementSystemVersionTwo.Controllers
             return View("ViewAllDepartments");
         }
 
-        public ActionResult ViewSupervisorsPerDepartment(int? id)
-        {
-            if (id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-
-            var supervisors = _data.FindUserPerDepartment((int)id,"Supervisor");
-            
-            if (supervisors == null)
-            {
-                return HttpNotFound();
-            }
-            return View(supervisors);
-        }
+        
         public ActionResult ViewAllProjects()
         {
             return View(_data.AllProjects());
