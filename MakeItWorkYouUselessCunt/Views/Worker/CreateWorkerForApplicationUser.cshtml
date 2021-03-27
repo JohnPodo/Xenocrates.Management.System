@@ -4,7 +4,7 @@
 }
 @Styles.Render("~/Content/navStyle.css")
 <h2>CreateWorkerForApplicationUser</h2>
-@using (Html.BeginForm("CreateWorkerForApplicationUser", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" }))
+@using (Html.BeginForm("CreateWorkerForApplicationUser", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off", onsubmit= "return isChecked() && formOK() && formOK1() && birthVal();" } ))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(m => m.userID)
@@ -41,8 +41,8 @@
         </div>
         <div class="input-box">
             <span class="details">Date of Birth</span>
-            @Html.EditorFor(m => Model.DateOfBirth, new { @class = "" })
-            @Html.ValidationMessageFor(m => Model.DateOfBirth, "", new { @class = "" })
+            @Html.EditorFor(m => Model.DateOfBirth, new { @class = ""})
+            @Html.ValidationMessageFor(m => Model.DateOfBirth, "", new { @class = "" , id="dateError"})
         </div>
         <div class="input-box">
             <span class="details">Salary</span>
@@ -51,18 +51,18 @@
         </div>
         <div class="input-box">
             <span class="details">CV</span>
-            @Html.TextBoxFor(m => Model.CV, new { type = "file", accept = "application/pdf" })
-            @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "" })
+            @Html.TextBoxFor(m => Model.CV, new {id="filePDF", type = "file", accept = "application/pdf", onchange = "validatePDF(this)" })
+            @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "", id = "errorPDF" })
         </div>
         <div class="input-box">
             <span class="details">Contract of Employee</span>
-            @Html.TextBoxFor(m => Model.ContractOfEmployment, new { type = "file", accept = "application/pdf" })
-            @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "" })
+            @Html.TextBoxFor(m => Model.ContractOfEmployment, new {id="filePDF", type = "file", accept = "application/pdf", onchange="validatePDF(this)"})
+            @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "" , id="errorPDF"})
         </div>
         <div class="input-box">
             <span class="details">Profile Picture</span>
-            @Html.TextBoxFor(m => Model.ProfilePicture, new { onchange = "ChangePic(this)", type = "file", accept = "image/jpeg" })
-            @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "" })
+            @Html.TextBoxFor(m => Model.ProfilePicture, new {id="fileJPG", onchange = "ChangePic(this)", type = "file", accept = "image/jpeg"})
+            @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "",id= "errorJPG" })
         </div>
     </div>
     <div class="gender-details">
@@ -81,6 +81,7 @@
                 <span class="gender">Female</span>
             </label>
         </div>
+        <div id="errorGender"></div>
         <div class="col-md-6">
             <div class="sidenav">
                 <a href="#">About</a>
@@ -91,26 +92,16 @@
         </div>
 
         <div class="button">
-            <input type="submit" value="Register">
+            <input type="submit" value="Register" >
         </div>
     </div>
 }
 
 @section Scripts{
     @Scripts.Render("~/bundles/jqueryval")
+<script src="~/Scripts/buttonsWorker.js"></script>
 
     <script>
-        function ChangePic(input) {
-            var pic = document.getElementById("pic");
-            var temp = pic.src;
-            if (input.files && input.files[0]) {
-                var reader = new FileReader();
-                reader.onload = function (e) {
-                    pic.src = e.target.result;
-                }
-                reader.readAsDataURL(input.files[0]);
-            } else {
-                pic.src = temp;
-            }
-        }</script>
+
+    </script>
 }
