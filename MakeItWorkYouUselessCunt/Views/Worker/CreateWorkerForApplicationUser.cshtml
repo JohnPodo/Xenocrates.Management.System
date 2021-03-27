@@ -161,19 +161,4 @@
                 </div>
                
 
-                <script>
-                    document.getElementById("pic").style.display = "none";
-            function ChangePic(input) {
-                var pic = document.getElementById("pic");
-                var temp = pic.src;
-                if (input.files && input.files[0]) {
-                    var reader = new FileReader();
-                    reader.onload = function (e) {
-                        pic.src = e.target.result;
-                    }
-                    reader.readAsDataURL(input.files[0]);
-                } else {
-                    pic.src = temp;
-                }
-                pic.style.display = "block";
-            }</script>
+              

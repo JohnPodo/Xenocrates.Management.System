@@ -78,6 +78,7 @@ function formOK1() {
 }
 
 //Pic
+document.getElementById("pic").style.display = "none";
 function ChangePic(input) {
     var pic = document.getElementById("pic");
     var temp = pic.src;
@@ -90,4 +91,5 @@ function ChangePic(input) {
     } else {
         pic.src = temp;
     }
+    pic.style.display = "block";
 }
