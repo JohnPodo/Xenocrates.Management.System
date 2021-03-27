@@ -22,12 +22,50 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
         }
 
-        public ActionResult ViewAllDepartments()
+        public ActionResult ViewAllDepartments(string searchString, string sort)
         {
-            return View(_data.AllDepartments());
+            var data = _data.AllDepartments();
+            if (!string.IsNullOrEmpty(sort))
+            {
+                data = _data.SortDepartments(sort, data);
+            }
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                data = _data.GetDepartmentsByCity(searchString, data);
+            }
+           
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "City",
+                Value = "City"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "City_desc",
+                Value = "City_desc"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "High-Low",
+                Value = "High-Low"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Low-High",
+                Value = "Low-High"
+            });
+            ViewBag.SortByCity = listItems;
+
+
+            var citiesForAutoComplete = _data.DepartmentsForAutoComplete();
+            ViewBag.Cities = citiesForAutoComplete;
+            return View(data);
+
         }
 
-        
+
 
 
         public ActionResult ViewAllWorkers()
@@ -40,9 +78,45 @@ namespace ManagementSystemVersionTwo.Controllers
             return View();
         }
 
-        public ActionResult ViewAllRoles()
+        public ActionResult ViewAllRoles(string searchString, string sort)
         {
-            return View(_data.AllRoles());
+            var data = _data.AllRoles();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                data = _data.GetRoleByName(searchString, data);
+            }
+            if (!string.IsNullOrEmpty(sort))
+            {
+                data = _data.SortRoles(sort, data);
+            }
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "Role",
+                Value = "Role"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Role_desc",
+                Value = "Role_desc"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "High-Low",
+                Value = "High-Low"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Low-High",
+                Value = "Low-High"
+            });
+            ViewBag.SortByRole = listItems;
+            var rolesForAutoComplete = _data.RolesForAutoComplete();
+            ViewBag.Roles = rolesForAutoComplete;
+
+            
+            return View(data);
         }
 
         public ActionResult FindWorkerByName(string searchName)

@@ -1,6 +1,6 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Department>
 @{
-    ViewBag.Title = "ViewAllDepartments"; 
+    ViewBag.Title = "ViewAllDepartments";
 }
 
 <div class="row">
@@ -9,23 +9,44 @@
             <div style="margin: auto;" class="card card-department">
                 <div class="card-body">
                     <h3 style="text-align: center;">Departments View</h3>
+                </div>
+                @using (Html.BeginForm())
+                {
+                    <div class="row">
+                        <p>Search By City: @Html.TextBox("searchString", "", new { list = "cities", @class = "" })</p>
 
-                    <div>
-                        <a href="@Url.Action("CreateDepartment", "Department" )" style="font-size: 12px;" class="btn-add-add">Create New Department</a>
-                    </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>City</th>
-                                <th>Address</th>
-                                <th>Employees</th>
-                                <th>View</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            @foreach (var department in Model)
+                        <datalist id="cities">
+                            @foreach (var item in ViewBag.Cities)
                             {
+                                <option value="@item"></option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="row">
+                        <p>Order by: @Html.DropDownList("sort", new SelectList(ViewBag.SortByCity, "Value", "Text"), "")</p>
+                    </div>
+                    <input type="submit" value="Search" />
+                    @Html.ActionLink("Reset", "ViewAllDepartments", "Display", new { }, new {@class="btn btn-warning"})
+
+                }
+
+
+                <div>
+                    <a href="@Url.Action("CreateDepartment", "Department" )" style="font-size: 12px;" class="btn-add-add">Create New Department</a>
+                </div>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>City</th>
+                            <th>Address</th>
+                            <th>Employees</th>
+                            <th>View</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var department in Model)
+                        {
 
                             <tr>
                                 <td>
@@ -47,14 +68,13 @@
                                     @Html.ActionLink("Delete", "DeleteDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
                                 </td>
                             </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
+                        }
+                    </tbody>
+                </table>
             </div>
         </div>
-        </div>
     </div>
+</div>
 
 
 

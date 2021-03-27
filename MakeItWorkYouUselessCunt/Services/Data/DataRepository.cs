@@ -23,6 +23,36 @@ namespace ManagementSystemVersionTwo.Services.Data
         public Department FindDepartmentByID(int id) => _context.Departments.Include(s => s.WorkersInThisDepartment).SingleOrDefault(s => s.ID == id);
 
         public Department FindDepartmentByCity(string City) => _context.Departments.Include(s => s.WorkersInThisDepartment).Single(s => s.City == City);
+
+        //Filtering and Sorting
+        public List<Department> GetDepartmentsByCity(string searchString, List<Department> departments) => departments.Where(x => x.City.Contains(searchString)).ToList();
+
+        public List<string> DepartmentsForAutoComplete() => _context.Departments.Select(x => x.City).ToList();
+        
+
+
+        public List<Department> SortDepartments(string sort, List<Department> departments)
+        {
+            switch (sort)
+            {
+                case "City":
+                    return departments.OrderBy(x => x.City).ToList();
+
+                case "City_desc":
+                    return departments.OrderByDescending(x => x.City).ToList();
+                case "Low-High":
+                    return departments.OrderBy(x => x.WorkersInThisDepartment.Count).ToList();
+
+                case "High-Low":
+                    return departments.OrderByDescending(x => x.WorkersInThisDepartment.Count).ToList();
+                default:
+                    return departments;
+
+            }
+        }
+
+        
+
         #endregion
 
         #region RoleData
@@ -32,6 +62,29 @@ namespace ManagementSystemVersionTwo.Services.Data
         public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).Where(s=>s.Name!="Admin").ToList();
 
         public IdentityRole FindRoleByID(string id) => _context.Roles.Include(r => r.Users).Single(s => s.Id == id);
+
+        public List<IdentityRole> GetRoleByName(string searchString, List<IdentityRole> roles) => roles.Where(x => x.Name.Contains(searchString)).ToList();
+
+        public List<string> RolesForAutoComplete() => _context.Roles.Select(x => x.Name).ToList();
+        public List<IdentityRole> SortRoles(string sort, List<IdentityRole> roles)
+        {
+            switch (sort)
+            {
+                case "Role":
+                    return roles.OrderBy(x => x.Name).ToList();
+
+                case "Role_desc":
+                    return roles.OrderByDescending(x => x.Name).ToList();
+                case "Low-High":
+                    return roles.OrderBy(x => x.Users.Count).ToList();
+
+                case "High-Low":
+                    return roles.OrderByDescending(x => x.Users.Count).ToList();
+                default:
+                    return roles;
+
+            }
+        }
 
         #endregion
 

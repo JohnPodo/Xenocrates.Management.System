@@ -8,6 +8,28 @@
                             <div style="margin: auto;" class="card">
                                 <div class="card-body">
                                     <h3 style="text-align: center;">Roles View</h3>
+                                    @using (Html.BeginForm())
+                                    {
+                                        <div class="row">
+                                            <p>Search By Role: @Html.TextBox("searchString", "", new { list = "roles", @class = "" })</p>
+
+                                            <datalist id="roles">
+                                                @foreach (var item in ViewBag.Roles)
+                                                {
+                                                    <option value="@item"></option>
+                                                }
+                                            </datalist>
+                                        </div>
+                                        <div class="row">
+                                            <p>Order by: @Html.DropDownList("sort", new SelectList(ViewBag.SortByRole, "Value", "Text"), "")</p>
+                                        </div>
+
+                                        <input type="submit" value="Search" />
+                                        @Html.ActionLink("Reset", "ViewAllRoles", "Display", new { }, new { @class = "btn btn-warning" })
+
+
+                                    }
+
                                     <div>
                                         <a href="@Url.Action("CreateRole", "Role" )" style="font-size: 12px;" class="btn-add-add">Create New Role</a>
                                     </div>
