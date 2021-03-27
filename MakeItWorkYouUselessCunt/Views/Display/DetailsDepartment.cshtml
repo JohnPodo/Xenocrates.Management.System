@@ -1,0 +1,49 @@
+﻿@model ManagementSystemVersionTwo.Models.Department
+@{
+    ViewBag.Title = "DetailsDepartment";
+}
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div style="margin: auto; " class="col-lg-8 grid-margin stretch-card">
+            <div style="margin:auto; min-width:50%" class="card">
+                <div class="card-body">
+                    <h3 style="text-align: center;">@Html.DisplayFor(d => Model.City) Department View</h3>
+                    <p style="text-align: center;">Address: @Html.DisplayFor(d => Model.Adress)</p>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th> Name </th>
+                                <th> Role </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var d in Model.WorkersInThisDepartment)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(w => d.FullName)
+                                    </td>
+                                    <td>
+                                        @if (d.ApplicationUser.Roles.SingleOrDefault(v => v.RoleId == "bd1041ab-c6c8-45e9-8723-01d63187bb80") != null)
+                                        {
+                                            <p>Supervisor</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Employee</p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+

@@ -1,0 +1,98 @@
+﻿@model ManagementSystemVersionTwo.ViewModels.CreateProjectViewModel
+
+@{
+    ViewBag.Title = "CreateProject"; 
+}
+
+<div class="card">
+    <div class="card-body">
+        <h2 style="text-align:center">Create Project</h2>
+
+        @using (Html.BeginForm("CreateProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" }))
+        {
+            @Html.ValidationSummary()
+            @Html.AntiForgeryToken()
+    <form class="forms-sample">
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <div class="form-group">
+            @Html.LabelFor(model => model.Project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-12">
+                @Html.EditorFor(model => model.Project.Title, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Project.Title, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-12">
+                @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <label>Project Attachments</label>
+            <input type="file" name="img[]" class="file-upload-default">
+            <div class="input-group col-xs-12">
+                @Html.TextBoxFor(m => m.Attach, new  { type = "file" , @class = "" })
+                @Html.ValidationMessageFor(model => model.Attach, "" , new { @class="text-danger"})
+                
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(model => model.Project.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-12">
+                @Html.EditorFor(model => model.Project.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Project.StartDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Project.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-xs-12">
+                @Html.EditorFor(model => model.Project.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.Project.EndDate, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <table class="table table-striped">
+                <thead>
+                    <tr class="row">
+                        <th class="col-sm-1"> Assign </th>
+                        <th class="col-sm-1"> Picture </th>
+                        <th class="col-sm-4"> Full Name </th>
+                        <th class="col-sm-2"> Amount </th>
+                        <th class="col-sm-2"> Active Projects </th>
+                        <th class="col-sm-2"> CV </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @for (int i = 0; i < Model.Users.Count; i++)
+                    {
+                        <tr class="row">
+                            <td class="col-sm-1">
+                                @Html.HiddenFor(m => m.Users[i].ID)
+                                @Html.CheckBoxFor(m => m.Users[i].IsSelected)
+                            </td>
+                            <td style="height:3rem" class="col-sm-1 py-1">
+                                <img src="~/ProfPics/@Model.Users[i].Pic" alt="image" />
+                            </td>
+                            <td class="col-sm-4"> @Html.DisplayFor(m => m.Users[i].Fullname) </td>
+                            <td class="col-sm-2">
+                                <div class="progress">
+                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                            </td>
+                            <td class="col-sm-2">  </td>
+                            <td class="col-sm-2"> <a href="~/CVs/@Model.Users[i].CV" target="_blank">CV Details</a> </td>
+                        </tr>
+                    }
+                    </tbody>
+            </table>
+        </div>
+        <div style="margin:auto">
+            <button type="submit" class="btn btn-success mr-2">Create</button>
+            <button class="btn btn-light">@Html.ActionLink("Back to List", "ViewAllProjects", "Display")</button>
+        </div>
+    </form>
+        }
+    </div>
+</div>

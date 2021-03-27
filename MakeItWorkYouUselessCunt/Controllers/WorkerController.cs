@@ -38,11 +38,22 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             CreateWorker f2 = new CreateWorker()
             {
                 AllDepartments = _data.AllDepartments(),
                 userID = user.Id,
-                Roles = _data.AllRoles()
+                Roles = _data.AllRoles(),
+                DropDownDataForGender = new List<SelectListItem>() {
+                                                new SelectListItem(){
+            Text="Male",
+            Value="Male"
+            },
+                                                new SelectListItem(){
+            Text="Female",
+            Value="Female"
+            }
+                }
             };
             return View(f2);
         }
@@ -62,7 +73,18 @@ namespace ManagementSystemVersionTwo.Controllers
                 f2 = new CreateWorker()
                 {
                     AllDepartments = _data.AllDepartments(),
-                    userID = f2.userID
+                    userID = f2.userID,
+                    Roles = _data.AllRoles(),
+                    DropDownDataForGender = new List<SelectListItem>() {
+                                                new SelectListItem(){
+            Text="Male",
+            Value="Male"
+            },
+                                                new SelectListItem(){
+            Text="Female",
+            Value="Female"
+            }
+                }
                 };
                 return View(f2);
             }

@@ -11,55 +11,44 @@ body{
   justify-content: center;
   align-items: center;
   padding: 10px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
+  
 }
-.col-md-12.container{
+.container{
+  height: 700px;
   max-width: 700px;
   width: 100%;
   background-color: #fff;
   padding: 25px 30px;
-  border-radius: 5px;
+  border-radius: 15px;
   box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 }
-.container .title{
-  font-size: 25px;
-  font-weight: 500;
-  position: relative;
-}
-.container .title::before{
-  content: "";
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  height: 3px;
-  width: 30px;
-  border-radius: 5px;
-  background: linear-gradient(135deg, #71b7e6, #9b59b6);
-}
-.content form .user-details{
+
+
+.col-md-12.content form .user-details{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   margin: 20px 0 12px 0;
 }
-form .user-details .input-box{
+form .user-details .col-md-6.input-box{
   margin-bottom: 15px;
   width: calc(100% / 2 - 20px);
 }
-form .input-box span.details{
+form .col-md-6.input-box span.details{
   display: block;
   font-weight: 500;
   margin-bottom: 5px;
 }
-.user-details .input-box input{
+.user-details .col-md-6.input-box input{
   height: 45px;
   width: 100%;
   outline: none;
   font-size: 16px;
   border-radius: 25px;
   padding-left: 15px;
-  border: 1px solid #ccc;
+  border: none;
   border-bottom-width: 2px;
+  box-shadow: 0 5px 10px rgba(0,0,0,0.15);
 }
 
  form .gender-details .gender-title{
@@ -76,8 +65,11 @@ form .input-box span.details{
    display: flex;
    align-items: center;
    cursor: pointer;
+   
  }
+ 
  form .category label .dot{
+   margin-left: 20px;
   height: 18px;
   width: 18px;
   border-radius: 50%;
@@ -87,31 +79,20 @@ form .input-box span.details{
   transition: all 0.3s ease;
 }
  #dot-1:checked ~ .category label .one,
- #dot-2:checked ~ .category label .two,
- #dot-3:checked ~ .category label .three{
-   background: #9b59b6;
+ #dot-2:checked ~ .category label .two{
+   background: #00da21;
    border-color: #d9d9d9;
  }
  form input[type="radio"]{
    display: none;
  }
- form .button{
+form .col-md-5.button{
    height: 45px;
-   margin: 35px 225px;
+   margin:35px 200px;
    
  }
 
- /* .button {
-    margin: 0;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    -ms-transform: translate(-50%, -50%);
-    transform: translate(-50%, -50%);
-  } */
-
- 
- form .button input{
+ form .col-md-5.button input{
    height: 100%;
    width: 150px;
    border-radius: 25px;
@@ -122,11 +103,10 @@ form .input-box span.details{
    letter-spacing: 1px;
    cursor: pointer;
    transition: all 0.3s ease;
-   background: linear-gradient(135deg, #71b7e6, #9b59b6);
+   background: linear-gradient(150deg, #006CFF, #00397C);
  }
  form .button input:hover{
-  /* transform: scale(0.99); */
-  background: linear-gradient(-135deg, #71b7e6, #9b59b6);
+  background: linear-gradient(-100deg, #00397C, #006CFF);
   }
  @media(max-width: 584px){
  .container{
@@ -153,16 +133,14 @@ form .user-details .input-box{
   }
 }
 
-
-
-
-
-
-
-
-
-
-
+/* --Avatar Image-- */
+.col-md-3 .avatar {
+  vertical-align: middle;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+/* --Avatar-- */
 
 /* --SideNavbar-- */
 
@@ -173,23 +151,43 @@ form .user-details .input-box{
     z-index: 1;
     top: 0;
     left: 0;
-    background-color: rgb(2, 6, 123);
+    /* background: linear-gradient(135deg, #006CFF, #00397C); */
+    background: linear-gradient( -35deg,#69a7fc, #006CFF, #004696,#00224a);
+    background-size: 200% 200%;
+    animation: change 10s ease-in-out infinite;
     overflow-x: hidden;
     padding-top: 300px;
   }
   
+  @keyframes change {
+    0%{
+      background-position: 0 50%;
+    }
+    50%{
+      background-position: 100% 50%;
+    }
+    100%{
+      background-position: 0 50%;
+    }
+  }
+
   .sidenav a {
     padding: 6px 6px 6px 32px;
     text-decoration: none;
-    font-size: 25px;
-    color: #818181;
+    font-size: 22px;
+    color: #e4e2e2;
     display: block;
+    font-weight: lighter;
   }
   
-  .sidenav a:hover {
-    color: #f1f1f1;
-  }
-  
+.sidebar:hover{
+  background: #00397C;
+}
+
+.text:hover{
+  border-left: 6px solid rgb(230, 230, 230);
+}
+
   .main {
     margin-left: 200px;
   }

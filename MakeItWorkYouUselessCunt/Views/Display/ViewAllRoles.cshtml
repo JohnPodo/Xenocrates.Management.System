@@ -1,11 +1,46 @@
-﻿@model List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+@model List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
 @{
-    ViewBag.Title = "ViewAllRoles";
+    ViewBag.Title = "ViewAllRoles"; 
 }
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div style="margin: auto;" class="col-lg-6 grid-margin stretch-card">
+                            <div style="margin: auto; min-width:50%" class="card">
+                                <div class="card-body">
+                                    <h3 style="text-align: center;">Roles View</h3>
+                                    <div>
+                                        <a href="@Url.Action("CreateRole", "Role" )" style="font-size: 12px;" class="btn-add-add">Create New Role</a>
+                                    </div>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Name</th>
+                                                <th>Count</th>
+                                                <th>Activity</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
 
-<h2>ViewAllRoles</h2>
+                                            @foreach (var role in Model)
+                                            {
+                                                <tr>
+                                                    <td>@Html.DisplayFor(r => role.Name)</td>
+                                                    <td>@role.Users.Count</td>
+                                                    <td>
+                                                        @Html.ActionLink("View All", "ViewAllWorkers","Display",new { roleSpec=role.Id },new {@class= "badge badge-success", style = "font-size: 12px;" })
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
 
-@foreach (var role in Model)
-            {
-<span>@Html.DisplayNameFor(n => role.Name)</span>      @Html.DisplayFor(r => role.Name) <br />
-            }
+
+
+
+
+                    </div>
+                </div>
+           

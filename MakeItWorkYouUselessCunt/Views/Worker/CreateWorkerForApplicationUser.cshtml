@@ -1,107 +1,179 @@
 ﻿@model ManagementSystemVersionTwo.ViewModels.CreateWorker
 @{
-    ViewBag.Title = "CreateWorkerForApplicationUser";
-}
-@Styles.Render("~/Content/navStyle.css")
-<h2>CreateWorkerForApplicationUser</h2>
-@using (Html.BeginForm("CreateWorkerForApplicationUser", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off", onsubmit= "return isChecked() && formOK() && formOK1() && birthVal();" } ))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m => m.userID)
+    ViewBag.Title = "CreateWorkerForApplicationUser"; 
 
-    <img src="" alt="Profile Pic" class="" id="pic">
-    <div class="user-details">
-        <div class="input-box">
-            <span class="details">First Name</span>
-            @Html.TextBoxFor(m => Model.FirstName, new { placeholder = "Enter your name", @class = "" })
-            @Html.ValidationMessageFor(m => Model.FirstName, "", new { @class = "" })
-        </div>
-        <div class="input-box">
-            <span class="details">Last Name</span>
-            @Html.TextBoxFor(m => Model.LastName, new { placeholder = "Enter your Last name" })
-            @Html.ValidationMessageFor(m => Model.LastName, "", new { @class = "" })
-        </div>
-        <div class="input-box">
-            <span class="details">Address</span>
-            @Html.TextBoxFor(m => Model.Address, new { placeholder = "Enter your Address" })
-            @Html.ValidationMessageFor(m => Model.Address, "", new { @class = "text-danger" })
-        </div>
-        <div class="input-box">
-            <span class="details">Back Account</span>
-            @Html.TextBoxFor(m => Model.BankAccount, new { placeholder = "Enter your Card Number" })
-            @Html.ValidationMessageFor(m => Model.BankAccount, "", new { @class = "" })
-        </div>
-        <div class="input-box">
-            <span class="details">Department</span>
-            @Html.DropDownListFor(m => Model.IdOfDepartment, new SelectList(Model.AllDepartments, "ID", "City"), "Select Department", new { @class = "form-control" })
-        </div>
-        <div class="input-box">
-            <span class="details">Role</span>
-            @Html.DropDownListFor(s => Model.SelectedRole, new SelectList(Model.Roles, "ID", "Name"), "Select Role", new { @class = "form-control" })
-        </div>
-        <div class="input-box">
-            <span class="details">Date of Birth</span>
-            @Html.EditorFor(m => Model.DateOfBirth, new { @class = ""})
-            @Html.ValidationMessageFor(m => Model.DateOfBirth, "", new { @class = "" , id="dateError"})
-        </div>
-        <div class="input-box">
-            <span class="details">Salary</span>
-            @Html.TextBoxFor(m => Model.Salary, new { placeholder = "Salary" })
-            @Html.ValidationMessageFor(m => Model.Salary, "", new { @class = "" })
-        </div>
-        <div class="input-box">
-            <span class="details">CV</span>
-            @Html.TextBoxFor(m => Model.CV, new {id="filePDF", type = "file", accept = "application/pdf", onchange = "validatePDF(this)" })
-            @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "", id = "errorPDF" })
-        </div>
-        <div class="input-box">
-            <span class="details">Contract of Employee</span>
-            @Html.TextBoxFor(m => Model.ContractOfEmployment, new {id="filePDF", type = "file", accept = "application/pdf", onchange="validatePDF(this)"})
-            @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "" , id="errorPDF"})
-        </div>
-        <div class="input-box">
-            <span class="details">Profile Picture</span>
-            @Html.TextBoxFor(m => Model.ProfilePicture, new {id="fileJPG", onchange = "ChangePic(this)", type = "file", accept = "image/jpeg"})
-            @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "",id= "errorJPG" })
-        </div>
-    </div>
-    <div class="gender-details">
-
-        @Html.RadioButtonFor(a => Model.Gender, "Male", new { @class = "", name = "gender", id = "dot-1" })
-        @Html.RadioButtonFor(a => Model.Gender, "Female", new { @class = "", name = "gender", id = "dot-2" })
-        @Html.ValidationMessageFor(m => Model.Gender, "", new { @class = "" })
-        <span class="gender-title">Gender</span>
-        <div class="category">
-            <label for="dot-1">
-                <span class="dot one"></span>
-                <span class="gender">Male</span>
-            </label>
-            <label for="dot-2">
-                <span class="dot two"></span>
-                <span class="gender">Female</span>
-            </label>
-        </div>
-        <div id="errorGender"></div>
-        <div class="col-md-6">
-            <div class="sidenav">
-                <a href="#">About</a>
-                <a href="#">Services</a>
-                <a href="#">Clients</a>
-                <a href="#">Contact</a>
-            </div>
-        </div>
-
-        <div class="button">
-            <input type="submit" value="Register" >
-        </div>
-    </div>
 }
 
-@section Scripts{
-    @Scripts.Render("~/bundles/jqueryval")
-<script src="~/Scripts/buttonsWorker.js"></script>
+                <div class="row">
+                    <div class="col-12 grid-margin">
+                        <div class="card">
+                            <div class="card-body">
+                                <h2 style="text-align: center;">Add New Person</h2>
+                                
+                                <img src="" alt="Profile Pic"style="display: block; margin-left: auto; margin-right: auto; width: 250px; border: 2px solid #00ff21; border-radius: 4px;" class="" id="pic">
+                                @using (Html.BeginForm("CreateWorkerForApplicationUser", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" }))
+                                {
+                                    @Html.AntiForgeryToken()
+                                    @Html.HiddenFor(m => m.userID)
+                                    <form class="form-sample">
+                                        <h4 class="card-description"> Personal info </h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">First Name</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(m => Model.FirstName, new { placeholder = "Enter your name", @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.FirstName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Last Name</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(m => Model.LastName, new { placeholder = "Enter your Last name", @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.LastName, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Gender</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.DropDownListFor(s => Model.Gender, Model.DropDownDataForGender,"Select Gender", new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.Gender, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Date of Birth</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.EditorFor(m => Model.DateOfBirth, new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.DateOfBirth, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Address </label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(m => Model.Address, new { placeholder = "Enter your Address", @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.Address, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4 class="card-description"> Company </h4>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Department</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.DropDownListFor(m => Model.IdOfDepartment, new SelectList(Model.AllDepartments, "ID", "City"), "Select Department", new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.IdOfDepartment, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Role</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.DropDownListFor(s => Model.SelectedRole, new SelectList(Model.Roles, "ID", "Name"), "Select Role", new { @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.SelectedRole, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <h4 class="card-description"> Addition Info </h4>
+                                        <div class="row">
 
-    <script>
 
-    </script>
-}
+
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Bank Account</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(m => Model.BankAccount, new { placeholder = "Enter your Card Number", @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.BankAccount, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group row">
+                                                    <label class="col-sm-3 col-form-label">Salary</label>
+                                                    <div class="col-sm-9">
+                                                        @Html.TextBoxFor(m => Model.Salary, new { placeholder = "Salary", @class = "form-control" })
+                                                        @Html.ValidationMessageFor(m => Model.Salary, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>CV</label>
+                                                    <input type="file" name="img[]" class="file-upload-default">
+                                                    <div class="input-group col-md-12">
+
+                                                        @Html.TextBoxFor(m => Model.CV, new { type = "file", accept = "application/pdf", @class = "form-control file-upload-info" })
+                                                        @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "text-danger" })
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Contract of Employement</label>
+                                                    <input type="file" name="img[]" class="file-upload-default">
+                                                    <div class="input-group col-md-12">
+                                                        @Html.TextBoxFor(m => Model.ContractOfEmployment, new { type = "file", accept = "application/pdf", @class = "form-control file-upload-info" })
+                                                        @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Profile Picture</label>
+                                                    <input type="file" name="img[]" class="file-upload-default">
+                                                    <div class="input-group col-md-12">
+                                                        @Html.TextBoxFor(m => Model.ProfilePicture, new { onchange = "ChangePic(this)", type = "file", accept = "image/jpeg", @class = "form-control file-upload-info" })
+                                                        @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "text-danger" })
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div style="justify-content: center;" class="row col-md-12">
+                                            <button type="submit" class="btn btn-success mr-2">Submit</button>
+                                            <button class="btn btn-light">Cancel</button>
+                                        </div>
+
+                                       
+                                    </form>
+                                }
+                            </div>
+                        </div>
+                    </div>
+                </div>
+               
+
+                <script>
+                    document.getElementById("pic").style.display = "none";
+            function ChangePic(input) {
+                var pic = document.getElementById("pic");
+                var temp = pic.src;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        pic.src = e.target.result;
+                    }
+                    reader.readAsDataURL(input.files[0]);
+                } else {
+                    pic.src = temp;
+                }
+                pic.style.display = "block";
+            }</script>

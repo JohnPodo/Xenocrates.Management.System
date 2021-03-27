@@ -38,6 +38,7 @@ namespace ManagementSystemVersionTwo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult CreateRole(IdentityRole role)
         {
+
             _crud.CreateRole(role);
             return RedirectToAction("ViewAllRoles","Display");
         }

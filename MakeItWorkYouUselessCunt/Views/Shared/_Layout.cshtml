@@ -4,44 +4,146 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-    @Styles.Render("~/Content/css")
-    @Scripts.Render("~/bundles/modernizr")
+    @Styles.Render("~/Content/font-awesome.css")
+    @Styles.Render("~/Content/materialdesignicons.min.css")
+    @Styles.Render("~/Content/ionicons.css")
+    @Styles.Render("~/Content/flag-icon.min.css")
+    @Styles.Render("~/Content/vendor.bundle.base.css")
+    @Styles.Render("~/Content/vendor.bundle.addons.css")
+    @Styles.Render("~/Content/style.css")
+    @Styles.Render("~/Content/favicon.ico")
+
+
 
 </head>
 <body>
-    <div class="navbar navbar-inverse navbar-fixed-top">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-              
+
+
+    <div class="container-scroller">
+        <!-- partial:../../partials/_navbar.html -->
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
+                <a class="navbar-brand brand-logo" href="#">
+                    <img src="~/EIKONES/logo.png" alt="logo" />
+                </a>
+                <a class="navbar-brand brand-logo-mini" href="#">
+                    <img src="~/EIKONES/logo-mini.png" alt="logo" />
+                </a>
             </div>
-            <div class="navbar-collapse collapse">
-                <ul class="nav navbar-nav">
-                    <li>@Html.ActionLink("Create Role", "../Role/CreateRole", "Home")</li>
-                    <li>@Html.ActionLink("Create Department", "../Department/CreateDepartment", "Home")</li>
-                    <li>@Html.ActionLink("Create Employee", "../Account/Register", "Home")</li>
-                    <li>@Html.ActionLink("View Roles", "../Role/CreateRole", "Home")</li>
-                    <li>@Html.ActionLink("View Departments", "../Display/ViewAllDepartments", "Home")</li>
-                    <li>@Html.ActionLink("View Employees", "../Display/ViewAllWorkers", "Home")</li>
+            <div class="navbar-menu-wrapper d-flex align-items-center">
+
+                <ul class="navbar-nav ml-auto">
+
+
+                    <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
+                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
+                            <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="Profile image">
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
+                            <div class="dropdown-header text-center">
+                                <img class="img-md rounded-circle" src="~/EIKONES/boss.png" alt="Profile image">
+                                <p class="mb-1 mt-3 font-weight-semibold">Pyravlos Boss</p>
+                                <p class="font-weight-light text-muted mb-0">teampyravlos@gmail.com</p>
+                            </div>
+                            <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
+                            <a class="dropdown-item">Contact IT<i class="dropdown-item-icon ti-help-alt"></i></a>
+                            @Html.Partial("_LoginPartial")
+                        </div>
+                    </li>
                 </ul>
-                @Html.Partial("_LoginPartial")
+                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
+                    <span class="mdi mdi-menu"></span>
+                </button>
             </div>
+        </nav>
+        <!-- partial -->
+        <div class="container-fluid page-body-wrapper">
+            <!-- partial:../../partials/_sidebar.html -->
+            <nav class="sidebar sidebar-offcanvas" id="sidebar">
+                <ul class="nav">
+                    <li class="nav-item nav-profile">
+                        <a href="#" class="nav-link">
+                            <div class="profile-image">
+                                <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="profile image">
+                                <div class="dot-indicator bg-success"></div>
+                            </div>
+                            <div class="text-wrapper">
+                                <!--  <p class="profile-name">ViewBag.User</p> -->
+                                <p class="designation">@Html.DisplayName(User.Identity.Name)</p>
+                            </div>
+                        </a>
+                    </li>
+                    <li class="nav-item nav-category">Admin Menu</li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Home" )">
+                            <i class="menu-icon typcn typcn-document-text"></i>
+                            <span class="menu-title">Dashboard</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ViewAllRoles", "Display" )">
+                            <i class="menu-icon typcn typcn-shopping-bag"></i>
+                            <span class="menu-title">Roles</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display")">
+                            <i class="menu-icon typcn typcn-th-large-outline"></i>
+                            <span class="menu-title">Workers</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ViewAllDepartments", "Display" )">
+                            <i class="menu-icon typcn typcn-bell"></i>
+                            <span class="menu-title">Departments</span>
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("ViewAllProjects", "Display" )">
+                            <i class="menu-icon typcn typcn-user-outline"></i>
+                            <span class="menu-title">Projects</span>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+            <!-- partial -->
+            <div class="main-panel">
+                <div class="content-wrapper">
+
+
+                    @RenderBody()
+
+                </div>
+                <!-- content-wrapper ends -->
+                <!-- partial:../../partials/_footer.html -->
+                <footer class="footer">
+                    <div class="container-fluid clearfix">
+                        <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Xenocrates 2021</span>
+
+                    </div>
+                </footer>
+                <!-- partial -->
+            </div>
+            <!-- main-panel ends -->
         </div>
-    </div>
-    <div class="container body-content">
-        @RenderBody()
-        <hr />
-        <footer>
-            <p>&copy; @DateTime.Now.Year - My ASP.NET Application</p>
-        </footer>
+        <!-- page-body-wrapper ends -->
     </div>
 
+
+
+    @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
+
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/vendor.bundle.base.js")
+    @Scripts.Render("~/Scripts/vendor.bundle.addons.js")
+    @Scripts.Render("~/Scripts/off-canvas.js")
+    @Scripts.Render("~/Scripts/misc.js")
+
+
+
 </body>
 </html>
