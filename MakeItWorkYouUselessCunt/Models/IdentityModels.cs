@@ -33,6 +33,7 @@ namespace ManagementSystemVersionTwo.Models
         public DbSet<Department> Departments { get; set; }
         public DbSet<ProjectsAssignedToEmployee> ProjectsToEmployees { get; set; }
         public DbSet<PaymentDetails> Payments { get; set; }
+        public DbSet<Message> Messages { get; set; }
 
 
         public static ApplicationDbContext Create()
