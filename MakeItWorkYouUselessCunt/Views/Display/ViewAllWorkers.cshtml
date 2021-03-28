@@ -58,7 +58,7 @@
                                 <div class="button">
                                     <button class="a button-worker">@Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
                                     <button class="b button-worker">@Html.ActionLink("Delete", "DeleteWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
-                                    <button class="c button-worker">Details</button>
+                                    <button class="c button-worker">@Html.ActionLink("Details", "DetailsWorker", "Display", new { id = worker.ApplicationUser.Id}, new { @class = "" })</button>
                                 </div>
                             </div>
                         </div>

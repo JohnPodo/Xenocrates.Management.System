@@ -11146,3 +11146,27 @@ background-color:rgb(2, 2, 66);
 .identity {
     padding-left: 40px;
 }
+
+.views-headings {
+    text-align: center;
+    color: #4b5cbf;
+    font-family: 'Helvetica Neue', sans-serif;
+    font-size: 46px;
+    font-weight: 100;
+    line-height: 50px;
+    letter-spacing: 1px;
+    padding: 0 0 40px;
+    border-bottom: double #555;
+}
+.views-comments {
+    color: #767b7e;
+    font-family: 'Verdana', sans-serif;
+    font-size: 16px;
+    line-height: 26px;
+    text-indent: 30px;
+    margin: 0;
+    text-align:center;
+}
+.views-add-button {
+    padding:10px;
+}

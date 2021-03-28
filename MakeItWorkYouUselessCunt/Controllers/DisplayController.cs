@@ -259,6 +259,19 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(department);
         }
 
+        public ActionResult DetailsWorker(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = _data.FindUserByID(id);
+            if(user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(user);
+        }
 
         //public ActionResult FinalizeProject(int? id)
         //{
