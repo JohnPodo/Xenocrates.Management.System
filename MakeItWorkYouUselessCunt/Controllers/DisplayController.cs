@@ -68,9 +68,85 @@ namespace ManagementSystemVersionTwo.Controllers
 
 
 
-        public ActionResult ViewAllWorkers()
+        public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID)
         {
-            return View(_data.AllWorkers());
+            var data = _data.AllWorkers();
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                data = _data.FindWorkerByName(searchName, data);
+            }
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                data = _data.SortWorker(orderBy, data);
+            }
+            if (!string.IsNullOrEmpty(roleSpec))
+            {
+                data = _data.GetWorkersInRoleForSort(roleSpec, data);
+            }
+            if (!string.IsNullOrEmpty(depID))
+            {
+                data = _data.GetWorkersPerDepartmentForSort(int.Parse(depID), data);
+            }
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "City Of Department",
+                Value = "City Of Department"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Full Name",
+                Value = "Full Name"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Age",
+                Value = "Age"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Salary",
+                Value = "Salary"
+            });
+
+            listItems.Add(new SelectListItem
+            {
+                Text = "Projects",
+                Value = "Projects"
+            });
+            ViewBag.SortOptions = listItems;
+
+            List<SelectListItem> roleItems = new List<SelectListItem>();
+            var allroles = _data.AllRoles();
+            foreach (var items in allroles)
+            {
+                roleItems.Add(new SelectListItem
+                {
+                    Text = items.Name,
+                    Value = items.Id
+                });
+            }
+            ViewBag.RoleOptions = roleItems;
+
+            List<SelectListItem> departmentItems = new List<SelectListItem>();
+            var allDepartments = _data.AllDepartments();
+            foreach (var items in allDepartments)
+            {
+                departmentItems.Add(new SelectListItem
+                {
+                    Text = items.City,
+                    Value = $"{items.ID}"
+                });
+            }
+            ViewBag.DepartmentOptions = departmentItems;
+
+            var namesForAutoComplete = _data.GetWorkerNamesForAutocomplete();
+            ViewBag.Names = namesForAutoComplete;
+
+
+
+            return View(data);
         }
         //View per Role
         public ActionResult ViewAllWorkersPerRole(string roleName)
@@ -119,9 +195,6 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(data);
         }
 
-        
-        
-
         public ActionResult ViewDepartmentWithWorkers(int? id, string city)
         {
             if (id == null && string.IsNullOrEmpty(city))
@@ -149,7 +222,21 @@ namespace ManagementSystemVersionTwo.Controllers
             return View("ViewAllDepartments");
         }
 
-        
+        public ActionResult ViewSupervisorsPerDepartment(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var supervisors = _data.FindUserPerDepartment((int)id,"Supervisor");
+            
+            if (supervisors == null)
+            {
+                return HttpNotFound();
+            }
+            return View(supervisors);
+        }
         public ActionResult ViewAllProjects()
         {
             return View(_data.AllProjects());
