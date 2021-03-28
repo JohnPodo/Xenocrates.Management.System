@@ -65,9 +65,6 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
 
-
-
-
         public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID)
         {
             var data = _data.AllWorkers();
@@ -148,12 +145,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
             return View(data);
         }
-        //View per Role
-        public ActionResult ViewAllWorkersPerRole(string roleName)
-        {
-            return View();
-        }
-
+        
         public ActionResult ViewAllRoles(string searchString, string sort)
         {
             var data = _data.AllRoles();
@@ -195,53 +187,9 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(data);
         }
 
-        public ActionResult ViewDepartmentWithWorkers(int? id, string city)
-        {
-            if (id == null && string.IsNullOrEmpty(city))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            if (id != null)
-            {
-                var dep = _data.FindDepartmentByID((int)id);
-                if (dep == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(dep);
-            }
-            if (!string.IsNullOrEmpty(city))
-            {
-                var dep = _data.FindDepartmentByCity(city);
-                if (dep == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(dep);
-            }
-            return View("ViewAllDepartments");
-        }
-
         public ActionResult ViewAllProjects()
         {
             return View(_data.AllProjects());
-        }
-
-        public ActionResult ViewAllProjects(int? id)
-        {
-            if(id == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var projects = _data.ProjectsPerEmployee((int)id);
-
-            return View("AllProjectsPerEmployee");
-        }
-
-        public ActionResult ViewAllActiveProjects()
-        {
-            var activeProjects = _data.AllActiveProjects();
-            return View("ActiveProjectsPerEmployee");
         }
 
         public ActionResult DetailsDepartment(int? id)
