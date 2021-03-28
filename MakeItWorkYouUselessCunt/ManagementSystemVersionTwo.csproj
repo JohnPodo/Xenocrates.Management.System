@@ -249,7 +249,6 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
-    <Content Include="Content\favicon.ico" />
     <Content Include="Content\flag-icon.min.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
@@ -258,9 +257,6 @@
     <Content Include="Content\materialdesignicons.min.css" />
     <Content Include="Content\navStyle.css" />
     <Content Include="Content\style.css" />
-    <Content Include="Content\style1.css" />
-    <Content Include="Content\vendor.bundle.addons.css" />
-    <Content Include="Content\vendor.bundle.base.css" />
     <Content Include="EIKONES\bg-01.jpg" />
     <Content Include="EIKONES\bg-02.jpg" />
     <Content Include="EIKONES\boss.png" />
@@ -454,6 +450,7 @@
     <Content Include="Views\Display\ViewAllProjects.cshtml" />
     <Content Include="Views\Project\DeleteProject.cshtml" />
     <Content Include="Views\Project\EditProject.cshtml" />
+    <Content Include="Views\Display\DetailsWorker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

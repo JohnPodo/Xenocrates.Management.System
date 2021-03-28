@@ -2,16 +2,15 @@
 @{
     ViewBag.Title = "ViewAllDepartments"; 
 }
-
 <div class="row">
     <div class="col-12 grid-margin">
         <div style="margin: auto;" class="col-lg-6 grid-margin stretch-card">
             <div style="margin: auto;" class="card">
                 <div style="margin: auto;" class="card-body">
-                    <h3 style="text-align: center;">Departments View</h3>
-
-                    <div>
-                        <a href="@Url.Action("CreateDepartment", "Department" )" style="font-size: 12px;" class="btn-add-add">Create New Department</a>
+                    <h3 class="views-headings">Departments View</h3>
+                    <p class="views-comments">Here you can view all the departments of the Company.</p>
+                    <div class="views-add-button">
+                        <a href="@Url.Action("CreateDepartment", "Department" )" style="font-size: 12px;" class="btn btn-info btn-fw">Add New Department</a>
                     </div>
                     <table class="table table-striped">
                         <thead>
@@ -23,10 +22,8 @@
                             </tr>
                         </thead>
                         <tbody>
-
                             @foreach (var department in Model)
                             {
-
                             <tr>
                                 <td>
                                     @Html.DisplayFor(d => department.City)
@@ -53,8 +50,8 @@
                 </div>
             </div>
         </div>
-        </div>
     </div>
+</div>
 
 
 
