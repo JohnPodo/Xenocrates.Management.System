@@ -270,6 +270,7 @@
     <Content Include="Content\bootstrap-reboot.min.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="Content\chatstyle.css" />
     <Content Include="Content\favicon.ico" />
     <Content Include="Content\flag-icon.min.css" />
     <Content Include="Content\font-awesome.css" />
@@ -482,6 +483,7 @@
     <Content Include="Views\Display\DetailWorker.cshtml" />
     <Content Include="Views\Payment\PartialViewForPayment.cshtml" />
     <Content Include="Views\Department\Chat.cshtml" />
+    <Content Include="Views\Display\ViewAllWorkersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

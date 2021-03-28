@@ -3,14 +3,17 @@
     ViewBag.Title = "ViewAllWorkers";
 
 }
-<a href="@Url.Action("Register", "Account" )" style="font-size: 12px;" class="btn-add-add">Create New Worker</a>
 <div>
-    @using (Html.BeginForm())
-    {
+<a href="@Url.Action("Register", "Account" )" style="font-size: 12px;" class="btn btn-info btn-fw">Create New Worker</a>
+<div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw"><a href="@Url.Action("ViewAllWorkersList" , "Display")">List View</a></div>
+<div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers" , "Display")">Card View</a></div>
+</div>
+<hr/>
+@using (Html.BeginForm())
+{
     <div class="row">
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+        <p class="col-md-4">
             Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
-
             <datalist id="browsers">
                 @foreach (var item in ViewBag.Names)
                 {
@@ -18,32 +21,24 @@
                 }
             </datalist>
         </p>
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+        <p class="col-md-3">
             Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
         </p>
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+        <p class="col-md-4">
             See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "" }) in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "" }) Departments
         </p>
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-2">
-            <input type="submit" value="Search" />
-            @Html.ActionLink("Reset", "ViewAllWorkers", "Display", new { @class = "btn btn-info" })
-            </p>
+        <p class="col-md-1">
+            <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+            @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "fa fa-refresh" })
+        </p>
     </div>
-    }
-</div>
-
+}
+<hr />
 <div class="row">
-
     <div class="col-12 grid-margin">
         <div class="col-md-12 row second-row">
-
-
-
             @foreach (var worker in Model)
             {
-
-
-
                 <div class="user-card">
                     <div class="card  card-workers">
                         <div class="first-col">
@@ -58,21 +53,13 @@
                                 <div class="button">
                                     <button class="a button-worker">@Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
                                     <button class="b button-worker">@Html.ActionLink("Delete", "DeleteWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
-                                    <button class="c button-worker">@Html.ActionLink("Details", "DetailsWorker", "Display", new { id = worker.ApplicationUser.Id}, new { @class = "" })</button>
+                                    <button class="c button-worker">@Html.ActionLink("Details", "DetailsWorker", "Display", new { id = worker.ApplicationUser.Id }, new { @class = "" })</button>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-
-
             }
-
-
-
-
-
-
         </div>
     </div>
 </div>

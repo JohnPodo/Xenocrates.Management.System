@@ -2,102 +2,59 @@
 @{
     ViewBag.Title = "ViewAllRoles"; 
 }
-                <div class="row">
-                    <div class="col-12 grid-margin">
-                        <div style="margin: auto;" class="col-lg-6 grid-margin stretch-card">
-                            <div style="margin: auto; min-width:50%" class="card">
-                                <div class="card-body">
-                                    <h3 class="views-headings">Roles View</h3>
-                                    <p class="views-comments">Here you can view all the active roles in the company.</p>
-                                    @using (Html.BeginForm())
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body all-roles">
+                    <h3 class="views-headings">Company Roles</h3>
+                    <p class="views-comments">Here you can view all the active roles in the company.</p>
+                    @using (Html.BeginForm())
+                    {
+                        <div class="row">
+                            <div class="col-md-6 filters-main">
+                                <p>Search By Role: @Html.TextBox("searchString", "", new { list = "roles", @class = "" })</p>
+                                <datalist id="roles">
+                                    @foreach (var item in ViewBag.Roles)
                                     {
-                                        <div class="row">
-                                            <p>Search By Role: @Html.TextBox("searchString", "", new { list = "roles", @class = "" })</p>
-
-                                            <datalist id="roles">
-                                                @foreach (var item in ViewBag.Roles)
-                                                {
-                                                    <option value="@item"></option>
-                                                }
-                                            </datalist>
-                                        </div>
-                                        <div class="row">
-                                            <p>Order by: @Html.DropDownList("sort", new SelectList(ViewBag.SortByRole, "Value", "Text"), "")</p>
-                                        </div>
-
-                                        <input type="submit" value="Search" />
-                                        @Html.ActionLink("Reset", "ViewAllRoles", "Display", new { }, new { @class = "btn btn-warning" })
-
-
+                                        <option value="@item"></option>
                                     }
-                                    <table class="table table-striped">
-                                        <thead>
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Count</th>
-                                                <th>Activity</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-
-                                            @foreach (var role in Model)
-                                            {
-                                                <tr>
-                                                    <td>@Html.DisplayFor(r => role.Name)</td>
-                                                    <td>@role.Users.Count</td>
-                                                    <td>
-                                                        @Html.ActionLink("View All", "ViewAllWorkers", "Display", new { roleSpec = role.Id }, new
-                                                        {
-                                                            @class = "@model List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
-@{
-    ViewBag.Title = "ViewAllRoles";
-}
-                                                        <div class="row">
-                                                            <div class="col-12 grid-margin">
-                                                                <div style="margin: auto;" class="col-lg-6 grid-margin stretch-card">
-                                                                    <div style="margin: auto; min-width:50%" class="card">
-                                                                        <div class="card-body">
-                                                                            <h3 class="views-headings">Roles View</h3>
-                                                                            <p class="views-comments">Here you can view all the active roles in the company.</p>
-                                                                            <table class="table table-striped">
-                                                                                <thead>
-                                                                                    <tr>
-                                                                                        <th>Name</th>
-                                                                                        <th>Count</th>
-                                                                                        <th>Activity</th>
-                                                                                    </tr>
-                                                                                </thead>
-                                                                                <tbody>
-                                                                                    @foreach (var role in Model)
-                                                                                    {
-                                                                    <tr>
-                                                                        <td>@Html.DisplayFor(r => role.Name)</td>
-                                                                        <td>@role.Users.Count</td>
-                                                                        <td>
-                                                                            @Html.ActionLink("View All", "ViewAllWorkers", "Display", new { roleSpec = role.Id }, new { @class = "badge badge-pill badge-info", style = "font-size: 12px;" })
-                                                                        </td>
-                                                                    </tr>}
-                                                                                </tbody>
-                                                                            </table>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        ", style = "font-size: 12px;" })
-                                                    </td>
-                                                </tr>
-                                            }
-                                        </tbody>
-                                    </table>
-                                </div>
+                                </datalist>
+                            </div>
+                            <div class="col-md-3 filters-main">
+                                <p>Order by: @Html.DropDownList("sort", new SelectList(ViewBag.SortByRole, "Value", "Text"), "")</p>
+                            </div>
+                            <div class="col-md-3 filters-main">
+                                <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                                @Html.ActionLink(" ", "ViewAllRoles", "Display", new { }, new { @class = "fa fa-refresh" })
+                                
                             </div>
                         </div>
-
-
-
-
-
-                    </div>
+                    }
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Count</th>
+                                <th>Activity</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var role in Model)
+                            {
+                                <tr>
+                                    <td>@Html.DisplayFor(r => role.Name)</td>
+                                    <td>@role.Users.Count</td>
+                                    <td>
+                                        @Html.ActionLink("View All", "ViewAllWorkers", "Display", new { roleSpec = role.Id }, new { @class = "btn btn-info btn-fw", style = "font-size: 12px;" })
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
                 </div>
+            </div>
+        </div>
+    </div>
+</div>
            

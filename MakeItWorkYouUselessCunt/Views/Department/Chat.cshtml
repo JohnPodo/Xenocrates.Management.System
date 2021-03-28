@@ -3,21 +3,62 @@
 @{
     ViewBag.Title = "Chat";
 }
-<h2>Chat</h2>
+@Styles.Render("~/Content/chatstyle.css")
+
+@*
+    <h2>Chat</h2>
+    <div class="container">
+        <input type="text" id="message" />
+        <input type="button" id="sendmessage" value="Send" />
+        <input type="hidden" id="displayname" value="@ViewBag.Name" />
+        <ul id="discussion">
+            @foreach (var item in Model)
+            {
+                <li>
+                    @item.Name @item.Text @item.Date
+                </li>
+            }
+        </ul>
+    </div>
+*@
+
 <div class="container">
-    <input type="text" id="message" />
-    <input type="button" id="sendmessage" value="Send" />
-    <input type="hidden" id="displayname" value="@ViewBag.Name" />
-    <ul id="discussion">
-        @foreach (var item in Model)
-        {
-            <li>
-                @item.Name @item.Text @item.Date
-            </li>
-        }
-    </ul>
+    <div class="top-bar">
+        <div class="avatar"><p>@Html.DisplayName(User.Identity.Name.Substring(0,1))</p></div>
+        <div class="name">@Html.DisplayName(User.Identity.Name)</div>
+    </div>
+    <div class="middle">
+        <div class="voldemort">
+            <div style="overflow-y: scroll;  height:340px;" id="discussion" class="incoming">
+                @foreach (var item in Model)
+                {
+                    <div style="font-size: 12px;">@item.Date</div>
+                    <div class="bubble">  @item.Name @item.Text </div>
+                }
+            </div>
+        </div>
+    </div>
+    <div class="bottom-bar">
+        <div class="chat">
+            <input type="text" id="message" placeholder="Type a message..." />
+            <button type="submit" id="sendmessage"><i class="fa fa-paper-plane"></i></button>
+            <input type="hidden" id="displayname" value="@ViewBag.Name" />
+        </div>
+    </div>
 </div>
+
+
+
 @section scripts {
+
+    @*<script>
+        $(".person").on('click', function () {
+            $(this).toggleClass('focus').siblings().removeClass('focus');
+        })
+    </script>*@
+
+
+
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
     <!--Reference the SignalR library. -->

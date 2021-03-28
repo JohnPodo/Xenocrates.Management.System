@@ -75,7 +75,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display")">
+                        <a class="nav-link" href="@Url.Action("ViewAllWorkersList" , "Display")">
                             <i class="menu-icon typcn typcn-th-large-outline"></i>
                             <span class="menu-title">Workers</span>
                         </a>
@@ -102,7 +102,7 @@
                         <div class="collapse" id="ui-basic">
                             <ul class="nav flex-column sub-menu">
                                 <li class="nav-item">
-                                    <a class="nav-link" href="#">Pay Workers</a>
+                                    <a class="nav-link" href="@Url.Action("Index", "Payment" )">Pay Workers</a>
                                 </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#">Payments History</a>
@@ -115,6 +115,11 @@
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
+                    <div class="btn-chat" id="livechat-compact-container" style="visibility: visible; opacity: 1;">
+                        <div class="btn-holder">
+                            <a onclick="parent.LC_API.open_chat_window();return false;" href="@Url.Action("Chat", "Department" )" class="link">Live Chat</a>
+                        </div>
+                    </div>
                     @RenderBody()
                 </div>
                 <!-- content-wrapper ends -->

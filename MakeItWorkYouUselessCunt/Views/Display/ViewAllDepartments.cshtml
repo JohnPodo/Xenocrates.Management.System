@@ -2,71 +2,73 @@
 @{
     ViewBag.Title = "ViewAllDepartments";
 }
-
 <div class="row">
     <div class="col-12 grid-margin">
-        <div style="margin: auto;" class="col-lg-6 grid-margin stretch-card">
+        <div class="col-lg-6 grid-margin stretch-card">
             <div style="margin: auto;" class="card">
-                <div style="margin: auto;" class="card-body">
+                <div class="card-body all-departments">
                     <h3 class="views-headings">Departments View</h3>
                     <p class="views-comments">Here you can view all the departments of the Company.</p>
                     @using (Html.BeginForm())
                         {
-                            <div class="row">
-                                <p>Search By City: @Html.TextBox("searchString", "", new { list = "cities", @class = "" })</p>
-                                <datalist id="cities">
-                                    @foreach (var item in ViewBag.Cities)
-                                    {
-                                        <option value="@item"></option>
-                                    }
-                                </datalist>
-                            </div>
-                            <div class="row">
-                                <p>Order by: @Html.DropDownList("sort", new SelectList(ViewBag.SortByCity, "Value", "Text"), "")</p>
-                            </div>
-                            <input type="submit" value="Search" />
-                            @Html.ActionLink("Reset", "ViewAllDepartments", "Display", new { }, new { @class = "btn btn-warning" })
-                        }
+                <div class="row">
+                    <div class="col-md-6 filters-main">
+                        <p>Search By City: @Html.TextBox("searchString", "", new { list = "cities", @class = "" })</p>
+                        <datalist id="cities">
+                            @foreach (var item in ViewBag.Cities)
+                            {
+                                <option value="@item"></option>
+                            }
+                        </datalist>
+                    </div>
+                    <div class="col-md-3 filters-main">
+                        <p>Order by: @Html.DropDownList("sort", new SelectList(ViewBag.SortByCity, "Value", "Text"), "")</p>
+                    </div>
+                    <div class="col-md-3 filters-main">
+                        <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                        @Html.ActionLink(" ", "ViewAllDepartments", "Display", new { }, new { @class = "fa fa-refresh" })
+                        
+                    </div>
+                </div>
+                    }
                 <div class="views-add-button">
                     <a href="@Url.Action("CreateDepartment", "Department" )" style="font-size: 12px;" class="btn btn-info btn-fw">Add New Department</a>
                 </div>
-                    <table class="table table-striped">
-                        <thead>
-                            <tr>
-                                <th>City</th>
-                                <th>Address</th>
-                                <th>Employees</th>
-                                <th>View</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach (var department in Model)
-                            {
+                        <table class="table table-striped">
+                            <thead>
                                 <tr>
-                                    <td>
-                                        @Html.DisplayFor(d => department.City)
-                                    </td>
-                                    <td>
-                                        @Html.DisplayFor(d => department.Adress)
-                                    </td>
-                                    <td class="text-primary">
-                                        @department.WorkersInThisDepartment.Count
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Details", "DetailsDepartment", "Display", new { id = department.ID }, new { @class = "btn btn-primary details1" })
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Edit", "EditDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
-                                    </td>
-                                    <td>
-                                        @Html.ActionLink("Delete", "DeleteDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-primary details1" })
-                                    </td>
+                                    <th>City</th>
+                                    <th>Address</th>
+                                    <th>Employees</th>
+                                    <th>Actions</th>
                                 </tr>
-                            }
-                        </tbody>
-                     </table>
+                            </thead>
+                            <tbody>
+                                @foreach (var department in Model)
+                                {
+                                    <tr>
+                                        <td>
+                                            @Html.DisplayFor(d => department.City)
+                                        </td>
+                                        <td>
+                                            @Html.DisplayFor(d => department.Adress)
+                                        </td>
+                                        <td class="text-primary">
+                                            @department.WorkersInThisDepartment.Count
+                                        </td>
+                                        <td>
+                                            @Html.ActionLink("Details", "DetailsDepartment", "Display", new { id = department.ID }, new { @class = "btn btn-info btn-fw" })
+                                       
+                                            @Html.ActionLink("Edit", "EditDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-info btn-fw" })
+                                        
+                                            @Html.ActionLink("Delete", "DeleteDepartment", "Department", new { id = department.ID }, new { @class = "btn btn-info btn-fw" })
+                                        </td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-            </div>
         </div>
     </div>
 </div>
