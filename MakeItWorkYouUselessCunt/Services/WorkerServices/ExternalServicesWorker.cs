@@ -115,7 +115,7 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
                 IdOfDepartment = user.Worker.DepartmentID,
                 SelectedRole = _db.Roles.Find(user.Roles.First().RoleId).Name,
                 AllDepartments = _db.Departments.ToList(),
-                Roles = _db.Roles.ToList()
+                Roles = _db.Roles.Where(s=>s.Name!="Admin").ToList()
             };
             return f2;
         }
