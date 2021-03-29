@@ -14,7 +14,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public DisplayController()
         {
-            _data=new DataRepository();
+            _data = new DataRepository();
         }
 
         protected override void Dispose(bool disposing)
@@ -33,34 +33,11 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 data = _data.GetDepartmentsByCity(searchString, data);
             }
-           
 
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "City",
-                Value = "City"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "City_desc",
-                Value = "City_desc"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "High-Low",
-                Value = "High-Low"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Low-High",
-                Value = "Low-High"
-            });
-            ViewBag.SortByCity = listItems;
+            ViewBag.SortByCity = _data.DepartmentSortingOptionsViewBag();
 
+            ViewBag.Cities = _data.DepartmentsForAutoComplete();
 
-            var citiesForAutoComplete = _data.DepartmentsForAutoComplete();
-            ViewBag.Cities = citiesForAutoComplete;
             return View(data);
 
         }
@@ -85,67 +62,19 @@ namespace ManagementSystemVersionTwo.Controllers
                 data = _data.GetWorkersPerDepartmentForSort(int.Parse(depID), data);
             }
 
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "City Of Department",
-                Value = "City Of Department"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Full Name",
-                Value = "Full Name"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Age",
-                Value = "Age"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Salary",
-                Value = "Salary"
-            });
+            ViewBag.SortOptions = _data.WorkerSortingOptionsViewBag();
 
-            listItems.Add(new SelectListItem
-            {
-                Text = "Projects",
-                Value = "Projects"
-            });
-            ViewBag.SortOptions = listItems;
+            ViewBag.RoleOptions = _data.AvailableRolesFilteringViewBag();
 
-            List<SelectListItem> roleItems = new List<SelectListItem>();
-            var allroles = _data.AllRoles();
-            foreach (var items in allroles)
-            {
-                roleItems.Add(new SelectListItem
-                {
-                    Text = items.Name,
-                    Value = items.Id
-                });
-            }
-            ViewBag.RoleOptions = roleItems;
+            ViewBag.DepartmentOptions = _data.AvailableDepartmentsFilteringViewBag();
 
-            List<SelectListItem> departmentItems = new List<SelectListItem>();
-            var allDepartments = _data.AllDepartments();
-            foreach (var items in allDepartments)
-            {
-                departmentItems.Add(new SelectListItem
-                {
-                    Text = items.City,
-                    Value = $"{items.ID}"
-                });
-            }
-            ViewBag.DepartmentOptions = departmentItems;
-
-            var namesForAutoComplete = _data.GetWorkerNamesForAutocomplete();
-            ViewBag.Names = namesForAutoComplete;
+            ViewBag.Names = _data.GetWorkerNamesForAutocomplete(); ;
 
 
 
             return View(data);
         }
-        
+
         public ActionResult ViewAllRoles(string searchString, string sort)
         {
             var data = _data.AllRoles();
@@ -158,32 +87,10 @@ namespace ManagementSystemVersionTwo.Controllers
                 data = _data.SortRoles(sort, data);
             }
 
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "Role",
-                Value = "Role"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Role_desc",
-                Value = "Role_desc"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "High-Low",
-                Value = "High-Low"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Low-High",
-                Value = "Low-High"
-            });
-            ViewBag.SortByRole = listItems;
-            var rolesForAutoComplete = _data.RolesForAutoComplete();
-            ViewBag.Roles = rolesForAutoComplete;
+            ViewBag.SortByRole = _data.RolesSortingOptionsViewBag();
 
-            
+            ViewBag.Roles = _data.RolesForAutoComplete();
+
             return View(data);
         }
 
@@ -194,20 +101,32 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult DetailsDepartment(int? id)
         {
-            
-            if(id == null)
+
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var department = _data.FindDepartmentByID((int)id);
-            if(department == null)
+            if (department == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             return View(department);
         }
 
-
+        public ActionResult DetailsWorker(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = _data.FindUserByID(id);
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(user);
+        }
         //public ActionResult FinalizeProject(int? id)
         //{
         //    if (id == null)

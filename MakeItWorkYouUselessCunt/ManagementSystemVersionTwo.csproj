@@ -479,9 +479,9 @@
     <Content Include="Views\Project\DeleteProject.cshtml" />
     <Content Include="Views\Project\EditProject.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
-    <Content Include="Views\Display\DetailWorker.cshtml" />
     <Content Include="Views\Payment\PartialViewForPayment.cshtml" />
     <Content Include="Views\Department\Chat.cshtml" />
+    <Content Include="Views\Display\DetailsWorker.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

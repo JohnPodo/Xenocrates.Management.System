@@ -16,7 +16,7 @@ namespace ManagementSystemVersionTwo.CustomAnnotations
             var pro = (Project)context.ObjectInstance;
             var endProject = DateTime.Compare(pro.EndDate.Date, pro.StartDate.Date);
             var today = DateTime.Compare(pro.EndDate.Date, DateTime.Now.Date);
-            return endProject>0&& today>0 ? ValidationResult.Success : new ValidationResult("Wrong End Date");
+            return endProject>0 && today>0 ? ValidationResult.Success : new ValidationResult("Wrong End Date");
         }
 
     }
