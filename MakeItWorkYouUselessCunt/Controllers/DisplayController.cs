@@ -102,9 +102,72 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(data);
         }
 
-        public ActionResult ViewAllProjects()
+        public ActionResult ViewAllProjects(string title, string orderBy, string depID )
         {
-            return View(_data.AllProjects());
+            var data = _data.AllProjects();
+            if (!string.IsNullOrEmpty(title))
+            {
+                data = _data.FindProjectByTitle(title, data);
+            }
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                data = _data.SortProject(orderBy, data);
+            }
+            if (!string.IsNullOrEmpty(depID))
+            {
+                data = _data.GetProjectsPerDepartmentForSort(int.Parse(depID), data);
+            }
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "Title",
+                Value = "Title"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Finished",
+                Value = "Finished"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Not Finished",
+                Value = "Not Finished"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Employees",
+                Value = "Employees"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Start Date",
+                Value = "Start Date"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "End Date",
+                Value = "End Date"
+            });
+            ViewBag.SortOptions = listItems;
+
+
+            var titleForAutoComplete = _data.GetProjectNamesForAutocomplete();
+            ViewBag.Names = titleForAutoComplete;
+
+            List<SelectListItem> departmentItems = new List<SelectListItem>();
+            var allDepartments = _data.AllDepartments();
+            foreach (var items in allDepartments)
+            {
+                departmentItems.Add(new SelectListItem
+                {
+                    Text = items.City,
+                    Value = $"{items.ID}"
+                });
+            }
+            ViewBag.DepartmentOptions = departmentItems;
+
+            return View(data);
         }
 
         public ActionResult DetailsDepartment(int? id)

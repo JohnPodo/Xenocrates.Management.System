@@ -233,6 +233,46 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         #endregion
 
+        #region Sorting And Filtering Projects
+        public List<string> GetProjectNamesForAutocomplete()
+        {
+            var titles = _context.Projects
+                                .Select(st => new {
+                                    Title = st.Title
+                                }).ToList();
+            List<string> data = new List<string>();
+            foreach (var title in titles)
+            {
+                data.Add(title.Title);
+            }
+            return data;
+        }
+        public List<Project> FindProjectByTitle(string search, List<Project> data) => data.Where(w => (w.Title).Contains(search)).ToList();
+
+        public List<Project> SortProject(string sort, List<Project> data)
+        {
+
+            switch (sort)
+            {
+                case "Employees":
+                    return data.OrderBy(w => w.WorkersInMe.Count).ToList();
+                case "Title":
+                    return data.OrderBy(w => (w.Title).ToUpper()).ToList();
+                case "Finished":
+                    return data.OrderBy(w => w.Finished == false).ToList();
+                case "Not Finished":
+                    return data.OrderBy(w => w.Finished == true).ToList();
+                case "Start Date":
+                    return data.OrderBy(w => w.StartDate).ToList();
+                case "End Date":
+                    return data.OrderBy(w => w.EndDate).ToList();
+                default:
+                    return AllProjects();
+            }
+        }
+        public List<Project> GetProjectsPerDepartmentForSort(int id, List<Project> data) => data.Where(u => u.ID == id).ToList();
+
+        #endregion
 
         #region DepartmentData
         public List<Department> AllDepartments() => _context.Departments.Include(s => s.WorkersInThisDepartment).ToList();
