@@ -7,18 +7,9 @@
     @Styles.Render("~/Content/font-awesome.css")
     @Styles.Render("~/Content/materialdesignicons.min.css")
     @Styles.Render("~/Content/ionicons.css")
-    @Styles.Render("~/Content/flag-icon.min.css")
-    @Styles.Render("~/Content/vendor.bundle.base.css")
-    @Styles.Render("~/Content/vendor.bundle.addons.css")
     @Styles.Render("~/Content/style.css")
-    @Styles.Render("~/Content/favicon.ico")
-
-
-
 </head>
 <body>
-
-
     <div class="container-scroller">
         <!-- partial:../../partials/_navbar.html -->
         <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
@@ -31,10 +22,7 @@
                 </a>
             </div>
             <div class="navbar-menu-wrapper d-flex align-items-center">
-
                 <ul class="navbar-nav ml-auto">
-
-
                     <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
                         <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                             <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="Profile image">
@@ -87,7 +75,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display")">
+                        <a class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display",new {viewType=true })">
                             <i class="menu-icon typcn typcn-th-large-outline"></i>
                             <span class="menu-title">Workers</span>
                         </a>
@@ -104,22 +92,41 @@
                             <span class="menu-title">Projects</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                           aria-controls="ui-basic">
+                            <i class="menu-icon typcn typcn-coffee"></i>
+                            <span class="menu-title">Payments</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Payment" )">Pay Workers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Payments History</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </nav>
             <!-- partial -->
             <div class="main-panel">
                 <div class="content-wrapper">
-
-
+                    <div class="btn-chat" id="livechat-compact-container" style="visibility: visible; opacity: 1;">
+                        <div class="btn-holder">
+                            <a onclick="parent.LC_API.open_chat_window();return false;" href="@Url.Action("Chat", "Department" )" class="link">Live Chat</a>
+                        </div>
+                    </div>
                     @RenderBody()
-
                 </div>
                 <!-- content-wrapper ends -->
                 <!-- partial:../../partials/_footer.html -->
                 <footer class="footer">
                     <div class="container-fluid clearfix">
                         <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Xenocrates 2021</span>
-
                     </div>
                 </footer>
                 <!-- partial -->
@@ -128,23 +135,14 @@
         </div>
         <!-- page-body-wrapper ends -->
     </div>
-
-
-
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/Scripts/buttonsWorker.js")
     @RenderSection("scripts", required: false)
 
-
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/vendor.bundle.base.js")
-    @Scripts.Render("~/Scripts/vendor.bundle.addons.js")
     @Scripts.Render("~/Scripts/off-canvas.js")
     @Scripts.Render("~/Scripts/misc.js")
-
-
-
 </body>
 </html>

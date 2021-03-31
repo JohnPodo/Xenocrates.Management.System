@@ -52,6 +52,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -226,11 +232,17 @@
     <Compile Include="Migrations\202103261240033_Payments.Designer.cs">
       <DependentUpon>202103261240033_Payments.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103281538390_Message.cs" />
+    <Compile Include="Migrations\202103281538390_Message.Designer.cs">
+      <DependentUpon>202103281538390_Message.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ChatHub.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs" />
     <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsAssignedToEmployee.cs" />
@@ -323,6 +335,8 @@
     <Content Include="Scripts\jquery-3.5.1.slim.js" />
     <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -465,8 +479,10 @@
     <Content Include="Views\Project\DeleteProject.cshtml" />
     <Content Include="Views\Project\EditProject.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
-    <Content Include="Views\Display\DetailWorker.cshtml" />
     <Content Include="Views\Payment\PartialViewForPayment.cshtml" />
+    <Content Include="Views\Department\Chat.cshtml" />
+    <Content Include="Views\Display\DetailsWorker.cshtml" />
+    <Content Include="Views\Display\ViewAllWorkersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -497,6 +513,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103261240033_Payments.resx">
       <DependentUpon>202103261240033_Payments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103281538390_Message.resx">
+      <DependentUpon>202103281538390_Message.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

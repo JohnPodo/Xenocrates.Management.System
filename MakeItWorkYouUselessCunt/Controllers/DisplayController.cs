@@ -14,7 +14,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public DisplayController()
         {
-            _data=new DataRepository();
+            _data = new DataRepository();
         }
 
         protected override void Dispose(bool disposing)
@@ -22,15 +22,27 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
         }
 
-        public ActionResult ViewAllDepartments()
+        public ActionResult ViewAllDepartments(string searchString, string sort)
         {
-            return View(_data.AllDepartments());
+            var data = _data.AllDepartments();
+            if (!string.IsNullOrEmpty(sort))
+            {
+                data = _data.SortDepartments(sort, data);
+            }
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                data = _data.GetDepartmentsByCity(searchString, data);
+            }
+
+            ViewBag.SortByCity = _data.DepartmentSortingOptionsViewBag();
+
+            ViewBag.Cities = _data.DepartmentsForAutoComplete();
+
+            return View(data);
+
         }
 
-        
-
-
-        public ActionResult ViewAllWorkers(string searchName,string orderBy,string roleSpec,string depID)
+        public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID, string viewType)
         {
             var data = _data.AllWorkers();
             if (!string.IsNullOrEmpty(searchName))
@@ -50,96 +62,44 @@ namespace ManagementSystemVersionTwo.Controllers
                 data = _data.GetWorkersPerDepartmentForSort(int.Parse(depID), data);
             }
 
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "City Of Department",
-                Value = "City Of Department"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Full Name",
-                Value = "Full Name"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Age",
-                Value = "Age"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Salary",
-                Value = "Salary"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Projects",
-                Value = "Projects"
-            });
-            ViewBag.SortOptions = listItems;
+            ViewBag.SortOptions = _data.WorkerSortingOptionsViewBag();
 
-            List<SelectListItem> roleItems = new List<SelectListItem>();
-            var allroles = _data.AllRoles();
-            foreach(var items in allroles)
+            ViewBag.RoleOptions = _data.AvailableRolesFilteringViewBag();
+
+            ViewBag.DepartmentOptions = _data.AvailableDepartmentsFilteringViewBag();
+
+            ViewBag.Names = _data.GetWorkerNamesForAutocomplete(); ;
+
+            ViewBag.Parameters = new List<string> {searchName,orderBy,roleSpec,depID };
+
+            if (string.IsNullOrEmpty(viewType))
             {
-                roleItems.Add(new SelectListItem
-                {
-                    Text = items.Name,
-                    Value = items.Id
-                });
+                return View(data);
             }
-            ViewBag.RoleOptions = roleItems;
-            
-            List<SelectListItem> departmentItems = new List<SelectListItem>();
-            var allDepartments = _data.AllDepartments();
-            foreach (var items in allDepartments)
+            else
             {
-                departmentItems.Add(new SelectListItem
-                {
-                    Text = items.City,
-                    Value = $"{items.ID}"
-                });
+                return View("ViewAllWorkersList", data);
             }
-            ViewBag.DepartmentOptions = departmentItems;
 
-            var namesForAutoComplete = _data.GetWorkerNamesForAutocomplete();
-            ViewBag.Names = namesForAutoComplete;
+        }
 
-           
+        public ActionResult ViewAllRoles(string searchString, string sort)
+        {
+            var data = _data.AllRoles();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                data = _data.GetRoleByName(searchString, data);
+            }
+            if (!string.IsNullOrEmpty(sort))
+            {
+                data = _data.SortRoles(sort, data);
+            }
+
+            ViewBag.SortByRole = _data.RolesSortingOptionsViewBag();
+
+            ViewBag.Roles = _data.RolesForAutoComplete();
 
             return View(data);
-        }
-
-        public ActionResult ViewAllRoles()
-        {
-            return View(_data.AllRoles());
-        }
-
-        public ActionResult ViewDepartmentWithWorkers(int? id, string city)
-        {
-            if (id == null && string.IsNullOrEmpty(city))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            if (id != null)
-            {
-                var dep = _data.FindDepartmentByID((int)id);
-                if (dep == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(dep);
-            }
-            if (!string.IsNullOrEmpty(city))
-            {
-                var dep = _data.FindDepartmentByCity(city);
-                if (dep == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(dep);
-            }
-            return View("ViewAllDepartments");
         }
 
         public ActionResult ViewAllProjects()
@@ -147,28 +107,34 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(_data.AllProjects());
         }
 
-        public ActionResult ViewAllActiveProjects()
-        {
-            var activeProjects = _data.AllActiveProjects();
-            return View("ActiveProjectsPerEmployee");
-        }
-
         public ActionResult DetailsDepartment(int? id)
         {
-            
-            if(id == null)
+
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var department = _data.FindDepartmentByID((int)id);
-            if(department == null)
+            if (department == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             return View(department);
         }
 
-
+        public ActionResult DetailsWorker(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var user = _data.FindUserByID(id);
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(user);
+        }
         //public ActionResult FinalizeProject(int? id)
         //{
         //    if (id == null)
