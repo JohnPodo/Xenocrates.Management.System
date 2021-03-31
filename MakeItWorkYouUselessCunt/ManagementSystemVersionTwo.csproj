@@ -482,6 +482,7 @@
     <Content Include="Views\Payment\PartialViewForPayment.cshtml" />
     <Content Include="Views\Department\Chat.cshtml" />
     <Content Include="Views\Display\DetailsWorker.cshtml" />
+    <Content Include="Views\Display\ViewAllWorkersList.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

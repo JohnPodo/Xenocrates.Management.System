@@ -4,11 +4,11 @@
 
 }
 <div>
-<a href="@Url.Action("Register", "Account" )" style="font-size: 12px;" class="btn btn-info btn-fw">Create New Worker</a>
-<div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw"><a href="@Url.Action("ViewAllWorkersList" , "Display")">List View</a></div>
-<div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers" , "Display")">Card View</a></div>
+    <a href="@Url.Action("Register", "Account" )" style="font-size: 12px;" class="btn btn-info btn-fw">Create New Worker</a>
+    <div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw"><a href="@Url.Action("ViewAllWorkers" , "Display",new { viewType = "List",searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3] })">List View</a></div>
+    <div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers" , "Display")">Card View</a></div>
 </div>
-<hr/>
+<hr />
 @using (Html.BeginForm())
 {
     <div class="row">

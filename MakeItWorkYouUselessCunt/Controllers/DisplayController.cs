@@ -42,7 +42,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
 
-        public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID)
+        public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID, string viewType)
         {
             var data = _data.AllWorkers();
             if (!string.IsNullOrEmpty(searchName))
@@ -70,9 +70,17 @@ namespace ManagementSystemVersionTwo.Controllers
 
             ViewBag.Names = _data.GetWorkerNamesForAutocomplete(); ;
 
+            ViewBag.Parameters = new List<string> {searchName,orderBy,roleSpec,depID };
 
+            if (string.IsNullOrEmpty(viewType))
+            {
+                return View(data);
+            }
+            else
+            {
+                return View("ViewAllWorkersList", data);
+            }
 
-            return View(data);
         }
 
         public ActionResult ViewAllRoles(string searchString, string sort)
