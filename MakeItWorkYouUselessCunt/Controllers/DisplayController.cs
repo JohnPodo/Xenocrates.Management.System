@@ -68,7 +68,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
             ViewBag.DepartmentOptions = _data.AvailableDepartmentsFilteringViewBag();
 
-            ViewBag.Names = _data.GetWorkerNamesForAutocomplete(); ;
+            ViewBag.Names = _data.GetWorkerNamesForAutocomplete(); 
 
             ViewBag.Parameters = new List<string> {searchName,orderBy,roleSpec,depID };
 
@@ -102,7 +102,7 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(data);
         }
 
-        public ActionResult ViewAllProjects(string title, string orderBy, string depID )
+        public ActionResult ViewAllProjects(string title, string orderBy, string depID, string status )
         {
             var data = _data.AllProjects();
             if (!string.IsNullOrEmpty(title))
@@ -117,22 +117,16 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 data = _data.GetProjectsPerDepartmentForSort(int.Parse(depID), data);
             }
+            if (!string.IsNullOrEmpty(status))
+            {
+                data = _data.StatusProject(status, data);
+            }
 
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
             {
                 Text = "Title",
                 Value = "Title"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Finished",
-                Value = "Finished"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Not Finished",
-                Value = "Not Finished"
             });
             listItems.Add(new SelectListItem
             {
@@ -151,6 +145,18 @@ namespace ManagementSystemVersionTwo.Controllers
             });
             ViewBag.SortOptions = listItems;
 
+            List<SelectListItem> statusItems = new List<SelectListItem>();
+            statusItems.Add(new SelectListItem
+            {
+                Text = "Finished",
+                Value = "Finished"
+            });
+            statusItems.Add(new SelectListItem
+            {
+                Text = "Not Finished",
+                Value = "Not Finished"
+            });
+            ViewBag.StatusOptions = statusItems;
 
             var titleForAutoComplete = _data.GetProjectNamesForAutocomplete();
             ViewBag.Names = titleForAutoComplete;

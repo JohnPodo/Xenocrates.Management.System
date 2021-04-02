@@ -30,10 +30,20 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
         // GET: Payment
-        public ActionResult Index()
+        public ActionResult Index(string searchName, string orderBy)
         {
-            var data = _data.AllWorkers();
+            var data = _data.AllWorkersWithPayments();
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                data = _data.FindWorkerByName(searchName, data);
+            }
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                data = _data.SortSalary(orderBy, data);
+            }
 
+            ViewBag.SortSalary = _data.SalarySortingOptionsViewBag();
+            ViewBag.Names = _data.GetWorkerNamesForAutocomplete();
             return View(data);
         }
 

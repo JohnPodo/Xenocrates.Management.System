@@ -2,7 +2,30 @@
 @{
     ViewBag.Title = "Index";
 }
+<div>
+    @using (Html.BeginForm())
+    {
+    <div class="row">
+        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+            Search Employee:@Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
 
+            <datalist id="browsers">
+                @foreach (var item in ViewBag.Names)
+                {
+                    <option value="@item" />
+                }
+            </datalist>
+        </p>
+        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+            Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortSalary, "Value", "Text"), "None", new { @class = "" })
+        </p>
+        <p class="col-md-1">
+            <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+            @Html.ActionLink("Reset", "Index", "Payment", new { @class = "fa fa-refresh" })
+        </p>
+    </div>
+    }
+</div>
 <table class="table">
     <thead>
         <tr>

@@ -51,6 +51,7 @@ namespace ManagementSystemVersionTwo.Services.Data
             return listItems;
         }
 
+
         public List<SelectListItem> RolesSortingOptionsViewBag()
         {
             List<SelectListItem> listItems = new List<SelectListItem>();
@@ -73,6 +74,22 @@ namespace ManagementSystemVersionTwo.Services.Data
             {
                 Text = "Low-High",
                 Value = "Low-High"
+            });
+            return listItems;
+        }
+
+        public List<SelectListItem> SalarySortingOptionsViewBag()
+        {
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "Salary Desc",
+                Value = "Salary Desc"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Salary Asc",
+                Value = "Salary Asc"
             });
             return listItems;
         }
@@ -233,6 +250,23 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         #endregion
 
+        #region Sorting And Filtering Payments
+        public List<Worker> SortSalary(string sort, List<Worker> payments)
+        {
+            switch (sort)
+            {
+                case "Salary Desc":
+                    return payments.OrderByDescending(x => x.Salary).ToList();
+                case "Salary Asc":
+                    return payments.OrderBy(x => x.Salary).ToList();
+                default:
+                    return payments;
+            }
+        }
+
+        #endregion
+
+
         #region Sorting And Filtering Projects
         public List<string> GetProjectNamesForAutocomplete()
         {
@@ -251,17 +285,12 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         public List<Project> SortProject(string sort, List<Project> data)
         {
-
             switch (sort)
             {
                 case "Employees":
                     return data.OrderBy(w => w.WorkersInMe.Count).ToList();
                 case "Title":
                     return data.OrderBy(w => (w.Title).ToUpper()).ToList();
-                case "Finished":
-                    return data.OrderBy(w => w.Finished == false).ToList();
-                case "Not Finished":
-                    return data.OrderBy(w => w.Finished == true).ToList();
                 case "Start Date":
                     return data.OrderBy(w => w.StartDate).ToList();
                 case "End Date":
@@ -270,6 +299,20 @@ namespace ManagementSystemVersionTwo.Services.Data
                     return AllProjects();
             }
         }
+
+        public List<Project> StatusProject(string status, List<Project> data)
+        {
+            switch (status)
+            {
+                case "Finished":
+                    return data.Where( w => (w.Finished) == true).ToList();
+                case "Not Finished":
+                    return data.Where(w => (w.Finished) == false).ToList();
+                default:
+                    return AllProjects();
+            }
+        }
+
         public List<Project> GetProjectsPerDepartmentForSort(int id, List<Project> data) => data.Where(u => u.ID == id).ToList();
 
         #endregion
@@ -308,9 +351,13 @@ namespace ManagementSystemVersionTwo.Services.Data
             var workers = _context.Workers.Where(r => r.ApplicationUser.Roles.SingleOrDefault(w => w.RoleId == roleID) != null).ToList();
             return workers;
         }
-        
 
 
+
+        #endregion
+
+        #region PaymentData
+        public List<Worker> AllWorkersWithPayments() => _context.Workers.Include(w => w.Payments).ToList();
         #endregion
 
         #region ApplicationUserData
@@ -333,8 +380,6 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         public List<Project> AllFinishedProjects() => _context.Projects.Include(s => s.WorkersInMe).Where(s=>s.Finished==true).ToList();
         #endregion
-
-
 
         public void Dispose()
         {
