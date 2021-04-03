@@ -35,18 +35,14 @@ namespace ManagementSystemVersionTwo.Controllers
             List<DummyForProject> f3 = new List<DummyForProject>();
             for(int i=0;i<employees.Count;i++)
             {
-                if (employees[i].Roles.SingleOrDefault(r=>r.RoleId==roleId)==null) {
-                    employees.Remove(employees[i]);
-                }
-                else
-                {
+                if (!(employees[i].Roles.SingleOrDefault(r=>r.RoleId==roleId)==null)) {
                     f3.Add(new DummyForProject()
                     {
                         ID = employees[i].Id,
                         Fullname = employees[i].Worker.FullName,
                         CV = employees[i].Worker.CV,
                         Pic = employees[i].Worker.Pic
-                });
+                    });
                 }
             }
             CreateProjectViewModel f2 = new CreateProjectViewModel()

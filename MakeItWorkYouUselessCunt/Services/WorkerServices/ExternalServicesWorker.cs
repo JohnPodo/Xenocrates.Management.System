@@ -115,7 +115,7 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
                 IdOfDepartment = user.Worker.DepartmentID,
                 SelectedRole = _db.Roles.Find(user.Roles.First().RoleId).Name,
                 AllDepartments = _db.Departments.ToList(),
-                Roles = _db.Roles.Where(s=>s.Name!="Admin").ToList()
+                Roles = _db.Roles.Where(s => s.Name != "Admin").ToList()
             };
             return f2;
         }
@@ -124,14 +124,14 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
         {
             var workerInDb = _db.Users.Find(editworker.UserID);
             var role = _db.Roles.Find(editworker.SelectedRole);
-            if (!workerInDb.Roles.Any(r=>r.RoleId== role.Id))
+            if (!workerInDb.Roles.Any(r => r.RoleId == role.Id))
             {
                 workerInDb.Roles.Remove(workerInDb.Roles.First());
                 workerInDb.Roles.Add(new IdentityUserRole()
                 {
                     RoleId = role.Id,
                     UserId = workerInDb.Id
-                }) ;
+                });
             }
             if (workerInDb.Worker.Department.ID != editworker.IdOfDepartment)
             {
@@ -169,6 +169,43 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
 
         public void FinalizeProject(int id) => _db.Projects.SingleOrDefault(p => p.ID == id).Finished = true;
 
+        public void SaveWorkingDays(WorkingDays[] tosave, int id)
+        {
+            if (tosave.Length > 0 && tosave != null)
+            {
+                foreach (var day in tosave)
+                {
+                    WorkingDays saveme = new WorkingDays()
+                    {
+                        Start = day.Start,
+                        Title = day.Title,
+                        BackgroundColor = day.BackgroundColor,
+                        Display = day.Display
+                    };
+                    var worker = _db.Workers.Find(id);
+                    saveme.Worker = worker;
+                    if (worker.Days.SingleOrDefault(s => s.Start == saveme.Start) is null)
+                    {
+                        _db.CaldendarDays.Add(saveme);
+                        _db.SaveChanges();
+                    }
+                }
+            }
+        }
+
+        public void DeleteWorkingDays(WorkingDays[] tosave, int id)
+        {
+            foreach (var item in tosave)
+            {
+                var day = _db.CaldendarDays.SingleOrDefault(d => d.Start == item.Start && d.Worker.ID == id);
+               if(!(day is null))
+                {
+                    _db.CaldendarDays.Remove(day);
+                    _db.SaveChanges();
+                }
+                
+            }
+        }
         public void Dispose()
         {
             _db.Dispose();

@@ -149,5 +149,89 @@ namespace ManagementSystemVersionTwo.Controllers
             _external.DeleteWorkersApplicationUser(userToDelete.Id);
             return RedirectToAction("ViewAllWorkers", "Display");
         }
+
+        public ActionResult Calendar(int? id)
+        {
+            if (id is null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var worker = _data.FindWorkerByID((int)id);
+            if (worker is null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            ViewBag.WorkerID = worker.ID;
+            return View();
+        }
+
+        public JsonResult GetProjects(int? workerid)
+        {
+            var worker= new Worker();
+            if (!(workerid is null))
+            {
+                worker = _data.FindWorkerByID((int)workerid);
+            }
+            
+            List<WorkingDays> projects = new List<WorkingDays>();
+            if (!(worker is null))
+            {
+                var workersprojects = _data.FindProjectsPerWorker(worker.ID);
+                foreach (var p in workersprojects)
+                {
+                    projects.Add(new WorkingDays()
+                    {
+                        Start = p.StartDate.Date.ToString("yyyy-MM-dd"),
+                        End = p.EndDate.Date.ToString("yyyy-MM-dd"),
+                        Title = p.Title
+                    });
+                }
+
+                return new JsonResult { Data = projects, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+
+            return new JsonResult { };
+        }
+
+        [HttpPost]
+        public void SaveWorkingDays(WorkingDays[] tosave,int workerid)
+        {
+            _external.SaveWorkingDays(tosave, workerid);
+        }
+
+        public JsonResult GetWorkDays(int? workerid)
+        {
+            var worker = new Worker();
+            if (!(workerid is null))
+            {
+                worker = _data.FindWorkerByID((int)workerid);
+            }
+            var days = new List<WorkingDays>();
+            if (!(worker is null))
+            {
+                foreach(var day in worker.Days)
+                {
+                    days.Add(new WorkingDays
+                    {
+                        Start=day.Start,
+                        Title=day.Title,
+                        Display=day.Display,
+                        BackgroundColor=day.BackgroundColor,
+                        ID=day.ID,
+                        End=day.End
+                    });
+                }
+
+                return new JsonResult { Data = days, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
+            }
+
+            return new JsonResult { };
+        }
+
+        [HttpPost]
+        public void DeleteWorkDays(WorkingDays[] days,int workerid)
+        {
+            _external.DeleteWorkingDays(days, workerid);
+        }
     }
 }

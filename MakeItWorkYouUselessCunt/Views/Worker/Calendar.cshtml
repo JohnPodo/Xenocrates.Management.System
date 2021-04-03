@@ -1,0 +1,240 @@
+﻿
+@{
+    ViewBag.Title = "Calendar";
+}
+<link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.css"
+      rel="stylesheet" />
+<h2>Calendar</h2>
+<div class="timeContainer" id="containerfortime" style="display: none">
+    <p id="selectedDays"></p>
+    <input id="time" type="time" />
+    <label for="working">Day off</label>
+    <input id="working" type="checkbox" />
+    <input type="button" id="save" value="Save" />
+    <input type="button" id="delete" value="Delete" />
+</div>
+<div id="calendar"></div>
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js"></script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            //Metavlites
+            var calendarEl = document.getElementById("calendar");
+            var setRepeater;
+            var text = document.getElementById("selectedDays");
+            var timer = document.getElementById("time");
+            var btn = document.getElementById("save");
+            var timeDiv = document.getElementById("containerfortime");
+            var workingday = document.getElementById("working");
+            var deletebtn = document.getElementById("delete");
+            //Instanciate to calendar
+            var calendar = new FullCalendar.Calendar(calendarEl, {
+                initialView: "dayGridMonth",
+                selectable: true,
+                contentHeight: 600,
+            });
+            var events = [];
+
+
+
+
+            //Emfanise to
+            calendar.render();
+            GetProjects(@ViewBag.WorkerID);
+            GetWorkingDays(@ViewBag.WorkerID);
+
+            //Vriskei thn prwti kai thn teleytaia hmerominia apo mia pollaplh eisagwgi
+            calendar.on("select", function (info) {
+                var datestart = new Date();
+                var datestart = info.start;
+
+                date = info.start;
+                console.log(date);
+
+                var dateend = new Date();
+                dateend = info.end;
+
+                var checkyear =
+                    datestart.getFullYear() > dateend.getFullYear()
+                        ? dateend.getFullYear
+                        : datestart.getFullYear();
+
+                var checkmonth =
+                    datestart.getMonth() > dateend.getMonth()
+                        ? dateend.getMonth()
+                        : datestart.getMonth();
+
+                var daysInMonth = new Date(checkyear, checkmonth + 1, 0).getDate();
+
+                if (dateend.getDate() - date.getDate() < 0) {
+                    setRepeater = dateend.getDate() - date.getDate() + daysInMonth;
+                } else {
+                    setRepeater = dateend.getDate() - date.getDate();
+                }
+
+                text.innerText = `You have selected ${setRepeater} days choose time to start working`;
+                timeDiv.style.display = "block";
+            });
+
+            btn.addEventListener("click", () => {
+                events = CreateEventAndAddToArray(events);
+                calendar.addEventSource(events);
+                timeDiv.style.display = "none";
+            });
+
+            function CreateEventAndAddToArray(arr) {
+                var count = 0;
+                for (let i = 0; i < setRepeater; i++) {
+                    if (workingday.checked) {
+                        var day = {
+                            start: new Date(date.setDate(date.getDate() + 1))
+                                .toISOString()
+                                .slice(0, 10),
+                            display: "background",
+                            backgroundColor: "blue",
+                            title: `Rest Day`,
+                            color: "white",
+                        };
+                    } else {
+                        var day = {
+                            start: new Date(date.setDate(date.getDate() + 1))
+                                .toISOString()
+                                .slice(0, 10),
+                            display: "background",
+                            backgroundColor: "red",
+                            title: `${timer.value}`,
+                            textColor: "black",
+                        };
+                    }
+                    var ev = events.filter((s) => s.start === day.start);
+                    if (ev.length > 0) {
+                    } else {
+                        arr.push(day);
+                    }
+
+                    count++;
+                }
+                SaveWorkingDays(arr,@ViewBag.WorkerID);
+                location.reload();
+                return arr;
+            }
+
+            workingday.addEventListener("change", function () {
+                if (this.checked) {
+                    timer.style.display = "none";
+                } else {
+                    timer.style.display = "block";
+                }
+            });
+
+            deletebtn.addEventListener("click", () => {
+                var deleteArray = [];
+                deleteArray = searchForEventsToDelete(deleteArray);
+                console.log(deleteArray);
+            });
+
+            function searchForEventsToDelete(arr) {
+                var count = 0;
+                for (let i = 0; i < setRepeater; i++) {
+                    if (workingday.checked) {
+                        var day = {
+                            start: new Date(date.setDate(date.getDate() + 1))
+                                .toISOString()
+                                .slice(0, 10),
+                        };
+                    } else {
+                        var day = {
+                            start: new Date(date.setDate(date.getDate() + 1))
+                                .toISOString()
+                                .slice(0, 10),
+                        };
+                    }
+                    arr.push(day);
+
+                    count++;
+                }
+                DeleteWorkingDays(arr,@ViewBag.WorkerID);
+                location.reload();
+                return arr;
+            }
+
+            function SaveWorkingDays(arr,id) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Worker/SaveWorkingDays",
+                    dataType: "json",
+                    data: {
+                        tosave: arr, workerid: id
+                    }
+                });
+            }
+
+            function DeleteWorkingDays(arr, id) {
+                $.ajax({
+                    type: "POST",
+                    url: "/Worker/DeleteWorkDays",
+                    dataType: "json",
+                    data: {
+                        days: arr, workerid: id
+                    }
+                });
+            }
+
+            function GetProjects(id) {
+                var projects=[]
+                $.ajax({
+                    type: "GET",
+                    url: "/Worker/GetProjects",
+                    dataType: "json",
+                    data: {
+                        workerid: id
+                    },
+                    success: function (result) {
+                        var start;
+                        var end;
+                        for (let i = 0; i < result.length; i++) {
+                            start = new Date(Date.parse(result[i].Start));
+                            end = new Date(Date.parse(result[i].End));
+                            var pro = {
+                                start: start,
+                                end: end,
+                                title: result[i].Title
+                            }
+                            projects.push(pro);
+                        }
+                        calendar.addEventSource(projects);
+                    }
+                });
+            }
+
+            function GetWorkingDays(id) {
+                var days = []
+                $.ajax({
+                    type: "GET",
+                    url: "/Worker/GetWorkDays",
+                    dataType: "json",
+                    data: {
+                        workerid: id
+                    },
+                    success: function (result) {
+                        var start;
+                        for (let i = 0; i < result.length; i++) {
+                            start = new Date(Date.parse(result[i].Start));
+                            var pro = {
+                                start: start,
+                                end: result[i].End,
+                                title: result[i].Title,
+                                backgroundColor: result[i].BackgroundColor,
+                                display: result[i].Display,
+                                id: result[i].ID,
+                                allDay: true
+                            }
+                            days.push(pro);
+                        }
+                        calendar.addEventSource(days);
+                    }
+                });
+            }
+        });
+    </script>
+}

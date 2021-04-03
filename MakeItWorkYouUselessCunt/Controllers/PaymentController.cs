@@ -40,6 +40,7 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult ShowPartial(int id)
         {
             var worker = _data.FindWorkerByID(id);
+
             return PartialView("PartialViewForPayment",worker);
         }
 
