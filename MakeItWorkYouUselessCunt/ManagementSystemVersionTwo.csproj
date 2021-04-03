@@ -269,6 +269,7 @@
     <Compile Include="ViewModels\EditWorker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\13606-10ee503b.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -287,9 +288,11 @@
     <Content Include="Content\style1.css" />
     <Content Include="Content\vendor.bundle.addons.css" />
     <Content Include="Content\vendor.bundle.base.css" />
+    <Content Include="EIKONES\13606-10ee503b.jpg" />
     <Content Include="EIKONES\bg-01.jpg" />
     <Content Include="EIKONES\bg-02.jpg" />
     <Content Include="EIKONES\boss.png" />
+    <Content Include="EIKONES\dark_pattern-wallpaper-1920x1080.jpg" />
     <Content Include="EIKONES\login_1.jpg" />
     <Content Include="EIKONES\login_2.jpg" />
     <Content Include="EIKONES\logo-mini.png" />
@@ -305,7 +308,6 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\buttonsWorker.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
