@@ -3,6 +3,18 @@
     ViewBag.Title = "ViewAllProjects";
 }
 <div>
+    <a href="@Url.Action("CreateProject", "Project" )" style="font-size: 12px;" class="btn btn-info btn-fw">Add Project</a>
+</div>
+<br/>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                    <h3 class="views-headings">Projects</h3>
+                    <p class="views-comments">Here you can view all Projects in your Department.</p>
+                    <hr />
+                    <div>
     @using (Html.BeginForm())
     {
     <div class="row">
@@ -32,77 +44,61 @@
     </div>
     }
 </div>
-<div class="card">
-    <div class="card-body">
-        <h3 class="views-headings">Projects</h3>
-        <p class="views-comments">Here you can view all Projects in your Department.</p>
-        <a href="@Url.Action("CreateProject", "Project" )" style="font-size: 12px;" class="btn btn-info btn-fw">Add Project</a>
-        <table class="table table-striped">
-            <thead>
-                <tr class="row">
-                    <th class="col-1">
-                        Title
-                    </th>
-                    <th class="col-2">
-                        Description
-                    </th>
-                    <th class="col-2">
-                        Start Date
-                    </th>
-                    <th class="col-2">
-                        End Date
-                    </th>
-                    <th class="col-1">
-                        Status
-                    </th>
-                    <th class="col-1">
-                        Workers
-                    </th>
-                    <th class="col-2">
-                        Actions
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach (var pro in Model)
-                {
-                    <tr class="row">
-                        <td style="overflow:hidden" class="col-1">
-                            @pro.Title
-                        </td>
-                        <td style="overflow:hidden" class="col-2">
-                            @pro.Description
-                        </td>
-                        <td style="overflow:hidden" class="col-2">
-                            @pro.StartDate
-                        </td>
-                        <td style="overflow:hidden" class="col-2">
-                            @pro.EndDate
-                        </td>
-                        <td style="overflow:hidden" class="col-1">
-                            @if (pro.Finished)
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Title</th>
+                                <th>Description</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Status</th>
+                                <th>Workers</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var pro in Model)
                             {
-                                <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                <tr>
+                                    <td style="overflow:hidden">
+                                        @pro.Title
+                                    </td>
+                                    <td style="overflow:hidden">
+                                        @pro.Description
+                                    </td>
+                                    <td style="overflow:hidden">
+                                        @pro.StartDate
+                                    </td>
+                                    <td style="overflow:hidden">
+                                        @pro.EndDate
+                                    </td>
+                                    <td style="overflow:hidden">
+                                        @if (pro.Finished)
+                                        {
+                                            <i class="fa fa-check-circle-o" aria-hidden="true"></i>
+                                        }
+                                        @if (!pro.Finished && pro.EndDate > DateTime.Now)
+                                        {
+                                            <i class="fa fa-clock-o" aria-hidden="true"></i>
+                                        }
+                                        @if (!pro.Finished && pro.EndDate < DateTime.Now)
+                                        {
+                                            <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
+                                        }
+                                    </td>
+                                    <td>
+                                        @pro.WorkersInMe.Count
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "EditProject", "Project", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
+                                        @Html.ActionLink("Delete", "DeleteProject", "Project", new { id = pro.ID }, new { @class = "btn-sm btn-sm-project btn-info btn-fw" })
+                                    </td>
+                                </tr>
                             }
-                            @if (!pro.Finished && pro.EndDate > DateTime.Now)
-                            {
-                                <i class="fa fa-clock-o" aria-hidden="true"></i>
-                            }
-                            @if (!pro.Finished && pro.EndDate < DateTime.Now)
-                            {
-                                <i class="fa fa-exclamation-circle" aria-hidden="true"></i>
-                            }
-                        </td>
-                        <td class="col-md-1">
-                            @pro.WorkersInMe.Count
-                        </td>
-                        <td class="col-md-2">
-                            @Html.ActionLink("Edit", "EditProject", "Project", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
-                            @Html.ActionLink("Delete", "DeleteProject", "Project", new { id = pro.ID }, new { @class = "btn-sm btn-sm-project btn-info btn-fw" })
-                        </td>
-                    </tr>
-                }
-            </tbody>
-        </table>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

@@ -2,7 +2,12 @@
 @{
     ViewBag.Title = "Index";
 }
-<div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                   <div>
     @using (Html.BeginForm())
     {
     <div class="row">
@@ -26,27 +31,39 @@
     </div>
     }
 </div>
-<table class="table">
-    <thead>
-        <tr>
-            <th>Fullname</th>
-            <th>Salary</th>
-            <th>Pay</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var wo in Model)
-        {
-            <tr>
-                <th>@wo.FullName</th>
-                <th>@wo.Salary</th>
-                <th>
-                    @{
-                        Html.RenderAction("ShowPartial", "Payment", new { id = wo.ID });
-                    }
-                </th>
-            </tr>
-        }
-    </tbody>
-</table>
+                    
+                    <h3 class="views-headings">Payments</h3>
+                    <p class="views-comments">Here you can pay every worker.</p>
+                    <hr />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Fullname</th>
+                                <th>Salary</th>
+                                <th>Pay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var wo in Model)
+                            {
+                                <tr>
+                                    <td>@wo.FullName</td>
+                                    <td>@wo.Salary</td>
+                                    <td>
+                                        @{
+                                            Html.RenderAction("ShowPartial", "Payment", new { id = wo.ID });
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 

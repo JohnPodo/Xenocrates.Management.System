@@ -111,6 +111,7 @@ body {
 }
 
 .top-bar {
+    position: absolute;
     width: 100%;
     height: 60px;
     background: #f9fbff;
@@ -195,7 +196,7 @@ body {
 
 .incoming {
     position: absolute;
-    width: 50%;
+    width: 100%;
     height: 100%;
     padding: 20px;
 }
@@ -203,7 +204,19 @@ body {
     .incoming .bubble {
         background: #b2b2b2;
     }
+.outgoing {
+    position: absolute;
+    padding: 20px;
+    right: 0;
+    top: 15%;
+    width: 50%;
+    height: 100%;
+}
 
+    .outgoing .bubble {
+        background: #79c7c5;
+        float: right;
+    }
 .typing {
     position: absolute;
     top: 67%;
@@ -247,22 +260,10 @@ body {
 }
 
 .lower {
-    margin-top: 45px;
+    margin-top: 5px;
 }
 
-.outgoing {
-    position: absolute;
-    padding: 20px;
-    right: 0;
-    top: 15%;
-    width: 50%;
-    height: 100%;
-}
 
-    .outgoing .bubble {
-        background: #79c7c5;
-        float: right;
-    }
 
 .bottom-bar {
     position: absolute;
@@ -365,6 +366,16 @@ footer {
 
 /* Hide scrollbar for IE, Edge and Firefox */
 .incoming {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+}
+    /* Hide scrollbar for Chrome, Safari and Opera */
+    .outgoing::-webkit-scrollbar {
+        display: none;
+    }
+
+/* Hide scrollbar for IE, Edge and Firefox */
+.outgoing {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
 }
