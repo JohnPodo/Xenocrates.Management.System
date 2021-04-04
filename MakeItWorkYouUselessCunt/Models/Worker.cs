@@ -40,5 +40,7 @@ namespace ManagementSystemVersionTwo.Models
         public virtual ApplicationUser ApplicationUser { get; set; }
 
         public virtual ICollection<PaymentDetails> Payments { get; set; }
+
+        public virtual ICollection<WorkingDays> Days { get; set; }
     }
 }

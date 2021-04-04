@@ -2,14 +2,13 @@
 @{
     ViewBag.Title = "DetailsDepartment";
 }
-
 <div class="row">
     <div class="col-12 grid-margin">
-        <div style="margin: auto; " class="col-lg-8 grid-margin stretch-card">
-            <div style="margin:auto; min-width:50%" class="card">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin:auto;" class="card">
                 <div class="card-body">
-                    <h3 style="text-align: center;">@Html.DisplayFor(d => Model.City) Department View</h3>
-                    <p style="text-align: center;">Address: @Html.DisplayFor(d => Model.Adress)</p>
+                    <h2 class="views-headings">@Html.DisplayFor(d => Model.City) Department</h2>
+                    <p class="views-comments">Address: @Html.DisplayFor(d => Model.Adress)</p>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -38,6 +37,9 @@
                             }
                         </tbody>
                     </table>
+                    <div>
+                        <a href="@Url.Action("ViewAllDepartments", "Display" )" style="font-size: 12px;" class="btn btn-info btn-fw">Return to List</a>
+                    </div>
                 </div>
             </div>
         </div>

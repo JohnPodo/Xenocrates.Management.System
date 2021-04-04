@@ -236,6 +236,10 @@
     <Compile Include="Migrations\202103281538390_Message.Designer.cs">
       <DependentUpon>202103281538390_Message.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104031626431_Calendar.cs" />
+    <Compile Include="Migrations\202104031626431_Calendar.Designer.cs">
+      <DependentUpon>202104031626431_Calendar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHub.cs" />
@@ -248,6 +252,7 @@
     <Compile Include="Models\ProjectsAssignedToEmployee.cs" />
     <Compile Include="StatisticsModels\Ratio.cs" />
     <Compile Include="Models\Worker.cs" />
+    <Compile Include="Models\WorkingDays.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Data\DataRepository.cs" />
     <Compile Include="Services\DepartmentServices\CRUDDepartment.cs" />
@@ -265,6 +270,7 @@
     <Compile Include="ViewModels\EditWorker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\13606-10ee503b.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -283,9 +289,11 @@
     <Content Include="Content\style1.css" />
     <Content Include="Content\vendor.bundle.addons.css" />
     <Content Include="Content\vendor.bundle.base.css" />
+    <Content Include="EIKONES\13606-10ee503b.jpg" />
     <Content Include="EIKONES\bg-01.jpg" />
     <Content Include="EIKONES\bg-02.jpg" />
     <Content Include="EIKONES\boss.png" />
+    <Content Include="EIKONES\dark_pattern-wallpaper-1920x1080.jpg" />
     <Content Include="EIKONES\login_1.jpg" />
     <Content Include="EIKONES\login_2.jpg" />
     <Content Include="EIKONES\logo-mini.png" />
@@ -487,9 +495,11 @@
     <Content Include="Views\Project\DeleteProject.cshtml" />
     <Content Include="Views\Project\EditProject.cshtml" />
     <Content Include="Views\Payment\Index.cshtml" />
-    <Content Include="Views\Display\DetailWorker.cshtml" />
     <Content Include="Views\Payment\PartialViewForPayment.cshtml" />
     <Content Include="Views\Department\Chat.cshtml" />
+    <Content Include="Views\Display\DetailsWorker.cshtml" />
+    <Content Include="Views\Display\ViewAllWorkersList.cshtml" />
+    <Content Include="Views\Worker\Calendar.cshtml" />
     <Content Include="Views\Display\AdminDashboard.cshtml" />
     <Content Include="Views\Display\SupervisorDashboard.cshtml" />
   </ItemGroup>
@@ -525,6 +535,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202103281538390_Message.resx">
       <DependentUpon>202103281538390_Message.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104031626431_Calendar.resx">
+      <DependentUpon>202104031626431_Calendar.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

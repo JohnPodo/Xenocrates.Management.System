@@ -35,41 +35,15 @@ namespace ManagementSystemVersionTwo.Controllers
                 data = _data.GetDepartmentsByCity(searchString, data);
             }
 
+            ViewBag.SortByCity = _data.DepartmentSortingOptionsViewBag();
 
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "City",
-                Value = "City"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "City_desc",
-                Value = "City_desc"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "High-Low",
-                Value = "High-Low"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Low-High",
-                Value = "Low-High"
-            });
-            ViewBag.SortByCity = listItems;
+            ViewBag.Cities = _data.DepartmentsForAutoComplete();
 
-
-            var citiesForAutoComplete = _data.DepartmentsForAutoComplete();
-            ViewBag.Cities = citiesForAutoComplete;
             return View(data);
 
         }
 
-
-
-
-        public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID)
+        public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID, string viewType)
         {
             var data = _data.AllWorkers();
             if (!string.IsNullOrEmpty(searchName))
@@ -89,68 +63,26 @@ namespace ManagementSystemVersionTwo.Controllers
                 data = _data.GetWorkersPerDepartmentForSort(int.Parse(depID), data);
             }
 
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "City Of Department",
-                Value = "City Of Department"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Full Name",
-                Value = "Full Name"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Age",
-                Value = "Age"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Salary",
-                Value = "Salary"
-            });
+            ViewBag.SortOptions = _data.WorkerSortingOptionsViewBag();
 
-            listItems.Add(new SelectListItem
-            {
-                Text = "Projects",
-                Value = "Projects"
-            });
-            ViewBag.SortOptions = listItems;
+            ViewBag.RoleOptions = _data.AvailableRolesFilteringViewBag();
 
-            List<SelectListItem> roleItems = new List<SelectListItem>();
-            var allroles = _data.AllRoles();
-            foreach (var items in allroles)
+            ViewBag.DepartmentOptions = _data.AvailableDepartmentsFilteringViewBag();
+
+            ViewBag.Names = _data.GetWorkerNamesForAutocomplete(); 
+
+            ViewBag.Parameters = new List<string> {searchName,orderBy,roleSpec,depID };
+
+            if (string.IsNullOrEmpty(viewType))
             {
-                roleItems.Add(new SelectListItem
-                {
-                    Text = items.Name,
-                    Value = items.Id
-                });
+                return View(data);
             }
-            ViewBag.RoleOptions = roleItems;
-
-            List<SelectListItem> departmentItems = new List<SelectListItem>();
-            var allDepartments = _data.AllDepartments();
-            foreach (var items in allDepartments)
+            else
             {
-                departmentItems.Add(new SelectListItem
-                {
-                    Text = items.City,
-                    Value = $"{items.ID}"
-                });
+                return View("ViewAllWorkersList", data);
             }
-            ViewBag.DepartmentOptions = departmentItems;
 
-            var namesForAutoComplete = _data.GetWorkerNamesForAutocomplete();
-            ViewBag.Names = namesForAutoComplete;
-
-
-
-            return View(data);
         }
-        //View per Role
-
 
         public ActionResult ViewAllRoles(string searchString, string sort)
         {
@@ -164,43 +96,88 @@ namespace ManagementSystemVersionTwo.Controllers
                 data = _data.SortRoles(sort, data);
             }
 
-            List<SelectListItem> listItems = new List<SelectListItem>();
-            listItems.Add(new SelectListItem
-            {
-                Text = "Role",
-                Value = "Role"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Role_desc",
-                Value = "Role_desc"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "High-Low",
-                Value = "High-Low"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Low-High",
-                Value = "Low-High"
-            });
-            ViewBag.SortByRole = listItems;
-            var rolesForAutoComplete = _data.RolesForAutoComplete();
-            ViewBag.Roles = rolesForAutoComplete;
+            ViewBag.SortByRole = _data.RolesSortingOptionsViewBag();
 
+            ViewBag.Roles = _data.RolesForAutoComplete();
 
             return View(data);
         }
+        //View per Role
+        
 
-
-
-        public ActionResult ViewAllProjects()
+        public ActionResult ViewAllRoles(string searchString, string sort)
         {
-            return View(_data.AllProjects());
+            var data = _data.AllProjects();
+            if (!string.IsNullOrEmpty(title))
+            {
+                data = _data.FindProjectByTitle(title, data);
+            }
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                data = _data.SortProject(orderBy, data);
+            }
+            if (!string.IsNullOrEmpty(depID))
+            {
+                data = _data.GetProjectsPerDepartmentForSort(int.Parse(depID), data);
+            }
+            if (!string.IsNullOrEmpty(status))
+            {
+                data = _data.StatusProject(status, data);
+            }
+
+            List<SelectListItem> listItems = new List<SelectListItem>();
+            listItems.Add(new SelectListItem
+            {
+                Text = "Title",
+                Value = "Title"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Employees",
+                Value = "Employees"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "Start Date",
+                Value = "Start Date"
+            });
+            listItems.Add(new SelectListItem
+            {
+                Text = "End Date",
+                Value = "End Date"
+            });
+            ViewBag.SortOptions = listItems;
+
+            List<SelectListItem> statusItems = new List<SelectListItem>();
+            statusItems.Add(new SelectListItem
+            {
+                Text = "Finished",
+                Value = "Finished"
+            });
+            statusItems.Add(new SelectListItem
+            {
+                Text = "Not Finished",
+                Value = "Not Finished"
+            });
+            ViewBag.StatusOptions = statusItems;
+
+            var titleForAutoComplete = _data.GetProjectNamesForAutocomplete();
+            ViewBag.Names = titleForAutoComplete;
+
+            List<SelectListItem> departmentItems = new List<SelectListItem>();
+            var allDepartments = _data.AllDepartments();
+            foreach (var items in allDepartments)
+            {
+                departmentItems.Add(new SelectListItem
+                {
+                    Text = items.City,
+                    Value = $"{items.ID}"
+                });
+            }
+            ViewBag.DepartmentOptions = departmentItems;
+
+            return View(data);
         }
-
-
 
         public ActionResult DetailsDepartment(int? id)
         {

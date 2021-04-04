@@ -1,0 +1,77 @@
+﻿@model ManagementSystemVersionTwo.Models.ApplicationUser
+
+@{
+    ViewBag.Title = "DetailsWorker";
+}
+<div class="row">
+    <div style="margin: 0 auto" class="col-6 grid-margin">
+        <div class="card">
+            <div class="card-body">
+                <h2 style="text-align:center">Worker Details</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <table class="table">
+                            <tr>
+                                <td class="thead">Full Name</td>
+                                <td class="identity">@Html.DisplayFor(w => w.Worker.FullName)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Age</td>
+                                <td class="identity">@Html.DisplayFor(w => w.Worker.DateOfBirth)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Department</td>
+                                <td class="identity">@Html.DisplayFor(w => w.Worker.Department.City)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Mobile Phone</td>
+                                <td class="identity">@Html.DisplayFor(w => w.PhoneNumber)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Salary</td>
+                                <td class="identity">@Html.DisplayFor(w => w.Worker.Salary)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Bank</td>
+                                <td class="identity">@Html.DisplayFor(w => w.Worker.BankAccount)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Email</td>
+                                <td class="identity">@Html.DisplayFor(w => w.Email)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Username</td>
+                                <td class="identity">@Html.DisplayFor(w => w.UserName)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Address</td>
+                                <td class="identity">@Html.DisplayFor(w => w.Worker.Address)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Gender</td>
+                                <td class="identity">@Html.DisplayFor(w => w.Worker.Gender)</td>
+                            </tr>
+                            <tr>
+                                <td class="thead">CV</td>
+                                <td class="identity"><a href="~/CVs/@Model.Worker.CV" target="_blank">CV Details</a></td>
+                            </tr>
+                            <tr>
+                                <td class="thead">Contract Of Employment</td>
+                                <td class="identity"><a href="~/ContractOfEmployments/@Model.Worker.ContractOfEmployment" target="_blank">Contract Of Employment</a></td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div style="padding-top: 50px; " class="col-md-6">
+                        <img src="~/ProfPics/@Model.Worker.Pic" alt="Profile Pic" style="margin: 0 auto; padding:10px; justify-content:center; display: block; margin-left: auto; margin-right: auto; width: 250px; border: 2px solid #00ff21; border-radius: 4px;" class="" id="pic">
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-3"></div>
+                    <div style="float:right" class="col-md-3"><button class="btn-add-add">@Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = Model.Id }, new { @class = "",@style = "color: #FFFFFF; text-decoration-color:none" })</button></div>
+                    <div class="col-md-3"><button class="btn-add-add">@Html.ActionLink("Back to List", "ViewAllWorkers", "Display", new { @class = "", @style = "color: #FFFFFF; text-decoration-color:none" })</button></div>
+                    <div class="col-md-3"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

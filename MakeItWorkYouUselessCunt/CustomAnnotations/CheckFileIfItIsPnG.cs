@@ -14,7 +14,10 @@ namespace ManagementSystemVersionTwo.CustomAnnotations
         public override bool IsValid(object value)
         {
             var file = (HttpPostedFileBase)value;
-            var check = file.FileName.EndsWith(".png");
+            var check = true;
+            if (!(file is null)){ 
+            check= file.FileName.EndsWith(".jpg");
+            }
             return check;
         }
 
