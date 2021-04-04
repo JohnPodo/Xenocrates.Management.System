@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ManagementSystemVersionTwo.Services.Data;
+using ManagementSystemVersionTwo.StatisticsModels;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -33,6 +34,7 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 data = _data.GetDepartmentsByCity(searchString, data);
             }
+
 
             ViewBag.SortByCity = _data.DepartmentSortingOptionsViewBag();
 
@@ -101,6 +103,10 @@ namespace ManagementSystemVersionTwo.Controllers
 
             return View(data);
         }
+        //View per Role
+
+
+        public ActionResult ViewAllRoles(string searchString, string sort)
 
         public ActionResult ViewAllProjects(string title, string orderBy, string depID, string status )
         {
@@ -144,6 +150,18 @@ namespace ManagementSystemVersionTwo.Controllers
                 Value = "End Date"
             });
             ViewBag.SortOptions = listItems;
+
+
+            return View(data);
+        }
+
+
+
+        public ActionResult ViewAllProjects()
+        {
+            return View(_data.AllProjects());
+        }
+
 
             List<SelectListItem> statusItems = new List<SelectListItem>();
             statusItems.Add(new SelectListItem
@@ -190,6 +208,45 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             return View(department);
         }
+
+        public ActionResult AdminDashboard()
+        {
+            return View();
+        }
+
+        //Chart For Departments Per City
+        public ActionResult ChartsForAdmin()
+        {
+            var departmentsPerCity = _data.DepartmentsPerCityChart();
+            var employeesPerDepartment = _data.EmployeesPerDepartmentChart();
+            var averageSalaryPerDepartment = _data.AverageSalaryChart();
+            var averageAgePerDepartment = _data.AverageAgeChart();
+            var totalSalariesPerMonth = _data.TotalSalariesPerMonthChart();
+            var totalSalaryPerDepartment = _data.TotalSalaryPerDepartmentChart();
+            var ratioArray = new Ratio[] { departmentsPerCity, employeesPerDepartment, averageSalaryPerDepartment, averageAgePerDepartment, totalSalariesPerMonth, totalSalaryPerDepartment };
+
+            return Json(ratioArray, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult SupervisorDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult ChartsForSupervisor()
+        {
+            var salaryPerEmployee = _data.SalaryPerEmployeeChart();
+            var agePerEmployee = _data.AgePerEmployeeChart();
+            var genderPerDepartment = _data.GenderPerDepartmentChart();
+            var RatioArray = new Ratio[] { salaryPerEmployee, agePerEmployee, genderPerDepartment };
+
+
+            return Json(RatioArray, JsonRequestBehavior.AllowGet);
+
+        }
+
+
 
         public ActionResult DetailsWorker(string id)
         {
