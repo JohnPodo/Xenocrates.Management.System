@@ -524,7 +524,6 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         public List<Project> FindProjectsPerWorker(int id) => _context.Projects.Include(s => s.WorkersInMe).Where(p => p.WorkersInMe.FirstOrDefault(w=>w.WorkerID==id)!=null).ToList();
 
-        public List<Project> AllFinishedProjects() => _context.Projects.Include(s => s.WorkersInMe).Where(s=>s.Finished==true).ToList();
         #endregion
 
         public void Dispose()
