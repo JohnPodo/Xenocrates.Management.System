@@ -246,6 +246,7 @@
     <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsAssignedToEmployee.cs" />
+    <Compile Include="StatisticsModels\Ratio.cs" />
     <Compile Include="Models\Worker.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Data\DataRepository.cs" />
@@ -301,6 +302,13 @@
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <Content Include="Scripts\buttonsWorker.js" />
+    <Content Include="Scripts\chart\accessibility.js" />
+    <Content Include="Scripts\chart\dumbbell.js" />
+    <Content Include="Scripts\chart\export-data.js" />
+    <Content Include="Scripts\chart\exporting.js" />
+    <Content Include="Scripts\chart\highcharts-more.js" />
+    <Content Include="Scripts\chart\highcharts.js" />
+    <Content Include="Scripts\chart\lollipop.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -482,6 +490,8 @@
     <Content Include="Views\Display\DetailWorker.cshtml" />
     <Content Include="Views\Payment\PartialViewForPayment.cshtml" />
     <Content Include="Views\Department\Chat.cshtml" />
+    <Content Include="Views\Display\AdminDashboard.cshtml" />
+    <Content Include="Views\Display\SupervisorDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ManagementSystemVersionTwo.Services.Data;
+using ManagementSystemVersionTwo.StatisticsModels;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -14,7 +15,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public DisplayController()
         {
-            _data=new DataRepository();
+            _data = new DataRepository();
         }
 
         protected override void Dispose(bool disposing)
@@ -33,7 +34,7 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 data = _data.GetDepartmentsByCity(searchString, data);
             }
-           
+
 
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
@@ -149,7 +150,7 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(data);
         }
         //View per Role
-        
+
 
         public ActionResult ViewAllRoles(string searchString, string sort)
         {
@@ -188,33 +189,71 @@ namespace ManagementSystemVersionTwo.Controllers
             var rolesForAutoComplete = _data.RolesForAutoComplete();
             ViewBag.Roles = rolesForAutoComplete;
 
-            
+
             return View(data);
         }
 
-        
-        
+
+
         public ActionResult ViewAllProjects()
         {
             return View(_data.AllProjects());
         }
 
-       
+
 
         public ActionResult DetailsDepartment(int? id)
         {
-            
-            if(id == null)
+
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var department = _data.FindDepartmentByID((int)id);
-            if(department == null)
+            if (department == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             return View(department);
         }
+
+        public ActionResult AdminDashboard()
+        {
+            return View();
+        }
+
+        //Chart For Departments Per City
+        public ActionResult ChartsForAdmin()
+        {
+            var departmentsPerCity = _data.DepartmentsPerCityChart();
+            var employeesPerDepartment = _data.EmployeesPerDepartmentChart();
+            var averageSalaryPerDepartment = _data.AverageSalaryChart();
+            var averageAgePerDepartment = _data.AverageAgeChart();
+            var totalSalariesPerMonth = _data.TotalSalariesPerMonthChart();
+            var totalSalaryPerDepartment = _data.TotalSalaryPerDepartmentChart();
+            var ratioArray = new Ratio[] { departmentsPerCity, employeesPerDepartment, averageSalaryPerDepartment, averageAgePerDepartment, totalSalariesPerMonth, totalSalaryPerDepartment };
+
+            return Json(ratioArray, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult SupervisorDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult ChartsForSupervisor()
+        {
+            var salaryPerEmployee = _data.SalaryPerEmployeeChart();
+            var agePerEmployee = _data.AgePerEmployeeChart();
+            var genderPerDepartment = _data.GenderPerDepartmentChart();
+            var RatioArray = new Ratio[] { salaryPerEmployee, agePerEmployee, genderPerDepartment };
+
+
+            return Json(RatioArray, JsonRequestBehavior.AllowGet);
+
+        }
+
 
 
         //public ActionResult FinalizeProject(int? id)

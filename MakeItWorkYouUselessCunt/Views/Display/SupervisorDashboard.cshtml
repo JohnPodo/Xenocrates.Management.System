@@ -1,0 +1,196 @@
+﻿
+@{
+    ViewBag.Title = "SupervisorDashboard";
+}
+
+<h2>SupervisorDashboard</h2>
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/export-data.js"></script>
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/accessibility.js"></script>
+
+<div class="jumbotron">
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+            This chart shows the salary of each employee.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="age"></div>
+        <p class="highcharts-description">
+            This chart shows the age of each employee.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="gender"></div>
+        <p class="highcharts-description">
+            This chart shows the number of male and female employees per department.
+        </p>
+    </figure>
+</div>
+
+@section Scripts{
+    <script>
+        function statistics() {
+            return $.ajax({
+                type: "GET",
+                url: "/Display/ChartsForSupervisor",
+                dataType: "json"
+            })
+        }
+
+        $(document).ready(function () {
+            var getdata = statistics();
+            getdata.done(function (data) {
+                var salaryperemployee = data[0];
+                var ageperemployee = data[1];
+                var genderperdepartment = data[2];
+
+                salarychart(salaryperemployee);
+                agechart(ageperemployee);
+                genderchart(genderperdepartment);
+            })
+        });
+
+        function salarychart(data) {
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Salary Per Employee'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data.Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Salary'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Employees',
+                    data: data.Salaries
+                }]
+            });
+        }
+
+        function agechart(data) {
+            Highcharts.chart('age', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Age Per Employee'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data.Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Salary'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Employees',
+                    data: data.Ages
+                }]
+            });
+        }
+
+        function genderchart(data) {
+            Highcharts.chart('gender', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Gender Ratio By Department'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: ['Athens', 'Thessaloniki'],
+                    title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of Employees',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' employees'
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 80,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                    shadow: true
+                },
+                credits: {
+                    enabled: false
+                },
+                series: [{
+                    name: 'Male',
+                    data: [data.MaleAthens, data.FemaleAthens]
+                }, {
+                    name: 'Female',
+                    data: [data.MaleThessaloniki, data.FemaleThessaloniki]
+                }]
+            });
+        }
+
+
+    </script>
+
+
+
+
+
+
+
+}
+
