@@ -1,68 +1,78 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Worker>
 @{
     ViewBag.Title = "ViewAllWorkers";
-    List<SelectListItem> listItems = new List<SelectListItem>();
-    listItems.Add(new SelectListItem
-    {
-        Text = "City Of Department",
-        Value = "City Of Department"
-    });
-    listItems.Add(new SelectListItem
-    {
-        Text = "Full Name",
-        Value = "Full Name"
-    });
-}
-@Styles.Render("~/Content/viewWorkerStyle.css")
-<h2>ViewAllWorkers</h2>
 
-<div class="container">
+}
+<a href="@Url.Action("Register", "Account" )" style="font-size: 12px;" class="btn-add-add">Create New Worker</a>
+<div>
+    @using (Html.BeginForm())
+    {
     <div class="row">
-        <div class="col-md-2">
-            <dl>
-                <dt>@Html.ActionLink("Create Worker", "Register", "Account", null, new { @class = "btn btn-primary" })</dt>
-                <dt>@Html.ActionLink("Supervisors", "ViewAllSupervisors", "Display", new { @class = "btn btn-primary" })</dt>
-                <dt>@Html.ActionLink("Departments", "ViewAllDepartments", "Display", new { @class = "btn btn-primary" })</dt>
-                <dt>@Html.ActionLink("Employees", "ViewAllEmployees", "Display", new { @class = "btn btn-primary" })</dt>
-                <dt>@Html.ActionLink("Projects", "ViewAllProjects", "Display", new { @class = "btn btn-primary" })</dt>
-                <dt>@Html.ActionLink("Roles", "ViewAllRoles", "Display", new { @class = "btn btn-primary" })</dt>
-            </dl>
-        </div>
-        <div class="col-md-10">
-            <div class="row">
-                <div class="">
-                    @using (Html.BeginForm("SortedWorkers", "Display"))
-                    {
-                        @Html.Label("Sort By :", new { @class = "" }) @Html.DropDownList("Sort", listItems, new { @class = "" })
-                        <input type="submit" value="Sort" class="" />
-                    }
-                </div>
-                <div class="">
-                    @using (Html.BeginForm("FindWorkerByName", "Display"))
-                    {
-                        @Html.Label("Search Fullname :", new { @class = "" }) @Html.TextBox("Fullname", "", new { @class = "" })
-                        <input type="submit" value="Search" class="" />
-                    }
-                </div>
-            </div>
-            <div class="row">
-                @foreach (var worker in Model)
+        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+            Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
+
+            <datalist id="browsers">
+                @foreach (var item in ViewBag.Names)
                 {
-                    <div class="col-md-4">
-                        <div class="card" style="width: 18rem;">
-                            <img src="~/ProfPics/@worker.Pic" class="card-img-top" alt="Profile Pic Of User">
-                            <div class="card-body">
-                                <h5 class="card-title details1">@Html.DisplayFor(w => worker.FullName)</h5>
-                                <p class="card-text details1">Department in @Html.DisplayFor(w => worker.Department.City)</p>
-                                <div class="details1">
-                                @Html.ActionLink("Edit", "EditWorker", "Worker", new { id = worker.ID }, new { @class = "btn btn-primary details1" })
-                                @Html.ActionLink("Delete", "DeleteWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "btn btn-primary details1" })
-                           </div>
+                    <option value="@item" />
+                }
+            </datalist>
+        </p>
+        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+            Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
+        </p>
+        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+            See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "" }) in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "" }) Departments
+        </p>
+        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-2">
+            <input type="submit" value="Search" />
+            @Html.ActionLink("Reset", "ViewAllWorkers", "Display", new { @class = "btn btn-info" })
+            </p>
+    </div>
+    }
+</div>
+
+<div class="row">
+
+    <div class="col-12 grid-margin">
+        <div class="col-md-12 row second-row">
+
+
+
+            @foreach (var worker in Model)
+            {
+
+
+
+                <div class="user-card">
+                    <div class="card  card-workers">
+                        <div class="first-col">
+                            <div class="our-team">
+                                <div class="picture">
+                                    <img class="img-fluid" src="~/ProfPics/@worker.Pic">
                                 </div>
+                                <div class="team-content">
+                                    <h3 class="name">@Html.DisplayFor(w => worker.FullName)</h3>
+                                    <h4 class="title">Department in @Html.DisplayFor(w => worker.Department.City)</h4>
+                                </div>
+                                <div class="button">
+                                    <button class="a button-worker">@Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
+                                    <button class="b button-worker">@Html.ActionLink("Delete", "DeleteWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "" })</button>
+                                    <button class="c button-worker">Details</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                }
-            </div>
+                </div>
+
+
+            }
+
+
+
+
+
+
         </div>
     </div>
 </div>

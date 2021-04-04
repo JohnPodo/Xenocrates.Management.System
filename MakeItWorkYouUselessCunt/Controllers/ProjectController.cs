@@ -4,6 +4,7 @@ using System.Linq;
 using System.Net;
 using System.Web;
 using System.Web.Mvc;
+using ManagementSystemVersionTwo.Models;
 using ManagementSystemVersionTwo.Services.Data;
 using ManagementSystemVersionTwo.Services.ProjectServices;
 using ManagementSystemVersionTwo.ViewModels;
@@ -29,40 +30,42 @@ namespace ManagementSystemVersionTwo.Controllers
         
         public ActionResult CreateProject()
         {
-            var employees = _data.WorkersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+            var employees = _data.UsersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
             var roleId = _data.FindRoleByName("Employee").Id;
             List<DummyForProject> f3 = new List<DummyForProject>();
-            foreach(var worker in employees)
+            for(int i=0;i<employees.Count;i++)
             {
-                if (worker.Roles.SingleOrDefault(r=>r.RoleId==roleId)==null) {
-                    employees.Remove(worker);
+                if (employees[i].Roles.SingleOrDefault(r=>r.RoleId==roleId)==null) {
+                    employees.Remove(employees[i]);
                 }
                 else
                 {
                     f3.Add(new DummyForProject()
                     {
-                        ID = worker.Id,
-                        Fullname = worker.Worker.FullName,
-                        CV = worker.Worker.CV
-                    });
+                        ID = employees[i].Id,
+                        Fullname = employees[i].Worker.FullName,
+                        CV = employees[i].Worker.CV,
+                        Pic = employees[i].Worker.Pic
+                });
                 }
             }
             CreateProjectViewModel f2 = new CreateProjectViewModel()
             {
                 Users=f3
             };
-            return View(f3);
+            return View(f2);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult CreateProject(CreateProjectViewModel f2)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid&&f2.Users.Count!=0)
             {
                 _external.CreateProject(f2,User.Identity.GetUserId());
+                return RedirectToAction("ViewAllProjects", "Display");
             }
-            return View();
+            return RedirectToAction("CreateProject");
         }
 
         public ActionResult DeleteProject(int? id)
@@ -84,7 +87,7 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult DeleteProject(int id)
         {
             _external.DeleteProject(id);
-            return View();
+            return RedirectToAction("ViewAllProjects","Display");
         }
 
         public ActionResult EditProject(int? id)
@@ -98,24 +101,25 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var employees = _data.WorkersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+            var employees = _data.UsersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
             var roleId = _data.FindRoleByName("Employee").Id;
             List<DummyForProject> f3 = new List<DummyForProject>();
-            foreach (var worker in employees)
+            for(int i=0;i<employees.Count;i++)
             {
-                if (worker.Roles.SingleOrDefault(r => r.RoleId == roleId) == null)
+                if (employees[i].Roles.SingleOrDefault(r => r.RoleId == roleId) == null)
                 {
-                    employees.Remove(worker);
+                    employees.Remove(employees[i]);
                 }
                 else
                 {
-                    if (worker.Worker.MyProjects.SingleOrDefault(p => p.ID == pro.ID) != null)
+                    if (pro.WorkersInMe.FirstOrDefault(s=>s.WorkerID== employees[i].Worker.ID)!=null)
                     {
                         f3.Add(new DummyForProject()
                         {
-                            ID = worker.Id,
-                            Fullname = worker.Worker.FullName,
-                            CV = worker.Worker.CV,
+                            ID = employees[i].Id,
+                            Fullname = employees[i].Worker.FullName,
+                            CV = employees[i].Worker.CV,
+                            Pic = employees[i].Worker.Pic,
                             IsSelected = true
                         });
                     }
@@ -123,31 +127,34 @@ namespace ManagementSystemVersionTwo.Controllers
                     {
                         f3.Add(new DummyForProject()
                         {
-                            ID = worker.Id,
-                            Fullname = worker.Worker.FullName,
-                            CV = worker.Worker.CV,
+                            ID = employees[i].Id,
+                            Fullname = employees[i].Worker.FullName,
+                            CV = employees[i].Worker.CV,
+                            Pic = employees[i].Worker.Pic,
                             IsSelected = false
                         });
                     }
                 }
             }
-            CreateProjectViewModel f2 = new CreateProjectViewModel()
+            EditProjectViewModel f2 = new EditProjectViewModel()
             {
-                Project=pro,
-                Users = f3
+                Users =new List<DummyForProject>()
             };
-            return View(f3);
+            f2.Project = pro;
+            f2.Users = f3;
+            return View(f2);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProject(CreateProjectViewModel f2)
+        public ActionResult EditProject(EditProjectViewModel f2)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && f2.Users.Count != 0)
             {
                 _external.EditProject(f2);
+                return RedirectToAction("ViewAllProjects", "Display");
             }
-            return View();
+            return View(f2);
         }
     }
 }

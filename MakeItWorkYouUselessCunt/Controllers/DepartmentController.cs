@@ -7,6 +7,7 @@ using System.Web.Mvc;
 using ManagementSystemVersionTwo.Models;
 using ManagementSystemVersionTwo.Services.Data;
 using ManagementSystemVersionTwo.Services.DepartmentServices;
+using Microsoft.AspNet.Identity;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -95,6 +96,16 @@ namespace ManagementSystemVersionTwo.Controllers
             return RedirectToAction("ViewAllDepartments", "Display");
         }
 
-        
+
+        public ActionResult Chat()
+        {
+            var id = User.Identity.GetUserId();
+            var user = _data.FindUserByID(id);
+            var messages = user.Worker.Department.Messages.ToList();
+            ViewBag.Name = user.Worker.FullName;
+            return View(messages);
+        }
+
+
     }
 }

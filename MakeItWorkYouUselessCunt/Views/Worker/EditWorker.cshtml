@@ -1,14 +1,14 @@
-﻿@model ManagementSystemVersionTwo.Models.Worker
+﻿@model ManagementSystemVersionTwo.ViewModels.EditWorker
 @{
     ViewBag.Title = "EditWorker";
 }
 
 <h2>EditWorker</h2>
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("EditWorker", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" }))
 {
     @Html.AntiForgeryToken()
-
+    @Html.HiddenFor(x => Model.UserID)
 <div class="form-horizontal">
     <h3>Worker</h3>
     <hr />
@@ -28,7 +28,21 @@
             @Html.ValidationMessageFor(model => model.LastName, "", new { @class = "text-danger" })
         </div>
     </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Username, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Username, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Username, "", new { @class = "text-danger" })
+        </div>
 
+    </div>
+    <div class="form-group">
+        @Html.LabelFor(model => model.Email, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.Email, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Email, "", new { @class = "text-danger" })
+        </div>
+    </div>
     <div class="form-group">
         @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
@@ -68,22 +82,50 @@
             @Html.ValidationMessageFor(model => model.Salary, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(model => model.Department, htmlAttributes: new { @class = "control-label col-md-2" })
+        <span class="col-md-2">Department</span>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.Department, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Department, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.IdOfDepartment, new SelectList(Model.AllDepartments, "ID", "City"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.IdOfDepartment, "", new { @class = "text-danger" })
         </div>
     </div>
-
     <div class="form-group">
-        @Html.LabelFor(model => model.MyProjects, htmlAttributes: new { @class = "control-label col-md-2" })
+        <span class="col-md-2">Role</span>
         <div class="col-md-10">
-            @Html.EditorFor(model => model.MyProjects, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.MyProjects, "", new { @class = "text-danger" })
+            @Html.DropDownListFor(model => model.SelectedRole, new SelectList(Model.Roles, "Id", "Name"), new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.SelectedRole, "", new { @class = "text-danger" })
         </div>
     </div>
+    
+        <div class="form-group">
+            <label>CV</label>
+            <input type="file" name="img[]" class="file-upload-default">
+            <div class="input-group col-md-12">
+
+                @Html.TextBoxFor(m => Model.CV, new { type = "file", accept = "application/pdf", @class = "form-control file-upload-info" })
+                @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "" })
+
+            </div>
+        </div>
+    
+        <div class="form-group">
+            <label>Contract of Employement</label>
+            <input type="file" name="img[]" class="file-upload-default">
+            <div class="input-group col-md-12">
+                @Html.TextBoxFor(m => Model.ContractOfEmployment, new { type = "file", accept = "application/pdf", @class = "form-control file-upload-info" })
+                @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "" })
+            </div>
+        </div>
+   
+        <div class="form-group">
+            <label>Profile Picture</label>
+            <input type="file" name="img[]" class="file-upload-default">
+            <div class="input-group col-md-12">
+                @Html.TextBoxFor(m => Model.ProfilePicture, new { onchange = "ChangePic(this)", type = "file", accept = "image/jpeg", @class = "form-control file-upload-info" })
+                @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "" })
+            </div>
+        </div>
+    
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
@@ -95,5 +137,5 @@
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Back to List", "../Display/ViewAllWorkers")
 </div>
