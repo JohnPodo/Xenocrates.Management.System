@@ -5,8 +5,8 @@ using System.Web;
 using ManagementSystemVersionTwo.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
-using ManagementSystemVersionTwo.StatisticsModels;
 using System.Web.Mvc;
+using ManagementSystemVersionTwo.StatisticsModels;
 
 namespace ManagementSystemVersionTwo.Services.Data
 {
@@ -167,7 +167,6 @@ namespace ManagementSystemVersionTwo.Services.Data
             return data;
         }
 
-        public List<Worker> FindWorkerByName(string search, List<Worker> data) => data.Where(w => (w.FirstName + " " + w.LastName).Contains(search)).ToList();
         public List<string> DepartmentsForAutoComplete() => _context.Departments.Select(x => x.City).ToList();
 
         public List<string> RolesForAutoComplete() => _context.Roles.Select(x => x.Name).ToList();
@@ -207,24 +206,7 @@ namespace ManagementSystemVersionTwo.Services.Data
             return workers;
         }
 
-        public List<Worker> GetWorkersPerDepartmentForSort(int id, List<Worker> data) => data.Where(u => u.DepartmentID == id).ToList();
-
-
-        #endregion
-
-        #region DepartmentData
-        public List<Department> AllDepartments() => _context.Departments.Include(s => s.WorkersInThisDepartment).ToList();
-
-        public Department FindDepartmentByID(int id) => _context.Departments.Include(s => s.WorkersInThisDepartment).SingleOrDefault(s => s.ID == id);
-
-        public Department FindDepartmentByCity(string City) => _context.Departments.Include(s => s.WorkersInThisDepartment).Single(s => s.City == City);
-
-        //Filtering and Sorting
-        public List<Department> GetDepartmentsByCity(string searchString, List<Department> departments) => departments.Where(x => x.City.Contains(searchString)).ToList();
-
-        public List<string> DepartmentsForAutoComplete() => _context.Departments.Select(x => x.City).ToList();
-
-
+        public List<Worker> GetWorkersPerDepartmentForSort(int id, List<Worker> data) =>data.Where(u => u.DepartmentID == id).ToList();
 
         public List<Department> SortDepartments(string sort, List<Department> departments)
         {
@@ -246,17 +228,6 @@ namespace ManagementSystemVersionTwo.Services.Data
             }
         }
 
-
-
-        #endregion
-
-        #region RoleData
-
-        public IdentityRole FindRoleByName(string name) => _context.Roles.Include(r => r.Users).Single(s => s.Name == name);
-
-        public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).Where(s => s.Name != "Admin").ToList();
-
-        public IdentityRole FindRoleByID(string id) => _context.Roles.Include(r => r.Users).Single(s => s.Id == id);
         public List<Department> GetDepartmentsByCity(string searchString, List<Department> departments) => departments.Where(x => x.City.Contains(searchString)).ToList();
 
         public List<IdentityRole> SortRoles(string sort, List<IdentityRole> roles)
@@ -375,15 +346,13 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         public Worker FindWorkerByID(int id) => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(w => w.MyProjects).Include(w => w.Payments).SingleOrDefault(w => w.ID == id);
 
-        public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(p => p.MyProjects).ToList();
+        public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(p=>p.MyProjects).ToList();
 
         public List<Worker> GetWorkersInRole(string roleID)
         {
             var workers = _context.Workers.Where(r => r.ApplicationUser.Roles.SingleOrDefault(w => w.RoleId == roleID) != null).ToList();
             return workers;
         }
-
-        public List<Worker> GetWorkersPerDepartment(int id) => _context.Workers.Include(w => w.ApplicationUser).Include(s => s.Department).Where(u => u.DepartmentID == id).ToList();
 
 
 
@@ -552,6 +521,8 @@ namespace ManagementSystemVersionTwo.Services.Data
             obj.SalariesPerMonthThessaloniki = new List<decimal>() { januaryThessaloniki, februaryThessaloniki, marchThessaloniki, aprilThessaloniki, mayThessaloniki, juneThessaloniki, julyThessaloniki, augustThessaloniki, septemberThessaloniki, octoberThessaloniki, novemberThessaloniki, decemberThessaloniki};
             return obj;
         }
+
+        public List<Project> FindProjectsPerWorker(int id) => _context.Projects.Include(s => s.WorkersInMe).Where(p => p.WorkersInMe.FirstOrDefault(w=>w.WorkerID==id)!=null).ToList();
 
         #endregion
 
