@@ -135,6 +135,7 @@ namespace ManagementSystemVersionTwo.Services.Data
             return roleItems;
         }
 
+
         public List<SelectListItem> AvailableDepartmentsFilteringViewBag()
         {
             List<SelectListItem> departmentItems = new List<SelectListItem>();
@@ -264,6 +265,19 @@ namespace ManagementSystemVersionTwo.Services.Data
             }
         }
 
+        public List<PaymentDetails> SortDate(string sort, List<PaymentDetails> date)
+        {
+            switch (sort)
+            {
+                case "Date Asc":
+                    return date.OrderBy(x => x.Date).ToList();
+                case "Date Desc":
+                    return date.OrderByDescending(x => x.Date).ToList();
+                default:
+                    return date;
+            }
+        }
+
         #endregion
 
 
@@ -344,8 +358,13 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         public Worker FindWorkerByID(int id) => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(w => w.MyProjects).Include(w => w.Payments).Single(w => w.ID == id);
 
-        public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(p=>p.MyProjects).ToList();
-
+        public List<Worker> WorkerPaymentDate(DateTime date)
+        {
+            var paymentDate = _context.Workers.Include(w => w.Payments.Where(d => d.Date == date)).ToList();
+            return paymentDate;
+        }
+        public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(p=>p.MyProjects).Include(u => u.Payments).ToList();
+        
         public List<Worker> GetWorkersInRole(string roleID)
         {
             var workers = _context.Workers.Where(r => r.ApplicationUser.Roles.SingleOrDefault(w => w.RoleId == roleID) != null).ToList();
@@ -354,10 +373,6 @@ namespace ManagementSystemVersionTwo.Services.Data
 
 
 
-        #endregion
-
-        #region PaymentData
-        public List<Worker> AllWorkersWithPayments() => _context.Workers.Include(w => w.Payments).ToList();
         #endregion
 
         #region ApplicationUserData
