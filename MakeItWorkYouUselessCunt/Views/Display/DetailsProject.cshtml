@@ -1,0 +1,9 @@
+﻿@model ManagementSystemVersionTwo.Models.Project
+@{
+    ViewBag.Title = "DetailsProject";
+}
+
+<h2>DetailsProject</h2>
+@Html.DisplayNameFor(p => p.Title)
+@Html.DisplayFor(p => p.Title)
+<a href="@Url.Action("DownloadFile", "Project",new { fileName = Model.Attachments })">aaa</a>

@@ -15,35 +15,35 @@
                     <p class="views-comments">Here you can view all Projects in your Department.</p>
                     <hr />
                     <div>
-    @using (Html.BeginForm())
-    {
-    <div class="row">
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-            Search Project by Title:@Html.TextBox("title", "", new { list = "browsers", @class = "" })
+                        @using (Html.BeginForm())
+                        {
+                            <div class="row">
+                                <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+                                    Search Project by Title:@Html.TextBox("title", "", new { list = "browsers", @class = "" })
 
-            <datalist id="browsers">
-                @foreach (var item in ViewBag.Names)
-                {
-                    <option value="@item" />
-                }
-            </datalist>
-        </p>
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-            Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
-        </p>
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-            Status : @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
-        </p>
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-            See Projects in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "" }) Departments
-        </p>
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-2">
-            <input type="submit" value="Search" />
-            @Html.ActionLink("Reset", "ViewAllProjects", "Display", new { @class = "btn btn-info" })
-        </p>
-    </div>
-    }
-</div>
+                                    <datalist id="browsers">
+                                        @foreach (var item in ViewBag.Names)
+                                        {
+                                            <option value="@item" />
+                                        }
+                                    </datalist>
+                                </p>
+                                <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+                                    Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
+                                </p>
+                                <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+                                    Status : @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
+                                </p>
+                                <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+                                    See Projects in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "" }) Departments
+                                </p>
+                                <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-2">
+                                    <input type="submit" value="Search" />
+                                    @Html.ActionLink("Reset", "ViewAllProjects", "Display", new { @class = "btn btn-info" })
+                                </p>
+                            </div>
+                        }
+                    </div>
                     <table class="table table-striped">
                         <thead>
                             <tr>
@@ -92,6 +92,7 @@
                                     <td>
                                         @Html.ActionLink("Edit", "EditProject", "Project", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
                                         @Html.ActionLink("Delete", "DeleteProject", "Project", new { id = pro.ID }, new { @class = "btn-sm btn-sm-project btn-info btn-fw" })
+                                        
                                     </td>
                                 </tr>
                             }

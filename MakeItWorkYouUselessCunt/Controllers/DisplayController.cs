@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ManagementSystemVersionTwo.Services.Data;
+using Microsoft.AspNet.Identity;
 using ManagementSystemVersionTwo.StatisticsModels;
 
 namespace ManagementSystemVersionTwo.Controllers
@@ -177,6 +178,21 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(data);
         }
 
+        public ActionResult DetailsProject(int? id)
+        {
+            if(id is null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var project = _data.FindProjectById((int)id);
+            if (project is null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(project);
+        }
+
+
         public ActionResult DetailsDepartment(int? id)
         {
 
@@ -229,8 +245,26 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
 
-
-
+        public ActionResult NavbarPartial()
+        {
+            var user = _data.FindUserByID(User.Identity.GetUserId());
+            var ifIsAdmin = User.IsInRole("Admin") ? true : false;
+            var ifIsSupervisor = User.IsInRole("Supervisor") ? true : false;
+            ViewBag.roleIdentity = ifIsAdmin;
+            if (ifIsAdmin == true)
+            {
+                ViewBag.roleIcon = "/EIKONES/boss.png";
+            }
+            else if(ifIsAdmin == false && ifIsSupervisor == true)
+            {
+                ViewBag.roleIcon = "/EIKONES/boss.png";
+            }
+            else
+            {
+                ViewBag.roleIcon = "/EIKONES/boss.png";
+            }
+            return PartialView(user);
+        }
         //public ActionResult FinalizeProject(int? id)
         //{
         //    if (id == null)
