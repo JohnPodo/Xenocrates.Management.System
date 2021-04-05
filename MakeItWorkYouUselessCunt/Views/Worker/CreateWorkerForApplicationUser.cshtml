@@ -120,7 +120,7 @@
                                     <input type="file" name="img[]" class="file-upload-default">
                                     <div class="input-group col-md-12">
 
-                                        @Html.TextBoxFor(m => Model.CV, new {onchange="validatePDF(this)" , type = "file", accept = "application/pdf", @class = "form-control file-upload-info", id = "filePDF" })
+                                        @Html.TextBoxFor(m => Model.CV, new { type = "file", accept = "application/pdf", @class = "form-control file-upload-info", id = "filePDF" })
                                         @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "text-danger", id = "errorPDF" })
 
                                     </div>
@@ -131,7 +131,7 @@
                                     <label>Contract of Employement</label>
                                     <input type="file" name="img[]" class="file-upload-default">
                                     <div class="input-group col-md-12">
-                                        @Html.TextBoxFor(m => Model.ContractOfEmployment, new { onchange = "validatePDF(this)",  type = "file", accept = "application/pdf", @class = "form-control file-upload-info" , id="filePDF" })
+                                        @Html.TextBoxFor(m => Model.ContractOfEmployment, new {   type = "file", accept = "application/pdf", @class = "form-control file-upload-info" , id="filePDF" })
                                         @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "text-danger",id= "errorPDF" })
                                     </div>
                                 </div>
@@ -141,7 +141,7 @@
                                     <label>Profile Picture</label>
                                     <input type="file" name="img[]" class="file-upload-default">
                                     <div class="input-group col-md-12">
-                                        @Html.TextBoxFor(m => Model.ProfilePicture, new { onchange = "ChangePic(this) && validateJPG(this)", type = "file", accept = "image/jpeg", @class = "form-control file-upload-info", id = "fileJPG" })
+                                        @Html.TextBoxFor(m => Model.ProfilePicture, new { onchange = "ChangePic(this)", type = "file", accept = "image/jpeg", @class = "form-control file-upload-info", id = "fileJPG" })
                                         @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "text-danger"})
                                     </div>
                                 </div>
@@ -180,9 +180,8 @@
     var err = document.getElementById('errorPDF');
     var fil = document.getElementById('filePDF');
 
-    function validatePDF(object) {
-        console.log("Eimai o validator");
-        var file = object.value;
+    function validatePDF(fil) {
+        var file = fil.value;
         var len = file.length;
         var ext = file.slice(len - 4, len);
         if (ext.toUpperCase() == ".PDF") {
@@ -195,7 +194,7 @@
     }
 
     function formOK() {
-        if (validatePDF(filePDF) == false) {
+        if (validatePDF(fil) === false) {
             return false;
         } else {
             return true;
@@ -207,9 +206,9 @@
     var err1 = document.getElementById('errorJPG');
     var fil1 = document.getElementById('fileJPG');
 
-    function validateJPG(object) {
+    function validateJPG(fil1) {
         console.log("Eimai o validator jpg");
-        var file = object.value;
+        var file = fil1.value;
         var len = file.length;
         var ext = file.slice(len - 4, len);
         if (ext.toUpperCase() == ".JPG") {
@@ -222,7 +221,7 @@
     }
 
     function formOK1() {
-        if (validateJPG(fileJPG) == false) {
+        if (validateJPG(fil1) === false) {
             return false;
         } else {
             return true;

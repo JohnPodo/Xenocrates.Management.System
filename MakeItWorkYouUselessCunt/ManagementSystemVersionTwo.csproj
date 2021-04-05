@@ -502,6 +502,7 @@
     <Content Include="Views\Worker\Calendar.cshtml" />
     <Content Include="Views\Display\AdminDashboard.cshtml" />
     <Content Include="Views\Display\SupervisorDashboard.cshtml" />
+    <Content Include="Views\Payment\WorkerPaymentHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

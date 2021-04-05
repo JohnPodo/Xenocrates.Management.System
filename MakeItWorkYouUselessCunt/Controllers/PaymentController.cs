@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Threading.Tasks;
 using System.Web;
 using System.Web.Mvc;
@@ -32,7 +33,7 @@ namespace ManagementSystemVersionTwo.Controllers
         // GET: Payment
         public ActionResult Index(string searchName, string orderBy)
         {
-            var data = _data.AllWorkersWithPayments();
+            var data = _data.AllWorkers();
             if (!string.IsNullOrEmpty(searchName))
             {
                 data = _data.FindWorkerByName(searchName, data);
@@ -46,7 +47,7 @@ namespace ManagementSystemVersionTwo.Controllers
             ViewBag.Names = _data.GetWorkerNamesForAutocomplete();
             return View(data);
         }
-
+        
         public ActionResult ShowPartial(int id)
         {
             var worker = _data.FindWorkerByID(id);
@@ -69,5 +70,26 @@ namespace ManagementSystemVersionTwo.Controllers
             }
 
         }
+        public ActionResult WorkerPaymentHistory(string searchName, string orderBy, string dateOrder)
+        {
+            var data = _data.AllWorkers();
+            if (!string.IsNullOrEmpty(searchName))
+            {
+                data = _data.FindWorkerByName(searchName, data);
+            }
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                data = _data.SortSalary(orderBy, data);
+            }
+            //if (!string.IsNullOrEmpty(dateOrder))
+            //{
+            //    data = _data.SortDate(dateOrder, data);
+            //}
+
+            ViewBag.SortSalary = _data.SalarySortingOptionsViewBag();
+            ViewBag.Names = _data.GetWorkerNamesForAutocomplete();
+            return View(data);
+        }
+
     }
 }
