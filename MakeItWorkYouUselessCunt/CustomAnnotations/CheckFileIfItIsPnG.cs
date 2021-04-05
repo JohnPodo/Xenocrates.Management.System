@@ -16,7 +16,7 @@ namespace ManagementSystemVersionTwo.CustomAnnotations
             var file = (HttpPostedFileBase)value;
             var check = true;
             if (!(file is null)){ 
-            check= file.FileName.EndsWith(".png");
+            check= file.FileName.EndsWith(".jpg");
             }
             return check;
         }

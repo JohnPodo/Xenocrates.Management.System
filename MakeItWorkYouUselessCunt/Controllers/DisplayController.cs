@@ -5,6 +5,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ManagementSystemVersionTwo.Services.Data;
+using ManagementSystemVersionTwo.StatisticsModels;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -102,7 +103,7 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(data);
         }
 
-        public ActionResult ViewAllProjects(string title, string orderBy, string depID, string status )
+        public ActionResult ViewAllProjects(string title, string orderBy, string depID, string status)
         {
             var data = _data.AllProjects();
             if (!string.IsNullOrEmpty(title))
@@ -191,19 +192,45 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(department);
         }
 
-        public ActionResult DetailsWorker(string id)
+        public ActionResult AdminDashboard()
         {
-            if (string.IsNullOrEmpty(id))
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            var user = _data.FindUserByID(id);
-            if (user == null)
-            {
-                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            }
-            return View(user);
+            return View();
         }
+
+        //Chart For Departments Per City
+        public ActionResult ChartsForAdmin()
+        {
+            var departmentsPerCity = _data.DepartmentsPerCityChart();
+            var employeesPerDepartment = _data.EmployeesPerDepartmentChart();
+            var averageSalaryPerDepartment = _data.AverageSalaryChart();
+            var averageAgePerDepartment = _data.AverageAgeChart();
+            var totalSalariesPerMonth = _data.TotalSalariesPerMonthChart();
+            var totalSalaryPerDepartment = _data.TotalSalaryPerDepartmentChart();
+            var ratioArray = new Ratio[] { departmentsPerCity, employeesPerDepartment, averageSalaryPerDepartment, averageAgePerDepartment, totalSalariesPerMonth, totalSalaryPerDepartment };
+
+            return Json(ratioArray, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult SupervisorDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult ChartsForSupervisor()
+        {
+            var salaryPerEmployee = _data.SalaryPerEmployeeChart();
+            var agePerEmployee = _data.AgePerEmployeeChart();
+            var genderPerDepartment = _data.GenderPerDepartmentChart();
+            var RatioArray = new Ratio[] { salaryPerEmployee, agePerEmployee, genderPerDepartment };
+
+
+            return Json(RatioArray, JsonRequestBehavior.AllowGet);
+
+        }
+
+
+
         //public ActionResult FinalizeProject(int? id)
         //{
         //    if (id == null)
