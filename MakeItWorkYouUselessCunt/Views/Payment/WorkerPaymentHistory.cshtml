@@ -1,0 +1,52 @@
+﻿@model List<ManagementSystemVersionTwo.Models.Worker>
+@{
+    ViewBag.Title = "WorkerPaymentHistory";
+}
+<div>
+    @using (Html.BeginForm())
+    {
+        <div class="row">
+            <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+                Search Employee:@Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
+
+                <datalist id="browsers">
+                    @foreach (var item in ViewBag.Names)
+                    {
+                        <option value="@item" />
+                    }
+                </datalist>
+            </p>
+            <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+                Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortSalary, "Value", "Text"), "None", new { @class = "" })
+            </p>
+            <p class="col-md-1">
+                <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                @Html.ActionLink("Reset", "WorkerPaymentHistory", "Payment", new { @class = "fa fa-refresh" })
+            </p>
+        </div>
+    }
+</div>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Fullname</th>
+            <th>Salary</th>
+            <th>Payment Dates</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var wo in Model)
+        {
+            <tr>
+                <td>@wo.FullName</td>
+                <td>@wo.Salary</td>
+                <td>
+                    @foreach (var payment in wo.Payments)
+                    {
+                    <span> @Html.DisplayFor(p => payment.Date)</span> <br/><br/>
+                    }
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

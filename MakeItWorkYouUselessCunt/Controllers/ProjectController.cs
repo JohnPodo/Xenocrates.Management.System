@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
@@ -151,6 +152,12 @@ namespace ManagementSystemVersionTwo.Controllers
                 return RedirectToAction("ViewAllProjects", "Display");
             }
             return View(f2);
+        }
+
+        public FileResult DownloadFile(string fileName)
+        {
+            string path = HttpContext.Server.MapPath("~/ProjectFiles/" + fileName);
+            return File(path,"application/force-download",Path.GetFileName(path));
         }
     }
 }
