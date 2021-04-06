@@ -8,6 +8,7 @@ using ManagementSystemVersionTwo.Models;
 using ManagementSystemVersionTwo.Services.Data;
 using ManagementSystemVersionTwo.Services.WorkerServices;
 using ManagementSystemVersionTwo.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -152,6 +153,12 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult Calendar(int? id)
         {
+            ViewBag.Role = User.IsInRole("Employee");
+            if (ViewBag.Role)
+            {
+                var user = _data.FindUserByID(User.Identity.GetUserId());
+                id = user.Worker.ID;
+            }
             if (id is null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

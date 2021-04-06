@@ -347,7 +347,7 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         public IdentityRole FindRoleByName(string name) => _context.Roles.Include(r => r.Users).Single(s => s.Name == name);
 
-        public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).Where(s=>s.Name!="Admin").ToList();
+        public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).Where(s => s.Name != "Admin").ToList();
 
         public IdentityRole FindRoleByID(string id) => _context.Roles.Include(r => r.Users).Single(s => s.Id == id);
 
@@ -396,6 +396,18 @@ namespace ManagementSystemVersionTwo.Services.Data
         public List<Project> AllActiveProjects() => _context.Projects.Include(s => s.WorkersInMe).Where(s => s.Finished == false).ToList();
 
         public List<Project> AllFinishedProjects() => _context.Projects.Include(s => s.WorkersInMe).Where(s => s.Finished == true).ToList();
+
+        public void FinalizeProject(Project pro)
+        {
+            var projectInDb = _context.Projects.Find(pro.ID);
+            if (!projectInDb.Finished)
+            {
+                projectInDb.Finished = true;
+                _context.Entry(projectInDb).State = EntityState.Modified;
+                _context.SaveChanges();
+            }
+            
+        }
         #endregion
 
         #region Statistics
