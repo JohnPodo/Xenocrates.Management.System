@@ -122,6 +122,22 @@
         }
 
         function genderchart(data) {
+            dataToPopulate = [];
+            var males = {
+                name: "Male",
+                data: []
+            };
+            var females = {
+                name: "Female",
+                data: []
+            };
+            for (let i = 0; i < data.Count.length; i++) {
+                males.data.push(data.Count[i]);
+                females.data.push(data.Ages[i]);
+            }
+            dataToPopulate.push(males);
+            dataToPopulate.push(females);
+
             Highcharts.chart('gender', {
                 chart: {
                     type: 'bar'
@@ -133,7 +149,7 @@
                     text: ''
                 },
                 xAxis: {
-                    categories: ['Athens', 'Thessaloniki'],
+                    categories: data.Names,
                     title: {
                         text: null
                     }
@@ -173,13 +189,7 @@
                 credits: {
                     enabled: false
                 },
-                series: [{
-                    name: 'Male',
-                    data: [data.MaleAthens, data.FemaleAthens]
-                }, {
-                    name: 'Female',
-                    data: [data.MaleThessaloniki, data.FemaleThessaloniki]
-                }]
+                series: dataToPopulate
             });
         }
 

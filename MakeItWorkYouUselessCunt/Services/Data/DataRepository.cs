@@ -388,45 +388,62 @@ namespace ManagementSystemVersionTwo.Services.Data
         //Gets the number of Departments Per City
         public Ratio DepartmentsPerCityChart()
         {
-            int athens = _context.Departments.Where(d => d.City == "Athens").Count();
-            int thessaloniki = _context.Departments.Where(d => d.City == "Thessaloniki").Count();
+            int count;
+            var departments = _context.Departments.Select(d => d.City).ToList();
             Ratio obj = new Ratio();
-            obj.Athens = athens;
-            obj.Thessaloniki = thessaloniki;
+            foreach (var item in departments)
+            {
+                
+                count = departments.Count(x => x == item);
+                obj.Count.Add(count);
+            }
+            foreach (var item in departments)
+            {
+                obj.Names.Add(item);
+            }
+
             return obj;
         }
 
         //Gets the number of Employees Per Department
         public Ratio EmployeesPerDepartmentChart()
         {
-            int athens = _context.Workers.Where(d => d.Department.City == "Athens").Count();
-            int thessaloniki = _context.Workers.Where(d => d.Department.City == "Thessaloniki").Count();
+            var departmentNames = _context.Departments.Select(x => x.City + " " + x.Adress).ToList();
+            var employeesCount = _context.Departments.Select(x => x.WorkersInThisDepartment.Count()).ToList();
+
             Ratio obj = new Ratio();
-            obj.Athens = athens;
-            obj.Thessaloniki = thessaloniki;
+            obj.Names = departmentNames;
+            obj.Count = employeesCount;
             return obj;
         }
 
         //Gets the Average Salary of Employees Per Department
         public Ratio AverageSalaryChart()
         {
-            var athens = _context.Workers.Where(d => d.Department.City == "Athens").Select(x => x.Salary).Average();
-            var thessaloniki = _context.Workers.Where(d => d.Department.City == "Thessaloniki").Select(x => x.Salary).Average();
+            decimal averageSalary;
+            var departmentNames = _context.Departments.Select(x => x.City).ToList();
             Ratio obj = new Ratio();
-            obj.SalaryAthens = athens;
-            obj.SalaryThessaloniki = thessaloniki;
+            foreach (var item in departmentNames)
+            {
+                averageSalary = _context.Workers.Where(x => x.Department.City == item).Select(x => x.Salary).Average();
+                obj.Salaries.Add(averageSalary);
+            }
+            obj.Names = departmentNames;
             return obj;
         }
 
         //Gets the Average Age of Employees Per Department
         public Ratio AverageAgeChart()
         {
-            var averageAgeAthens = _context.Workers.Where(d => d.DepartmentID == 1).Select(x => DateTime.Now.Year - x.DateOfBirth.Year).Average();
-
-            var averageAgeThessaloniki = _context.Workers.Where(d => d.DepartmentID == 2).Select(x => DateTime.Now.Year - x.DateOfBirth.Year).Average();
+            double ages;
+            var departmentNames = _context.Departments.Select(x => x.City).ToList();
             Ratio obj = new Ratio();
-            obj.AgeAthens = (double)averageAgeAthens;
-            obj.AgeThessaloniki = (double)averageAgeThessaloniki;
+            foreach (var item in departmentNames)
+            {
+                ages = _context.Workers.Where(x => x.Department.City == item).Select(x => DateTime.Now.Year - x.DateOfBirth.Year).Average();
+                obj.AverageAge.Add(ages);
+            }
+            obj.Names = departmentNames;
             return obj;
 
         }
@@ -456,69 +473,60 @@ namespace ManagementSystemVersionTwo.Services.Data
         //Gets the Number of Male and Female Employees Per Department 
         public Ratio GenderPerDepartmentChart()
         {
-            var maleAthens = _context.Workers.Where(d => d.DepartmentID == 1).Where(x => x.Gender == "Male").Count();
-            var maleThessaloniki = _context.Workers.Where(d => d.DepartmentID == 2).Where(x => x.Gender == "Male").Count();
-
-            var femaleAthens = _context.Workers.Where(d => d.DepartmentID == 1).Where(x => x.Gender == "Female").Count();
-            var femaleThessaloniki = _context.Workers.Where(d => d.DepartmentID == 2).Where(x => x.Gender == "Female").Count();
             Ratio obj = new Ratio();
-            obj.MaleAthens = maleAthens;
-            obj.MaleThessaloniki = maleThessaloniki;
-            obj.FemaleAthens = femaleAthens;
-            obj.FemaleThessaloniki = femaleThessaloniki;
+
+            var departmentNames = _context.Departments.Select(x => x.City).ToList();
+            var departmentIds = _context.Departments.Select(x => x.ID).ToList();
+            var dep = _context.Workers.ToList();
+            foreach (var id in departmentIds)
+            {
+                var males = dep.Where(x => x.DepartmentID == id).Count(x => x.Gender == "Male");
+                obj.Count.Add(males);
+                var females = dep.Where(x => x.DepartmentID == id).Count(x => x.Gender == "Female");
+                obj.Ages.Add(females);
+            }
+            
+            obj.Names = departmentNames;
             return obj;
 
         }
 
-        //Total Amount of Payments Per Department
+        //Total Amount of Payments Per Month
         public Ratio TotalSalariesPerMonthChart()
         {
-            var january = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 01).Select(x => x.Amount).Sum();
-            var february = _context.Payments.Where(x => x.Date.Month == 02).Select(x => x.Amount).Sum();
-            var march = _context.Payments.Where(x => x.Date.Month == 03).Select(x => x.Amount).Sum();
-            var april = _context.Payments.Where(x => x.Date.Month == 04).Select(x => x.Amount).Sum();
-            var may = _context.Payments.Where(x => x.Date.Month == 05).Select(x => x.Amount).Sum();
-            var june = _context.Payments.Where(x => x.Date.Month == 06).Select(x => x.Amount).Sum();
-            var july = _context.Payments.Where(x => x.Date.Month == 07).Select(x => x.Amount).Sum();
-            var august = _context.Payments.Where(x => x.Date.Month == 08).Select(x => x.Amount).Sum();
-            var september = _context.Payments.Where(x => x.Date.Month == 09).Select(x => x.Amount).Sum();
-            var october = _context.Payments.Where(x => x.Date.Month == 10).Select(x => x.Amount).Sum();
-            var november = _context.Payments.Where(x => x.Date.Month == 11).Select(x => x.Amount).Sum();
-            var december = _context.Payments.Where(x => x.Date.Month == 12).Select(x => x.Amount).Sum();
+            decimal salary;
+            var months = _context.Payments.Select(x => x.Date.Month).Distinct().ToList();
             Ratio obj = new Ratio();
-            obj.Months = new List<decimal>() { january, february, march, april, may, june, july, august, september, october, november, december };
+            foreach (var item in months)
+            {
+                salary = _context.Payments.Where(x => x.Date.Month == item).Select(x => x.Amount).Sum();
+                obj.Salaries.Add(salary);
+            }
+            obj.Names = new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
+            
             return obj;
         }
 
         public Ratio TotalSalaryPerDepartmentChart()
         {
-            var januaryAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 01).Select(x => x.Amount).Sum();
-            var januaryThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 01).Select(x => x.Amount).Sum();
-            var februaryAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 02).Select(x => x.Amount).Sum();
-            var februaryThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 02).Select(x => x.Amount).Sum();
-            var marchAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 03).Select(x => x.Amount).Sum();
-            var marchThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 03).Select(x => x.Amount).Sum();
-            var aprilAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 04).Select(x => x.Amount).Sum();
-            var aprilThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 04).Select(x => x.Amount).Sum();
-            var mayAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 05).Select(x => x.Amount).Sum();
-            var mayThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 05).Select(x => x.Amount).Sum();
-            var juneAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 06).Select(x => x.Amount).Sum();
-            var juneThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 06).Select(x => x.Amount).Sum();
-            var julyAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 07).Select(x => x.Amount).Sum();
-            var julyThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 07).Select(x => x.Amount).Sum();
-            var augustAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 08).Select(x => x.Amount).Sum();
-            var augustThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 08).Select(x => x.Amount).Sum();
-            var septemberAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 09).Select(x => x.Amount).Sum();
-            var septemberThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 09).Select(x => x.Amount).Sum();
-            var octoberAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 10).Select(x => x.Amount).Sum();
-            var octoberThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 10).Select(x => x.Amount).Sum();
-            var novemberAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 11).Select(x => x.Amount).Sum();
-            var novemberThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 11).Select(x => x.Amount).Sum();
-            var decemberAthens = _context.Payments.Where(x => x.Worker.DepartmentID == 1 && x.Date.Month == 12).Select(x => x.Amount).Sum();
-            var decemberThessaloniki = _context.Payments.Where(x => x.Worker.DepartmentID == 2 && x.Date.Month == 12).Select(x => x.Amount).Sum();
+            
+            var departmentNames = _context.Departments.Select(x => x.City).ToList();
+            var departmentIds = _context.Departments.Select(x => x.ID).ToList();
             Ratio obj = new Ratio();
-            obj.SalariesPerMonthAthens = new List<decimal>() { januaryAthens, februaryAthens, marchAthens, aprilAthens, marchAthens, januaryAthens, januaryAthens, augustAthens, septemberAthens, octoberAthens, novemberAthens, decemberAthens};
-            obj.SalariesPerMonthThessaloniki = new List<decimal>() { januaryThessaloniki, februaryThessaloniki, marchThessaloniki, aprilThessaloniki, mayThessaloniki, juneThessaloniki, julyThessaloniki, augustThessaloniki, septemberThessaloniki, octoberThessaloniki, novemberThessaloniki, decemberThessaloniki};
+            obj.Names = departmentNames;
+
+            foreach (var item in departmentIds)
+            {
+                obj.PaymentsPerMonth = new List<decimal>();
+                for (int i = 1; i <= 12; i++)
+                {
+                    
+                    var payments = _context.Payments.Where(x => x.Worker.DepartmentID == item && x.Date.Month == i).Sum(x=>x.Amount);
+                    obj.PaymentsPerMonth.Add(payments);
+                }
+                obj.DepartmentsPaymentsPerMonth.Add(obj.PaymentsPerMonth);
+            }
+            
             return obj;
         }
 
