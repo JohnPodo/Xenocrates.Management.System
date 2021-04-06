@@ -11220,6 +11220,20 @@ background-color:rgb(2, 2, 66);
     .all-roles {
         display: table;
     }
+}.all-payments {
+    
+}
+@media only screen and (min-width:570px) {
+    .all-payments {
+        display: table;
+    }
+}.history-payments {
+    
+}
+@media only screen and (min-width:600px) {
+    .history-payments {
+        display: table;
+    }
 }
 .all-departments{
 
