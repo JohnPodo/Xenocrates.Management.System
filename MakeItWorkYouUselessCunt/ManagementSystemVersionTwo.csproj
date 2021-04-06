@@ -300,6 +300,8 @@
     <Content Include="EIKONES\logo.png" />
     <Content Include="EIKONES\register.jpg" />
     <Content Include="EIKONES\register_2.jpg" />
+    <Content Include="EIKONES\Xenocrates.png" />
+    <Content Include="EIKONES\Xenocrates2.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\materialdesignicons-webfont.svg" />

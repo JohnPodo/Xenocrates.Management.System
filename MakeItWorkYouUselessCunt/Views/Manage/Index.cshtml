@@ -2,27 +2,79 @@
 @{
     ViewBag.Title = "Manage";
 }
-
-<h2>@ViewBag.Title.</h2>
-
-<p class="text-success">@ViewBag.StatusMessage</p>
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>Password:</dt>
-        <dd>
-            [
-            @if (Model.HasPassword)
-            {
-                @Html.ActionLink("Change your password", "ChangePassword")
-            }
-            else
-            {
-                @Html.ActionLink("Create", "SetPassword")
-            }
-            ]
-        </dd>
-        @Html.DisplayFor(m => m.User.Worker.FullName)
-    </dl>
+<nav>
+    <div class="nav nav-tabs" id="nav-tab" role="tablist">
+        <a class="nav-item nav-link active" id="nav-account-tab" data-toggle="tab" href="#nav-account" role="tab" aria-controls="nav-account" aria-selected="true">Account Info</a>
+        <a class="nav-item nav-link" id="nav-personal-tab" data-toggle="tab" href="#nav-personal" role="tab" aria-controls="nav-personal" aria-selected="false">Personal Info</a>
+        <a class="nav-item nav-link" id="nav-further-tab" data-toggle="tab" href="#nav-further" role="tab" aria-controls="nav-further" aria-selected="false">Further Info</a>
+        <a class="nav-item nav-link" id="nav-attachments-tab" data-toggle="tab" href="#nav-attachments" role="tab" aria-controls="nav-attachments" aria-selected="false">Attachments</a>
+        <a class="nav-item nav-link" id="nav-actions-tab" data-toggle="tab" href="#nav-actions" role="tab" aria-controls="nav-actions" aria-selected="false">Actions</a>
+    </div>
+</nav>
+<div class="tab-content" id="nav-tabContent">
+    <div class="tab-pane fade show active" id="nav-account" role="tabpanel" aria-labelledby="nav-account-tab">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.User.Id)</dt>
+            <dd>@Html.DisplayFor(model => model.User.Id)</dd>
+            <dt>@Html.DisplayNameFor(model => model.User.UserName)</dt>
+            <dd>@Html.DisplayFor(model => model.User.UserName)</dd>
+            <dt>@Html.DisplayNameFor(model => model.User.Email)</dt>
+            <dd>@Html.DisplayFor(model => model.User.Email)</dd>
+        </dl>
+    </div>
+    <div class="tab-pane fade" id="nav-personal" role="tabpanel" aria-labelledby="nav-personal-tab">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.FirstName)</dt>
+            <dd>@Html.DisplayFor(model => model.User.Worker.FirstName)</dd>
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.LastName)</dt>
+            <dd>@Html.DisplayFor(model => model.User.Worker.LastName)</dd>
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.DateOfBirth)</dt>
+            <dd>@Html.DisplayFor(model => model.User.Worker.DateOfBirth)</dd>
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.Gender)</dt>
+            <dd>@Html.DisplayFor(model => model.User.Worker.Gender)</dd>
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.Address)</dt>
+            <dd>@Html.DisplayFor(model => model.User.Worker.Address)</dd>
+        </dl>
+    </div>
+    <div class="tab-pane fade" id="nav-further" role="tabpanel" aria-labelledby="nav-further-tab">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.BankAccount)</dt>
+            <dd>@Html.DisplayFor(model => model.User.Worker.BankAccount)</dd>
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.Salary)</dt>
+            <dd>@Html.DisplayFor(model => model.User.Worker.Salary)</dd>
+            <dt>Department City</dt>
+            <dd>@Html.DisplayFor(model => model.User.Worker.Department.City)</dd>
+        </dl>
+    </div>
+    <div class="tab-pane fade" id="nav-attachments" role="tabpanel" aria-labelledby="nav-attachments-tab">
+        <dl class="dl-horizontal">
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.Pic)</dt>
+            <dd>
+                <div style="padding-top: 50px; " class="col-md-6">
+                    <img src="~/ProfPics/@Model.User.Worker.Pic" alt="Profile Pic" style=" width: 250px; border: 2px solid #00ff21; border-radius: 4px;" class="" id="pic">
+                </div>
+            </dd>
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.CV)</dt>
+            <dd><a href="~/CVs/@Model.User.Worker.CV" target="_blank">CV</a></dd>
+            <dt>@Html.DisplayNameFor(model => model.User.Worker.ContractOfEmployment)</dt>
+            <dd><a href="~/ContractOfEmployments/@Model.User.Worker.ContractOfEmployment" target="_blank">Contract Of Employment</a></dd>
+        </dl>
+    </div>
+    <div class="tab-pane fade" id="nav-actions" role="tabpanel" aria-labelledby="nav-actions-tab">
+        <dl class="dl-horizontal">
+            <dt>Password:</dt>
+            <dd>
+                [
+                @if (Model.HasPassword)
+                {
+                    @Html.ActionLink("Change your password", "ChangePassword")
+                }
+                else
+                {
+                    @Html.ActionLink("Create", "SetPassword")
+                }
+                ]
+            </dd>
+        </dl>
+    </div>
 </div>
