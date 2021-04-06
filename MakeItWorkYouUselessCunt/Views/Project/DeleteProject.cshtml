@@ -28,14 +28,6 @@
         </dd>
 
         <dt>
-            @Html.DisplayNameFor(model => model.Finished)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Finished)
-        </dd>
-
-        <dt>
             @Html.DisplayNameFor(model => model.StartDate)
         </dt>
 
@@ -58,7 +50,7 @@
         @Html.HiddenFor(s=>s.ID)
         <div class="form-actions no-color">
             <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            @Html.ActionLink("Back to List", "ViewAllProjects","Display")
         </div>
     }
 </div>

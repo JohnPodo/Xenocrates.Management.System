@@ -5,6 +5,8 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using ManagementSystemVersionTwo.Services.Data;
+using Microsoft.AspNet.Identity;
+using ManagementSystemVersionTwo.StatisticsModels;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -14,7 +16,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public DisplayController()
         {
-            _data=new DataRepository();
+            _data = new DataRepository();
         }
 
         protected override void Dispose(bool disposing)
@@ -22,15 +24,27 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
         }
 
-        public ActionResult ViewAllDepartments()
+        public ActionResult ViewAllDepartments(string searchString, string sort)
         {
-            return View(_data.AllDepartments());
+            var data = _data.AllDepartments();
+            if (!string.IsNullOrEmpty(sort))
+            {
+                data = _data.SortDepartments(sort, data);
+            }
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                data = _data.GetDepartmentsByCity(searchString, data);
+            }
+
+            ViewBag.SortByCity = _data.DepartmentSortingOptionsViewBag();
+
+            ViewBag.Cities = _data.DepartmentsForAutoComplete();
+
+            return View(data);
+
         }
 
-        
-
-
-        public ActionResult ViewAllWorkers(string searchName,string orderBy,string roleSpec,string depID)
+        public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID, string viewType)
         {
             var data = _data.AllWorkers();
             if (!string.IsNullOrEmpty(searchName))
@@ -50,46 +64,105 @@ namespace ManagementSystemVersionTwo.Controllers
                 data = _data.GetWorkersPerDepartmentForSort(int.Parse(depID), data);
             }
 
+            ViewBag.SortOptions = _data.WorkerSortingOptionsViewBag();
+
+            ViewBag.RoleOptions = _data.AvailableRolesFilteringViewBag();
+
+            ViewBag.DepartmentOptions = _data.AvailableDepartmentsFilteringViewBag();
+
+            ViewBag.Names = _data.GetWorkerNamesForAutocomplete(); 
+
+            ViewBag.Parameters = new List<string> {searchName,orderBy,roleSpec,depID };
+
+            if (string.IsNullOrEmpty(viewType))
+            {
+                return View(data);
+            }
+            else
+            {
+                return View("ViewAllWorkersList", data);
+            }
+
+        }
+
+        public ActionResult ViewAllRoles(string searchString, string sort)
+        {
+            var data = _data.AllRoles();
+            if (!string.IsNullOrEmpty(searchString))
+            {
+                data = _data.GetRoleByName(searchString, data);
+            }
+            if (!string.IsNullOrEmpty(sort))
+            {
+                data = _data.SortRoles(sort, data);
+            }
+
+            ViewBag.SortByRole = _data.RolesSortingOptionsViewBag();
+
+            ViewBag.Roles = _data.RolesForAutoComplete();
+
+            return View(data);
+        }
+
+        public ActionResult ViewAllProjects(string title, string orderBy, string depID, string status)
+        {
+            var data = _data.AllProjects();
+            if (!string.IsNullOrEmpty(title))
+            {
+                data = _data.FindProjectByTitle(title, data);
+            }
+            if (!string.IsNullOrEmpty(orderBy))
+            {
+                data = _data.SortProject(orderBy, data);
+            }
+            if (!string.IsNullOrEmpty(depID))
+            {
+                data = _data.GetProjectsPerDepartmentForSort(int.Parse(depID), data);
+            }
+            if (!string.IsNullOrEmpty(status))
+            {
+                data = _data.StatusProject(status, data);
+            }
+
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
             {
-                Text = "City Of Department",
-                Value = "City Of Department"
+                Text = "Title",
+                Value = "Title"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "Full Name",
-                Value = "Full Name"
+                Text = "Employees",
+                Value = "Employees"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "Age",
-                Value = "Age"
+                Text = "Start Date",
+                Value = "Start Date"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "Salary",
-                Value = "Salary"
-            });
-            listItems.Add(new SelectListItem
-            {
-                Text = "Projects",
-                Value = "Projects"
+                Text = "End Date",
+                Value = "End Date"
             });
             ViewBag.SortOptions = listItems;
 
-            List<SelectListItem> roleItems = new List<SelectListItem>();
-            var allroles = _data.AllRoles();
-            foreach(var items in allroles)
+            List<SelectListItem> statusItems = new List<SelectListItem>();
+            statusItems.Add(new SelectListItem
             {
-                roleItems.Add(new SelectListItem
-                {
-                    Text = items.Name,
-                    Value = items.Id
-                });
-            }
-            ViewBag.RoleOptions = roleItems;
-            
+                Text = "Finished",
+                Value = "Finished"
+            });
+            statusItems.Add(new SelectListItem
+            {
+                Text = "Not Finished",
+                Value = "Not Finished"
+            });
+            ViewBag.StatusOptions = statusItems;
+
+            var titleForAutoComplete = _data.GetProjectNamesForAutocomplete();
+            ViewBag.Names = titleForAutoComplete;
+
             List<SelectListItem> departmentItems = new List<SelectListItem>();
             var allDepartments = _data.AllDepartments();
             foreach (var items in allDepartments)
@@ -102,73 +175,96 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             ViewBag.DepartmentOptions = departmentItems;
 
-            var namesForAutoComplete = _data.GetWorkerNamesForAutocomplete();
-            ViewBag.Names = namesForAutoComplete;
-
-           
-
             return View(data);
         }
 
-        public ActionResult ViewAllRoles()
+        public ActionResult DetailsProject(int? id)
         {
-            return View(_data.AllRoles());
-        }
-
-        public ActionResult ViewDepartmentWithWorkers(int? id, string city)
-        {
-            if (id == null && string.IsNullOrEmpty(city))
+            if(id is null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (id != null)
+            var project = _data.FindProjectById((int)id);
+            if (project is null)
             {
-                var dep = _data.FindDepartmentByID((int)id);
-                if (dep == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(dep);
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            if (!string.IsNullOrEmpty(city))
-            {
-                var dep = _data.FindDepartmentByCity(city);
-                if (dep == null)
-                {
-                    return HttpNotFound();
-                }
-                return View(dep);
-            }
-            return View("ViewAllDepartments");
+            return View(project);
         }
 
-        public ActionResult ViewAllProjects()
-        {
-            return View(_data.AllProjects());
-        }
-
-        public ActionResult ViewAllActiveProjects()
-        {
-            var activeProjects = _data.AllActiveProjects();
-            return View("ActiveProjectsPerEmployee");
-        }
 
         public ActionResult DetailsDepartment(int? id)
         {
-            
-            if(id == null)
+
+            if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             var department = _data.FindDepartmentByID((int)id);
-            if(department == null)
+            if (department == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             return View(department);
         }
 
+        public ActionResult AdminDashboard()
+        {
+            return View();
+        }
 
+        //Chart For Departments Per City
+        public ActionResult ChartsForAdmin()
+        {
+            var departmentsPerCity = _data.DepartmentsPerCityChart();
+            var employeesPerDepartment = _data.EmployeesPerDepartmentChart();
+            var averageSalaryPerDepartment = _data.AverageSalaryChart();
+            var averageAgePerDepartment = _data.AverageAgeChart();
+            var totalSalariesPerMonth = _data.TotalSalariesPerMonthChart();
+            var totalSalaryPerDepartment = _data.TotalSalaryPerDepartmentChart();
+            var ratioArray = new Ratio[] { departmentsPerCity, employeesPerDepartment, averageSalaryPerDepartment, averageAgePerDepartment, totalSalariesPerMonth, totalSalaryPerDepartment };
+
+            return Json(ratioArray, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult SupervisorDashboard()
+        {
+            return View();
+        }
+
+        public ActionResult ChartsForSupervisor()
+        {
+            var salaryPerEmployee = _data.SalaryPerEmployeeChart();
+            var agePerEmployee = _data.AgePerEmployeeChart();
+            var genderPerDepartment = _data.GenderPerDepartmentChart();
+            var RatioArray = new Ratio[] { salaryPerEmployee, agePerEmployee, genderPerDepartment };
+
+
+            return Json(RatioArray, JsonRequestBehavior.AllowGet);
+
+        }
+
+        public ActionResult NavbarPartial()
+        {
+            var user = _data.FindUserByID(User.Identity.GetUserId());
+            var ifIsAdmin = User.IsInRole("Admin") ? true : false;
+            var ifIsSupervisor = User.IsInRole("Supervisor") ? true : false;
+            ViewBag.roleIdentity = ifIsAdmin;
+            if (ifIsAdmin == true)
+            {
+                ViewBag.roleIcon = "/EIKONES/boss.png";
+            }
+            else if(ifIsAdmin == false && ifIsSupervisor == true)
+            {
+                ViewBag.roleIcon = "/EIKONES/boss.png";
+            }
+            else
+            {
+                ViewBag.roleIcon = "/EIKONES/boss.png";
+            }
+            return PartialView(user);
+        }
         //public ActionResult FinalizeProject(int? id)
         //{
         //    if (id == null)
@@ -178,7 +274,7 @@ namespace ManagementSystemVersionTwo.Controllers
         //    _data.FinalizeProject((int)id);
         //        return RedirectToAction("AllProjectsPerEmployee");
         //}
-
+        
 
     }
 }

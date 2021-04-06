@@ -4,58 +4,15 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - My ASP.NET Application</title>
-
+    @Styles.Render("~/Content/font-awesome.css")
     @Styles.Render("~/Content/materialdesignicons.min.css")
     @Styles.Render("~/Content/ionicons.css")
-    @Styles.Render("~/Content/flag-icon.min.css")
-    @Styles.Render("~/Content/vendor.bundle.base.css")
-    @Styles.Render("~/Content/vendor.bundle.addons.css")
     @Styles.Render("~/Content/style.css")
-    @Styles.Render("~/Content/style1.css")
-    @Styles.Render("~/Content/favicon.ico")
-
-
 </head>
 <body>
-
-
     <div class="container-scroller">
         <!-- partial:../../partials/_navbar.html -->
-        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
-            <div class="text-center navbar-brand-wrapper d-flex align-items-top justify-content-center">
-                <a class="navbar-brand brand-logo" href="#">
-                    <img src="~/EIKONES/logo.svg" alt="logo" />
-                </a>
-                <a class="navbar-brand brand-logo-mini" href="#">
-                    <img src="~/EIKONES/logo-mini.svg" alt="logo" />
-                </a>
-            </div>
-            <div class="navbar-menu-wrapper d-flex align-items-center">
-
-                <ul class="navbar-nav ml-auto">
-
-
-                    <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
-                        <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
-                            <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="Profile image">
-                        </a>
-                        <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
-                            <div class="dropdown-header text-center">
-                                <img class="img-md rounded-circle" src="~/EIKONES/boss.png" alt="Profile image">
-                                <p class="mb-1 mt-3 font-weight-semibold">Pyravlos Boss</p>
-                                <p class="font-weight-light text-muted mb-0">teampyravlos@gmail.com</p>
-                            </div>
-                            <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
-                            <a class="dropdown-item">Contact IT<i class="dropdown-item-icon ti-help-alt"></i></a>
-                            @Html.Partial("_LoginPartial")
-                        </div>
-                    </li>
-                </ul>
-                <button class="navbar-toggler navbar-toggler-right d-lg-none align-self-center" type="button" data-toggle="offcanvas">
-                    <span class="mdi mdi-menu"></span>
-                </button>
-            </div>
-        </nav>
+        @{ Html.RenderAction("NavbarPartial", "Display");}
         <!-- partial -->
         <div class="container-fluid page-body-wrapper">
             <!-- partial:../../partials/_sidebar.html -->
@@ -68,7 +25,6 @@
                                 <div class="dot-indicator bg-success"></div>
                             </div>
                             <div class="text-wrapper">
-                                <!--  <p class="profile-name">ViewBag.User</p> -->
                                 <p class="designation">@Html.DisplayName(User.Identity.Name)</p>
                             </div>
                         </a>
@@ -87,7 +43,7 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display")">
+                        <a class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display",new {viewType=true })">
                             <i class="menu-icon typcn typcn-th-large-outline"></i>
                             <span class="menu-title">Workers</span>
                         </a>
@@ -99,27 +55,46 @@
                         </a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#">
+                        <a class="nav-link" href="@Url.Action("ViewAllProjects", "Display" )">
                             <i class="menu-icon typcn typcn-user-outline"></i>
                             <span class="menu-title">Projects</span>
                         </a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                           aria-controls="ui-basic">
+                            <i class="menu-icon typcn typcn-coffee"></i>
+                            <span class="menu-title">Payments</span>
+                            <i class="menu-arrow"></i>
+                        </a>
+                        <div class="collapse" id="ui-basic">
+                            <ul class="nav flex-column sub-menu">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="@Url.Action("Index", "Payment" )">Pay Workers</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="#">Payments History</a>
+                                </li>
+                            </ul>
+                        </div>
+                    </li>
                 </ul>
             </nav>
             <!-- partial -->
-            <div class="main-panel">
+            <div style="background-color: #4f4a41"; class="main-panel">
                 <div class="content-wrapper">
-
-
+                    <div class="btn-chat" id="livechat-compact-container" style="visibility: visible; opacity: 1;">
+                        <div class="btn-holder">
+                            <a onclick="parent.LC_API.open_chat_window();return false;" href="@Url.Action("Chat", "Department" )" class="link">Live Chat</a>
+                        </div>
+                    </div>
                     @RenderBody()
-
                 </div>
                 <!-- content-wrapper ends -->
                 <!-- partial:../../partials/_footer.html -->
                 <footer class="footer">
                     <div class="container-fluid clearfix">
                         <span class="text-muted d-block text-center text-sm-left d-sm-inline-block">Copyright © Xenocrates 2021</span>
-
                     </div>
                 </footer>
                 <!-- partial -->
@@ -128,23 +103,13 @@
         </div>
         <!-- page-body-wrapper ends -->
     </div>
-
-
-
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
     @RenderSection("scripts", required: false)
 
-
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/vendor.bundle.base.js")
-    @Scripts.Render("~/Scripts/vendor.bundle.addons.js")
     @Scripts.Render("~/Scripts/off-canvas.js")
     @Scripts.Render("~/Scripts/misc.js")
-    @Scripts.Render("~/Scripts/jquery.cookie.js")
-
-
-
 </body>
 </html>

@@ -1,0 +1,69 @@
+﻿@model List<ManagementSystemVersionTwo.Models.Worker>
+@{
+    ViewBag.Title = "Index";
+}
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                   <div>
+    @using (Html.BeginForm())
+    {
+    <div class="row">
+        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+            Search Employee:@Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
+
+            <datalist id="browsers">
+                @foreach (var item in ViewBag.Names)
+                {
+                    <option value="@item" />
+                }
+            </datalist>
+        </p>
+        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
+            Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortSalary, "Value", "Text"), "None", new { @class = "" })
+        </p>
+        <p class="col-md-1">
+            <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+            @Html.ActionLink("Reset", "Index", "Payment", new { @class = "fa fa-refresh" })
+        </p>
+    </div>
+    }
+</div>
+                    
+                    <h3 class="views-headings">Payments</h3>
+                    <p class="views-comments">Here you can pay every worker.</p>
+                    <hr />
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Fullname</th>
+                                <th>Salary</th>
+                                <th>Pay</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var wo in Model)
+                            {
+                                <tr>
+                                    <td>@wo.FullName</td>
+                                    <td>@wo.Salary</td>
+                                    <td>
+                                        @{
+                                            Html.RenderAction("ShowPartial", "Payment", new { id = wo.ID });
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+
+
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

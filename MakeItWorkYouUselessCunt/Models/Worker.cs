@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Globalization;
 using System.Linq;
 using System.Web;
 
@@ -37,5 +38,9 @@ namespace ManagementSystemVersionTwo.Models
 
         [Required]
         public virtual ApplicationUser ApplicationUser { get; set; }
+
+        public virtual ICollection<PaymentDetails> Payments { get; set; }
+
+        public virtual ICollection<WorkingDays> Days { get; set; }
     }
 }

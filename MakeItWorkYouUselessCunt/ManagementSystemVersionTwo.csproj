@@ -52,6 +52,12 @@
     <Reference Include="EntityFramework.SqlServer, Version=6.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089, processorArchitecture=MSIL">
       <HintPath>..\packages\EntityFramework.6.1.3\lib\net45\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.Core, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.Core.2.2.2\lib\net45\Microsoft.AspNet.SignalR.Core.dll</HintPath>
+    </Reference>
+    <Reference Include="Microsoft.AspNet.SignalR.SystemWeb, Version=2.2.2.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.AspNet.SignalR.SystemWeb.2.2.2\lib\net45\Microsoft.AspNet.SignalR.SystemWeb.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=3.6.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.3.6.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
     </Reference>
@@ -162,9 +168,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json">
-      <HintPath>..\packages\Newtonsoft.Json.12.0.2\lib\net45\Newtonsoft.Json.dll</HintPath>
-    </Reference>
     <Reference Include="System.Net.Http.Formatting">
       <HintPath>..\packages\Microsoft.AspNet.WebApi.Client.5.2.7\lib\net45\System.Net.Http.Formatting.dll</HintPath>
     </Reference>
@@ -202,9 +205,14 @@
     <Compile Include="Controllers\DisplayController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PaymentController.cs" />
     <Compile Include="Controllers\ProjectController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
     <Compile Include="Controllers\WorkerController.cs" />
+    <Compile Include="CustomAnnotations\CheckFileIfItIsPDF.cs" />
+    <Compile Include="CustomAnnotations\CheckFileIfItIsPnG.cs" />
+    <Compile Include="CustomAnnotations\LegalAge.cs" />
+    <Compile Include="CustomAnnotations\ProjectEndDate.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -216,17 +224,39 @@
     <Compile Include="Migrations\202103041755501_SmallChangesToFirstStadium.Designer.cs">
       <DependentUpon>202103041755501_SmallChangesToFirstStadium.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202103251422172_ProjectAttachmentAdded.cs" />
+    <Compile Include="Migrations\202103251422172_ProjectAttachmentAdded.Designer.cs">
+      <DependentUpon>202103251422172_ProjectAttachmentAdded.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103261240033_Payments.cs" />
+    <Compile Include="Migrations\202103261240033_Payments.Designer.cs">
+      <DependentUpon>202103261240033_Payments.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202103281538390_Message.cs" />
+    <Compile Include="Migrations\202103281538390_Message.Designer.cs">
+      <DependentUpon>202103281538390_Message.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104031626431_Calendar.cs" />
+    <Compile Include="Migrations\202104031626431_Calendar.Designer.cs">
+      <DependentUpon>202104031626431_Calendar.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\ChatHub.cs" />
     <Compile Include="Models\Department.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
+    <Compile Include="Models\Message.cs" />
+    <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsAssignedToEmployee.cs" />
+    <Compile Include="StatisticsModels\Ratio.cs" />
     <Compile Include="Models\Worker.cs" />
+    <Compile Include="Models\WorkingDays.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Services\Data\DataRepository.cs" />
     <Compile Include="Services\DepartmentServices\CRUDDepartment.cs" />
+    <Compile Include="Services\PaypalServices\ExternalPaymentServices.cs" />
     <Compile Include="Services\ProjectServices\ExternalProjectService.cs" />
     <Compile Include="Services\Role\CRUDRole.cs" />
     <Compile Include="Services\WorkerServices\ConventionsOfHttpPostedFileBase.cs" />
@@ -236,9 +266,11 @@
     <Compile Include="ViewModels\CreateProjectViewModel.cs" />
     <Compile Include="ViewModels\CreateWorker.cs" />
     <Compile Include="ViewModels\DummyForProject.cs" />
+    <Compile Include="ViewModels\EditProjectViewModel.cs" />
     <Compile Include="ViewModels\EditWorker.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\13606-10ee503b.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -257,11 +289,15 @@
     <Content Include="Content\style1.css" />
     <Content Include="Content\vendor.bundle.addons.css" />
     <Content Include="Content\vendor.bundle.base.css" />
+    <Content Include="EIKONES\13606-10ee503b.jpg" />
+    <Content Include="EIKONES\bg-01.jpg" />
+    <Content Include="EIKONES\bg-02.jpg" />
     <Content Include="EIKONES\boss.png" />
+    <Content Include="EIKONES\dark_pattern-wallpaper-1920x1080.jpg" />
     <Content Include="EIKONES\login_1.jpg" />
     <Content Include="EIKONES\login_2.jpg" />
-    <Content Include="EIKONES\logo-mini.svg" />
-    <Content Include="EIKONES\logo.svg" />
+    <Content Include="EIKONES\logo-mini.png" />
+    <Content Include="EIKONES\logo.png" />
     <Content Include="EIKONES\register.jpg" />
     <Content Include="EIKONES\register_2.jpg" />
     <Content Include="favicon.ico" />
@@ -273,6 +309,14 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
+    <Content Include="Scripts\buttonsWorker.js" />
+    <Content Include="Scripts\chart\accessibility.js" />
+    <Content Include="Scripts\chart\dumbbell.js" />
+    <Content Include="Scripts\chart\export-data.js" />
+    <Content Include="Scripts\chart\exporting.js" />
+    <Content Include="Scripts\chart\highcharts-more.js" />
+    <Content Include="Scripts\chart\highcharts.js" />
+    <Content Include="Scripts\chart\lollipop.js" />
     <Content Include="Scripts\esm\popper-utils.js" />
     <Content Include="Scripts\esm\popper-utils.min.js" />
     <Content Include="Scripts\esm\popper.js" />
@@ -307,6 +351,8 @@
     <Content Include="Scripts\jquery-3.5.1.slim.js" />
     <Content Include="Scripts\jquery-3.5.1.slim.min.js" />
     <None Include="Scripts\jquery.validate-vsdoc.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.js" />
+    <Content Include="Scripts\jquery.signalR-2.2.2.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
@@ -446,6 +492,19 @@
     <Content Include="Views\Display\DetailsDepartment.cshtml" />
     <Content Include="Views\Project\CreateProject.cshtml" />
     <Content Include="Views\Display\ViewAllProjects.cshtml" />
+    <Content Include="Views\Project\DeleteProject.cshtml" />
+    <Content Include="Views\Project\EditProject.cshtml" />
+    <Content Include="Views\Payment\Index.cshtml" />
+    <Content Include="Views\Payment\PartialViewForPayment.cshtml" />
+    <Content Include="Views\Department\Chat.cshtml" />
+    <Content Include="Views\Display\DetailsWorker.cshtml" />
+    <Content Include="Views\Display\ViewAllWorkersList.cshtml" />
+    <Content Include="Views\Display\NavbarPartial.cshtml" />
+    <Content Include="Views\Display\DetailsProject.cshtml" />
+    <Content Include="Views\Worker\Calendar.cshtml" />
+    <Content Include="Views\Display\AdminDashboard.cshtml" />
+    <Content Include="Views\Display\SupervisorDashboard.cshtml" />
+    <Content Include="Views\Payment\WorkerPaymentHistory.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -471,8 +530,24 @@
     <EmbeddedResource Include="Migrations\202103041755501_SmallChangesToFirstStadium.resx">
       <DependentUpon>202103041755501_SmallChangesToFirstStadium.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103251422172_ProjectAttachmentAdded.resx">
+      <DependentUpon>202103251422172_ProjectAttachmentAdded.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103261240033_Payments.resx">
+      <DependentUpon>202103261240033_Payments.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202103281538390_Message.resx">
+      <DependentUpon>202103281538390_Message.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104031626431_Calendar.resx">
+      <DependentUpon>202104031626431_Calendar.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\Paypal\Paypal.csproj">
+      <Project>{37513404-3BB8-4792-8514-F1E886EA4F9D}</Project>
+      <Name>Paypal</Name>
+    </ProjectReference>
     <ProjectReference Include="..\ValidationsThroughApi\ValidationsThroughApi.csproj">
       <Project>{a1e0d407-ee86-4e45-80df-f0c9c0a44c49}</Project>
       <Name>ValidationsThroughApi</Name>

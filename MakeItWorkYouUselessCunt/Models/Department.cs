@@ -21,5 +21,7 @@ namespace ManagementSystemVersionTwo.Models
         public string Adress { get; set; }
 
         public virtual ICollection<Worker> WorkersInThisDepartment { get; set; }
+
+        public virtual ICollection<Message> Messages { get; set; }
     }
 }

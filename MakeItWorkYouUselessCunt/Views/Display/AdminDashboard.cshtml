@@ -1,0 +1,394 @@
+﻿
+@{
+    ViewBag.Title = "AdminDashboard";
+}
+
+<h2>AdminDashboard</h2>
+
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/highcharts-more.js"></script>
+<script src="~/Scripts/chart/dumbbell.js"></script>
+<script src="~/Scripts/chart/export-data.js"></script>
+<script src="~/Scripts/chart/lollipop.js"></script>
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/accessibility.js"></script>
+<div class="jumbotron">
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+            This chart shows the number of departments per city.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="box"></div>
+        <p class="highcharts-description">
+            This chart shows the number of employees per department.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="salary"></div>
+        <p class="highcharts-description">
+            This chart shows the average salary of employees per department.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="age"></div>
+        <p class="highcharts-description">
+            This chart shows the average age of employees per department.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="totalSalary"></div>
+        <p class="highcharts-description">
+            This chart shows the total amount of salaries per month.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="salaryPerDepartment"></div>
+        <p class="highcharts-description">
+            This chart shows the total amount of salaries per month.
+        </p>
+    </figure>
+</div>
+
+@section Scripts{
+
+    <script>
+
+        function statistics() {
+            return $.ajax({
+                type: "GET",
+                url: "/Display/ChartsForAdmin",
+                dataType: "json"
+            })
+
+        }
+
+        $(document).ready(function () {
+            var getdata = statistics();
+            getdata.done(function (data) {
+                var departmentchart = data[0];
+                var employeechart = data[1];
+                var salary = data[2];
+                var age = data[3];
+                var totalsalary = data[4];
+                var totalsalaryperdepartmentchart = data[5];
+                pie(departmentchart);
+                columnbar(employeechart);
+                salarychart(salary);
+                agechart(age);
+                totalsalarychart(totalsalary);
+                totalsalaryperdepartment(totalsalaryperdepartmentchart);
+            })
+        });
+
+
+
+
+        function pie(data) {
+            Highcharts.chart('container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Departments Per City'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Departments',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Athens',
+                        y: data.Athens
+                    }, {
+                        name: 'Thessaloniki',
+                        y: data.Thessaloniki
+                    }]
+                }]
+
+            })
+        }
+
+        function columnbar(data) {
+            Highcharts.chart('box', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Employees Per Department'
+                },
+
+
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of Employees'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">Employees</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y} employees</b></td></tr>',
+                    footerFormat: '</table>',
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Athens',
+                    data: [data.Athens]
+
+                }, {
+                    name: 'Thessaloniki',
+                    data: [data.Thessaloniki]
+
+                }]
+            })
+        }
+
+        function salarychart(data) {
+            Highcharts.chart('salary', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Average Salary Per Department'
+                },
+
+
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Salary'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">Salary</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} euro</b></td></tr>',
+                    footerFormat: '</table>',
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Athens',
+                    data: [data.SalaryAthens]
+
+                }, {
+                    name: 'Thessaloniki',
+                    data: [data.SalaryThessaloniki]
+
+                }]
+            })
+        }
+
+        function agechart(data) {
+            Highcharts.chart('age', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Average Age of Employees Per Department'
+                },
+
+
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Age'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">Age</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y} </b></td></tr>',
+                    footerFormat: '</table>',
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Athens',
+                    data: [Math.floor(data.AgeAthens)]
+
+                }, {
+                    name: 'Thessaloniki',
+                    data: [Math.floor(data.AgeThessaloniki)]
+
+                }]
+            })
+        }
+
+        function totalsalarychart(data) {
+            Highcharts.chart('totalSalary', {
+
+                chart: {
+                    type: 'lollipop'
+                },
+
+
+                legend: {
+                    enabled: false
+                },
+
+                subtitle: {
+                    text: '2020'
+                },
+
+                title: {
+                    text: 'Total Amount of Salaries Per Month'
+                },
+
+                tooltip: {
+                    shared: true
+                },
+
+                xAxis: {
+                    type: 'category'
+                },
+
+                yAxis: {
+                    title: {
+                        text: 'Salary'
+                    }
+                },
+
+                series: [{
+                    name: 'Total Salary',
+                    data: [{
+                        name: 'January',
+                        low: data.Months[0]
+                    }, {
+                        name: 'February',
+                        low: data.Months[1]
+                    }, {
+                        name: 'March',
+                        low: data.Months[2]
+                    }, {
+                        name: 'April',
+                        low: data.Months[3]
+                    }, {
+                        name: 'May',
+                        low: data.Months[4]
+                    }, {
+                        name: 'June',
+                        low: data.Months[5]
+                    }, {
+                        name: 'July',
+                        low: data.Months[6]
+                    }, {
+                        name: 'August',
+                        low: data.Months[7]
+                    }, {
+                        name: 'September',
+                        low: data.Months[8]
+                    }, {
+                        name: 'October',
+                        low: data.Months[9]
+                    }, {
+                        name: 'November',
+                        low: data.Months[10]
+                    }, {
+                        name: 'December',
+                        low: data.Months[11]
+                    }]
+                }]
+
+            });
+        }
+
+        function totalsalaryperdepartment(data) {
+            Highcharts.chart('salaryPerDepartment', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Monthly Salary Per Department'
+                },
+                xAxis: {
+                    categories: [
+                        'Jan',
+                        'Feb',
+                        'Mar',
+                        'Apr',
+                        'May',
+                        'Jun',
+                        'Jul',
+                        'Aug',
+                        'Sep',
+                        'Oct',
+                        'Nov',
+                        'Dec'
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Salary (Euro)'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} euro</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: [{
+                    name: 'Athens',
+                    data: [data.SalariesPerMonthAthens[0], data.SalariesPerMonthAthens[1], data.SalariesPerMonthAthens[2], data.SalariesPerMonthAthens[3], data.SalariesPerMonthAthens[4], data.SalariesPerMonthAthens[5], data.SalariesPerMonthAthens[6], data.SalariesPerMonthAthens[7], data.SalariesPerMonthAthens[8], data.SalariesPerMonthAthens[9], data.SalariesPerMonthAthens[10], data.SalariesPerMonthAthens[11]]
+
+                }, {
+                    name: 'Thessaloniki',
+                        data: [data.SalariesPerMonthThessaloniki[0], data.SalariesPerMonthThessaloniki[1], data.SalariesPerMonthThessaloniki[2], data.SalariesPerMonthThessaloniki[3], data.SalariesPerMonthThessaloniki[4], data.SalariesPerMonthThessaloniki[5], data.SalariesPerMonthThessaloniki[6], data.SalariesPerMonthThessaloniki[7], data.SalariesPerMonthThessaloniki[8], data.SalariesPerMonthThessaloniki[9], data.SalariesPerMonthThessaloniki[10], data.SalariesPerMonthThessaloniki[11]]
+
+                }]
+            });
+        }
+
+    </script>
+
+
+
+}

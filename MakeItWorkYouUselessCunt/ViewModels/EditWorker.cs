@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Web;
+using ManagementSystemVersionTwo.CustomAnnotations;
 using ManagementSystemVersionTwo.Models;
 using Microsoft.AspNet.Identity.EntityFramework;
 
@@ -30,6 +31,7 @@ namespace ManagementSystemVersionTwo.ViewModels
 
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Necessary")]
+        [LegalAge(ErrorMessage = "Not Legal Age To Hire")]
         public DateTime DateOfBirth { get; set; }
 
         [Required(ErrorMessage = "Necessary")]
@@ -47,10 +49,14 @@ namespace ManagementSystemVersionTwo.ViewModels
         [Required(ErrorMessage = "Necessary")]
         [Range(typeof(decimal), "0", "79228162514264337593543950335", ErrorMessage = "Positive Numbers Only")]
         public decimal Salary { get; set; }
+
+        [CheckFileIfItIsPnG(ErrorMessage = "EIPA SYGKENTRWSOU VLAKA")]
         public HttpPostedFileBase ProfilePicture { get; set; }
 
+        [CheckFileIfItIsPDF(ErrorMessage = "Sygkentrwsou Vlaka")]
         public HttpPostedFileBase CV { get; set; }
 
+        [CheckFileIfItIsPDF(ErrorMessage = "Sygkentrwsou Vlaka")]
         public HttpPostedFileBase ContractOfEmployment { get; set; }
 
         public List<Department> AllDepartments { get; set; }

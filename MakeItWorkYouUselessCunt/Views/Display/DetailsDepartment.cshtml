@@ -2,12 +2,50 @@
 @{
     ViewBag.Title = "DetailsDepartment";
 }
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin:auto;" class="card">
+                <div class="card-body">
+                    <h2 class="views-headings">@Html.DisplayFor(d => Model.City) Department</h2>
+                    <p class="views-comments">Address: @Html.DisplayFor(d => Model.Adress)</p>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th> Name </th>
+                                <th> Role </th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var d in Model.WorkersInThisDepartment)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(w => d.FullName)
+                                    </td>
+                                    <td>
+                                        @if (d.ApplicationUser.Roles.SingleOrDefault(v => v.RoleId == "bd1041ab-c6c8-45e9-8723-01d63187bb80") != null)
+                                        {
+                                            <p>Supervisor</p>
+                                        }
+                                        else
+                                        {
+                                            <p>Employee</p>
+                                        }
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                    <div>
+                        <a href="@Url.Action("ViewAllDepartments", "Display" )" style="font-size: 12px;" class="btn btn-info btn-fw">Return to List</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
-<h2>DetailsDepartment</h2>
-@Html.DisplayFor(d => Model.City)
-@Html.DisplayFor(d => Model.Adress)
-@foreach(var d in Model.WorkersInThisDepartment)
-            {
-                @Html.DisplayFor(w => d.FullName)
-                @Html.DisplayFor(w => d.Address)
-            }
+
+
+
