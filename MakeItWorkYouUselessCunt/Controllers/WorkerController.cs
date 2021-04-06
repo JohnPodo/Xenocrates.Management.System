@@ -30,12 +30,12 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult CreateWorkerForApplicationUser(ApplicationUser user)
         {
-            //if (user == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //} Otan Teleiwsei to Front End na to Vgalw apo ta sxolia
-            //Elenxei an o User pou dexetai exei eidi rolo An exei akyrwnei tin diadikasia
-            if (user.Roles.Count != 0)
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+           
+                if (user.Roles.Count != 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }

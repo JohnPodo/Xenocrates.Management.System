@@ -154,7 +154,7 @@ namespace ManagementSystemVersionTwo.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
@@ -456,9 +456,9 @@ namespace ManagementSystemVersionTwo.Controllers
         {
             if (Url.IsLocalUrl(returnUrl))
             {
-                return Redirect(returnUrl);
+                return RedirectToAction("Dashboard", "Display");
             }
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Dashboard", "Display");
         }
 
         internal class ChallengeResult : HttpUnauthorizedResult

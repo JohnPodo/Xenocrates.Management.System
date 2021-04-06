@@ -15,15 +15,9 @@
             </li>
             <li class="nav-item nav-category">Admin Menu</li>
             <li class="nav-item">
-                <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Index", "Home" )">
+                <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
                     <i class="menu-icon typcn typcn-document-text"></i>
                     <span class="menu-title">Dashboard</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a title="Personal Calendar for Projects,Working days,Day-Offs" class="nav-link" href="@Url.Action("Calendar", "Worker" )">
-                    <i class="menu-icon typcn typcn-document-text"></i>
-                    <span class="menu-title">My Calendar</span>
                 </a>
             </li>
             <li class="nav-item">
@@ -88,7 +82,7 @@ else if (ViewBag.Supervisor)
             </li>
             <li class="nav-item nav-category">Supervisor Menu</li>
             <li class="nav-item">
-                <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("SupervisorDashboard", "Display" )">
+                <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
                     <i class="menu-icon typcn typcn-document-text"></i>
                     <span class="menu-title">Dashboard</span>
                 </a>
@@ -107,6 +101,11 @@ else if (ViewBag.Supervisor)
             </li>
         </ul>
     </nav>
+    <div class="btn-chat" id="livechat-compact-container" style="visibility: visible; opacity: 1;">
+        <div class="btn-holder">
+            <a onclick="parent.LC_API.open_chat_window();return false;" href="@Url.Action("Chat", "Department" )" class="link">Live Chat</a>
+        </div>
+    </div>
 }
 else
 {
@@ -138,4 +137,9 @@ else
             </li>
         </ul>
     </nav>
+    <div class="btn-chat" id="livechat-compact-container" style="visibility: visible; opacity: 1;">
+        <div class="btn-holder">
+            <a onclick="parent.LC_API.open_chat_window();return false;" href="@Url.Action("Chat", "Department" )" class="link">Live Chat</a>
+        </div>
+    </div>
 }

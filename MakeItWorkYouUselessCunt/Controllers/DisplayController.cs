@@ -228,9 +228,20 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(department);
         }
 
-        public ActionResult AdminDashboard()
+        public ActionResult Dashboard()
         {
-            return View();
+            if (User.IsInRole("Admin"))
+            {
+                return View("AdminDashboard");
+            }
+            else if (User.IsInRole("Supervisor"))
+            {
+                return View("SupervisorDashboard");
+            }
+            else
+            {
+                return View("EmployeeDashboard");
+            }
         }
 
         //Chart For Departments Per City
@@ -248,10 +259,6 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
 
-        public ActionResult SupervisorDashboard()
-        {
-            return View();
-        }
 
         public ActionResult ChartsForSupervisor()
         {

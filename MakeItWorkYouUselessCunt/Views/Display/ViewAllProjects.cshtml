@@ -4,9 +4,7 @@
 }
 @if (ViewBag.Admin)
 {
-    <div>
-        <a href="@Url.Action("CreateProject", "Project")" style="font-size: 12px;" class="btn btn-info btn-fw">Add Project</a>
-    </div>
+    
     <br />
     <div class="row">
         <div class="col-12 grid-margin">
@@ -92,8 +90,7 @@
                                             @pro.WorkersInMe.Count
                                         </td>
                                         <td>
-                                            @Html.ActionLink("Edit", "EditProject", "Project", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
-                                            @Html.ActionLink("Delete", "DeleteProject", "Project", new { id = pro.ID }, new { @class = "btn-sm btn-sm-project btn-info btn-fw" })
+                                            @Html.ActionLink("Details", "DetailsProject", "Display", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
 
                                         </td>
                                     </tr>

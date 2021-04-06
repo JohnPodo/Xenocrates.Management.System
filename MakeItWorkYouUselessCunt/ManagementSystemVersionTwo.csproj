@@ -507,6 +507,8 @@
     <Content Include="Views\Display\AdminDashboard.cshtml" />
     <Content Include="Views\Display\SupervisorDashboard.cshtml" />
     <Content Include="Views\Payment\WorkerPaymentHistory.cshtml" />
+    <Content Include="Views\Display\SidebarPartial.cshtml" />
+    <Content Include="Views\Display\EmployeeDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
