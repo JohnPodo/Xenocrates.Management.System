@@ -1,6 +1,6 @@
 ﻿@model ManagementSystemVersionTwo.Models.Worker
 @{
-    var lastPayment = Model.Payments.Max();
+    var lastPayment = Model.Payments.Last();
 }
 
 @if (lastPayment is null || (lastPayment.Date.Month < DateTime.Now.Month && lastPayment.Date.Year == DateTime.Now.Year))
