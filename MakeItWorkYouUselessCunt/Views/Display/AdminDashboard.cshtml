@@ -38,6 +38,12 @@
         </p>
     </figure>
     <figure class="highcharts-figure">
+        <div id="gender"></div>
+        <p class="highcharts-description">
+            This chart shows the average age of employees per department.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
         <div id="totalSalary"></div>
         <p class="highcharts-description">
             This chart shows the total amount of salaries per month.
@@ -73,12 +79,14 @@
                 var age = data[3];
                 var totalsalary = data[4];
                 var totalsalaryperdepartmentchart = data[5];
+                var genderperdepartment = data[6];
                 pie(departmentchart);
                 columnbar(employeechart);
                 salarychart(salary);
                 agechart(age);
                 totalsalarychart(totalsalary);
                 totalsalaryperdepartment(totalsalaryperdepartmentchart);
+                genderchart(genderperdepartment);
             })
         });
 
@@ -86,6 +94,16 @@
 
 
         function pie(data) {
+            var dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    y: data.Count[i]
+                }
+                dataToPopulate.push(object);
+            }
+
+
             Highcharts.chart('container', {
                 chart: {
                     plotBackgroundColor: null,
@@ -117,19 +135,22 @@
                 series: [{
                     name: 'Departments',
                     colorByPoint: true,
-                    data: [{
-                        name: 'Athens',
-                        y: data.Athens
-                    }, {
-                        name: 'Thessaloniki',
-                        y: data.Thessaloniki
-                    }]
+                    data: dataToPopulate
                 }]
 
             })
         }
 
         function columnbar(data) {
+            var dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: [data.Count[i]]
+                }
+                dataToPopulate.push(object);
+            }
+            //console.log(dataToPopulate);
             Highcharts.chart('box', {
                 chart: {
                     type: 'column'
@@ -158,19 +179,19 @@
                         borderWidth: 0
                     }
                 },
-                series: [{
-                    name: 'Athens',
-                    data: [data.Athens]
-
-                }, {
-                    name: 'Thessaloniki',
-                    data: [data.Thessaloniki]
-
-                }]
+                series: dataToPopulate
             })
         }
 
         function salarychart(data) {
+            dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: [data.Salaries[i]]
+                }
+                dataToPopulate.push(object);
+            }
             Highcharts.chart('salary', {
                 chart: {
                     type: 'column'
@@ -199,19 +220,20 @@
                         borderWidth: 0
                     }
                 },
-                series: [{
-                    name: 'Athens',
-                    data: [data.SalaryAthens]
-
-                }, {
-                    name: 'Thessaloniki',
-                    data: [data.SalaryThessaloniki]
-
-                }]
+                series: dataToPopulate
             })
         }
 
         function agechart(data) {
+            dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: [Math.floor(data.AverageAge[i])]
+                }
+                dataToPopulate.push(object);
+            }
+            //console.log(dataToPopulate);
             Highcharts.chart('age', {
                 chart: {
                     type: 'column'
@@ -230,7 +252,7 @@
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">Age</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y} </b></td></tr>',
+                        '<td style="padding:0"><b>{point.y} years old </b></td></tr>',
                     footerFormat: '</table>',
                     useHTML: true
                 },
@@ -240,23 +262,94 @@
                         borderWidth: 0
                     }
                 },
-                series: [{
-                    name: 'Athens',
-                    data: [Math.floor(data.AgeAthens)]
-
-                }, {
-                    name: 'Thessaloniki',
-                    data: [Math.floor(data.AgeThessaloniki)]
-
-                }]
+                series: dataToPopulate
             })
+        }
+        function genderchart(data) {
+            dataToPopulate = [];
+            var males = {
+                name: "Male",
+                data: []
+            };
+            var females = {
+                name: "Female",
+                data: []
+            };
+            for (let i = 0; i < data.Count.length; i++) {
+                males.data.push(data.Count[i]);
+                females.data.push(data.Ages[i]);
+            }
+            dataToPopulate.push(males);
+            dataToPopulate.push(females);
+
+            Highcharts.chart('gender', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Gender Ratio By Department'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data.Names,
+                    title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of Employees',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' employees'
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 80,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                    shadow: true
+                },
+                credits: {
+                    enabled: false
+                },
+                series: dataToPopulate
+            });
         }
 
         function totalsalarychart(data) {
+            dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: [data.Salaries[i]]
+                }
+                dataToPopulate.push(object);
+            }
             Highcharts.chart('totalSalary', {
 
                 chart: {
-                    type: 'lollipop'
+                    type: 'column'
                 },
 
 
@@ -269,7 +362,7 @@
                 },
 
                 title: {
-                    text: 'Total Amount of Salaries Per Month'
+                    text: 'Total Salary Expenses Per Month For All Departments'
                 },
 
                 tooltip: {
@@ -277,7 +370,8 @@
                 },
 
                 xAxis: {
-                    type: 'category'
+                    categories: ['Months'],
+                    crosshair: true
                 },
 
                 yAxis: {
@@ -286,57 +380,29 @@
                     }
                 },
 
-                series: [{
-                    name: 'Total Salary',
-                    data: [{
-                        name: 'January',
-                        low: data.Months[0]
-                    }, {
-                        name: 'February',
-                        low: data.Months[1]
-                    }, {
-                        name: 'March',
-                        low: data.Months[2]
-                    }, {
-                        name: 'April',
-                        low: data.Months[3]
-                    }, {
-                        name: 'May',
-                        low: data.Months[4]
-                    }, {
-                        name: 'June',
-                        low: data.Months[5]
-                    }, {
-                        name: 'July',
-                        low: data.Months[6]
-                    }, {
-                        name: 'August',
-                        low: data.Months[7]
-                    }, {
-                        name: 'September',
-                        low: data.Months[8]
-                    }, {
-                        name: 'October',
-                        low: data.Months[9]
-                    }, {
-                        name: 'November',
-                        low: data.Months[10]
-                    }, {
-                        name: 'December',
-                        low: data.Months[11]
-                    }]
-                }]
+                series: dataToPopulate
 
             });
         }
 
         function totalsalaryperdepartment(data) {
+            console.log(data);
+            dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: data.DepartmentsPaymentsPerMonth[i]
+                }
+                
+                dataToPopulate.push(object);
+            }
+            
             Highcharts.chart('salaryPerDepartment', {
                 chart: {
                     type: 'column'
                 },
                 title: {
-                    text: 'Monthly Salary Per Department'
+                    text: 'Monthly Salary Expenses Per Department'
                 },
                 xAxis: {
                     categories: [
@@ -375,15 +441,7 @@
                         borderWidth: 0
                     }
                 },
-                series: [{
-                    name: 'Athens',
-                    data: [data.SalariesPerMonthAthens[0], data.SalariesPerMonthAthens[1], data.SalariesPerMonthAthens[2], data.SalariesPerMonthAthens[3], data.SalariesPerMonthAthens[4], data.SalariesPerMonthAthens[5], data.SalariesPerMonthAthens[6], data.SalariesPerMonthAthens[7], data.SalariesPerMonthAthens[8], data.SalariesPerMonthAthens[9], data.SalariesPerMonthAthens[10], data.SalariesPerMonthAthens[11]]
-
-                }, {
-                    name: 'Thessaloniki',
-                        data: [data.SalariesPerMonthThessaloniki[0], data.SalariesPerMonthThessaloniki[1], data.SalariesPerMonthThessaloniki[2], data.SalariesPerMonthThessaloniki[3], data.SalariesPerMonthThessaloniki[4], data.SalariesPerMonthThessaloniki[5], data.SalariesPerMonthThessaloniki[6], data.SalariesPerMonthThessaloniki[7], data.SalariesPerMonthThessaloniki[8], data.SalariesPerMonthThessaloniki[9], data.SalariesPerMonthThessaloniki[10], data.SalariesPerMonthThessaloniki[11]]
-
-                }]
+                series: dataToPopulate
             });
         }
 

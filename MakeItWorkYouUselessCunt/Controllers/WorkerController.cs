@@ -8,6 +8,7 @@ using ManagementSystemVersionTwo.Models;
 using ManagementSystemVersionTwo.Services.Data;
 using ManagementSystemVersionTwo.Services.WorkerServices;
 using ManagementSystemVersionTwo.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -29,21 +30,16 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult CreateWorkerForApplicationUser(ApplicationUser user)
         {
-            //if (user == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //} Otan Teleiwsei to Front End na to Vgalw apo ta sxolia
-            //Elenxei an o User pou dexetai exei eidi rolo An exei akyrwnei tin diadikasia
-            if (user.Roles.Count != 0)
+            if (user is null || user.Roles.Count != 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
             CreateWorker f2 = new CreateWorker()
             {
-                AllDepartments = _data.AllDepartments(),
+                AllDepartments = _data.Department.AllDepartments(),
                 userID = user.Id,
-                Roles = _data.AllRoles(),
+                Roles = _data.Role.AllRoles(),
                 DropDownDataForGender = new List<SelectListItem>() {
                                                 new SelectListItem(){
             Text="Male",
@@ -64,17 +60,17 @@ namespace ManagementSystemVersionTwo.Controllers
         {
             if (ModelState.IsValid)
             {
-                var dep = _data.FindDepartmentByID(f2.IdOfDepartment);
-                _external.CreateWorker(f2, dep, _data.FindRoleByID(f2.SelectedRole).Name);
+                var dep = _data.Department.FindDepartmentByID(f2.IdOfDepartment);
+                _external.CreateWorker(f2, dep, _data.Role.FindRoleByID(f2.SelectedRole).Name);
                 return RedirectToAction("ViewAllWorkers", "Display");
             }
             else
             {
                 f2 = new CreateWorker()
                 {
-                    AllDepartments = _data.AllDepartments(),
+                    AllDepartments = _data.Department.AllDepartments(),
                     userID = f2.userID,
-                    Roles = _data.AllRoles(),
+                    Roles = _data.Role.AllRoles(),
                     DropDownDataForGender = new List<SelectListItem>() {
                                                 new SelectListItem(){
             Text="Male",
@@ -95,7 +91,7 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = _data.FindUserByID(userID);
+            var user = _data.ApplicationUser.FindUserByID(userID);
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -114,7 +110,7 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             else
             {
-                f2 = _external.FillEditWorkerViewModel(_data.FindUserByID(f2.UserID));
+                f2 = _external.FillEditWorkerViewModel(_data.ApplicationUser.FindUserByID(f2.UserID));
                 return View(f2);
             }
         }
@@ -125,7 +121,7 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = _data.FindUserByID(userID);
+            var user = _data.ApplicationUser.FindUserByID(userID);
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -135,13 +131,13 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult DeleteWorkerConfirmed(ApplicationUser userToDelete) // Doulevei
+        public ActionResult DeleteWorkerConfirmed(ApplicationUser userToDelete)
         {
             if (string.IsNullOrEmpty(userToDelete.Id))
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var user = _data.FindUserByID(userToDelete.Id);
+            var user = _data.ApplicationUser.FindUserByID(userToDelete.Id);
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -152,11 +148,17 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult Calendar(int? id)
         {
+            ViewBag.Role = User.IsInRole("Employee");
+            if (ViewBag.Role)
+            {
+                var user = _data.ApplicationUser.FindUserByID(User.Identity.GetUserId());
+                id = user.Worker.ID;
+            }
             if (id is null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var worker = _data.FindWorkerByID((int)id);
+            var worker = _data.Worker.FindWorkerByID((int)id);
             if (worker is null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -170,7 +172,7 @@ namespace ManagementSystemVersionTwo.Controllers
             var worker= new Worker();
             if (!(workerid is null))
             {
-                worker = _data.FindWorkerByID((int)workerid);
+                worker = _data.Worker.FindWorkerByID((int)workerid);
             }
             
             List<WorkingDays> projects = new List<WorkingDays>();
@@ -204,7 +206,7 @@ namespace ManagementSystemVersionTwo.Controllers
             var worker = new Worker();
             if (!(workerid is null))
             {
-                worker = _data.FindWorkerByID((int)workerid);
+                worker = _data.Worker.FindWorkerByID((int)workerid);
             }
             var days = new List<WorkingDays>();
             if (!(worker is null))

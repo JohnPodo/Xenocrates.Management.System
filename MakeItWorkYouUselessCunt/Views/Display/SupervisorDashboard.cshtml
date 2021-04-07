@@ -22,12 +22,7 @@
             This chart shows the age of each employee.
         </p>
     </figure>
-    <figure class="highcharts-figure">
-        <div id="gender"></div>
-        <p class="highcharts-description">
-            This chart shows the number of male and female employees per department.
-        </p>
-    </figure>
+    
 </div>
 
 @section Scripts{
@@ -45,11 +40,11 @@
             getdata.done(function (data) {
                 var salaryperemployee = data[0];
                 var ageperemployee = data[1];
-                var genderperdepartment = data[2];
+                
 
                 salarychart(salaryperemployee);
                 agechart(ageperemployee);
-                genderchart(genderperdepartment);
+                
             })
         });
 
@@ -121,67 +116,7 @@
             });
         }
 
-        function genderchart(data) {
-            Highcharts.chart('gender', {
-                chart: {
-                    type: 'bar'
-                },
-                title: {
-                    text: 'Gender Ratio By Department'
-                },
-                subtitle: {
-                    text: ''
-                },
-                xAxis: {
-                    categories: ['Athens', 'Thessaloniki'],
-                    title: {
-                        text: null
-                    }
-                },
-                yAxis: {
-                    min: 0,
-                    title: {
-                        text: 'Number of Employees',
-                        align: 'high'
-                    },
-                    labels: {
-                        overflow: 'justify'
-                    }
-                },
-                tooltip: {
-                    valueSuffix: ' employees'
-                },
-                plotOptions: {
-                    bar: {
-                        dataLabels: {
-                            enabled: true
-                        }
-                    }
-                },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -40,
-                    y: 80,
-                    floating: true,
-                    borderWidth: 1,
-                    backgroundColor:
-                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-                    shadow: true
-                },
-                credits: {
-                    enabled: false
-                },
-                series: [{
-                    name: 'Male',
-                    data: [data.MaleAthens, data.FemaleAthens]
-                }, {
-                    name: 'Female',
-                    data: [data.MaleThessaloniki, data.FemaleThessaloniki]
-                }]
-            });
-        }
+        
 
 
     </script>

@@ -3,112 +3,228 @@
 @{
     ViewBag.Title = "ViewAllWorkersList";
 }
-<div>
-    <a href="@Url.Action("Register", "Account")" style="font-size: 12px;" class="btn btn-info btn-fw">Create New Worker</a>
-    <div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { viewType = "List" })">List View</a></div>
-    <div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw  btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3]})">Card View</a></div>
-</div>
-<br />
-<div class="row">
-    <div class="col-12 grid-margin">
-        <div class="col-lg-6 grid-margin stretch-card">
-            <div style="margin: auto;" class="card">
-                <div class="card-body">
-                    <h3 class="views-headings">Employees</h3>
-                    <p class="views-comments">Here you can view all the Employees working for the Company.</p>
-                    <hr />
-                    @using (Html.BeginForm())
-                    {
-                        <div style="width:100%" class="row">
-                            <p>
-                                Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
-                                <datalist id="browsers">
-                                    @foreach (var item in ViewBag.Names)
-                                    {
-                                        <option value="@item" />
-                                    }
-                                </datalist>
-                            </p>
-                            <p>
-                                Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
-                            </p>
-                            <p>
-                                See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "uploaded-text" }) in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "uploaded-text" }) Departments
-                            </p>
-                            <p style="float:left">
-                                <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
-                                @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "resbut fa fa-times" })
-                            </p>
-                        </div>
-                    }
-                    <hr />
-                    <table class="table">
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Department.City)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.FirstName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.LastName)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.DateOfBirth)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Gender)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Address)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.BankAccount)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Salary)
-                            </th>
-                            <th></th>
-                        </tr>
+@if (ViewBag.Supervisor)
+{
+    <div>
+        <div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { viewType = "List" })">List View</a></div>
+        <div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw  btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3]})">Card View</a></div>
+    </div>
+    <br />
+    <br />
+    <br />
 
-                        @foreach (var worker in Model)
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="col-lg-6 grid-margin stretch-card">
+                <div style="margin: auto;" class="card">
+                    <div class="card-body">
+                        <h3 class="views-headings">Employees</h3>
+                        <p class="views-comments">Here you can view all the Employees working for the Company.</p>
+                        <hr />
+                        @using (Html.BeginForm())
                         {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => worker.Department.City)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => worker.FirstName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => worker.LastName)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => worker.DateOfBirth)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => worker.Gender)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => worker.Address)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => worker.BankAccount)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => worker.Salary)
-                                </td>
-                                <td>
-                                    @Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" }) 
-                                    @Html.ActionLink("Delete", "DeleteWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" }) 
-                                    @Html.ActionLink("Details", "DetailsWorker", "Display", new { id = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" })
-                                </td>
-                            </tr>
+                            <div style="width:100%" class="row">
+                                <p>
+                                    Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
+                                    <datalist id="browsers">
+                                        @foreach (var item in ViewBag.Names)
+                                        {
+                                            <option value="@item" />
+                                        }
+                                    </datalist>
+                                </p>
+                                <p>
+                                    Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
+                                </p>
+                                <p>
+                                    See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "uploaded-text" })
+                                </p>
+                                <p style="float:left">
+                                    <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                                    @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "resbut fa fa-times" })
+                                </p>
+                            </div>
                         }
+                        <hr />
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Department.City)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LastName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Gender)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Address)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.BankAccount)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Salary)
+                                </th>
+                                <th></th>
+                            </tr>
 
-                    </table>
+                            @foreach (var worker in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.Department.City)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.FirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.DateOfBirth)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.Gender)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.BankAccount)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.Salary)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Details", "DetailsWorker", "Display", new { id = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" })
+                                        @Html.ActionLink("Calendar", "Calendar", "Worker", new { id = worker.ID }, new { @class = "btn btn-info btn-fw" })
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
                 </div>
             </div>
-</div>
-</div>
-</div>
+        </div>
+    </div>
+}
+else
+{
+    <div>
+        <a href="@Url.Action("Register", "Account")" style="font-size: 12px;" class="btn btn-info btn-fw">Create New Worker</a>
+        <div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { viewType = "List" })">List View</a></div>
+        <div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw  btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3]})">Card View</a></div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-12 grid-margin">
+            <div class="col-lg-6 grid-margin stretch-card">
+                <div style="margin: auto;" class="card">
+                    <div class="card-body">
+                        <h3 class="views-headings">Employees</h3>
+                        <p class="views-comments">Here you can view all the Employees working for the Company.</p>
+                        <hr />
+                        @using (Html.BeginForm())
+                        {
+                            <div style="width:100%" class="row">
+                                <p>
+                                    Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
+                                    <datalist id="browsers">
+                                        @foreach (var item in ViewBag.Names)
+                                        {
+                                            <option value="@item" />
+                                        }
+                                    </datalist>
+                                </p>
+                                <p>
+                                    Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
+                                </p>
+                                <p>
+                                    See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "uploaded-text" }) in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "uploaded-text" }) Departments
+                                </p>
+                                <p style="float:left">
+                                    <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                                    @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "resbut fa fa-times" })
+                                </p>
+                            </div>
+                        }
+                        <hr />
+                        <table class="table">
+                            <tr>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Department.City)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.FirstName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.LastName)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Gender)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Address)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.BankAccount)
+                                </th>
+                                <th>
+                                    @Html.DisplayNameFor(model => model.Salary)
+                                </th>
+                                <th></th>
+                            </tr>
+
+                            @foreach (var worker in Model)
+                            {
+                                <tr>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.Department.City)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.FirstName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.LastName)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.DateOfBirth)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.Gender)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.Address)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.BankAccount)
+                                    </td>
+                                    <td>
+                                        @Html.DisplayFor(modelItem => worker.Salary)
+                                    </td>
+                                    <td>
+                                        @Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" })
+                                        @Html.ActionLink("Delete", "DeleteWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" })
+                                        @Html.ActionLink("Details", "DetailsWorker", "Display", new { id = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" })
+                                    </td>
+                                </tr>
+                            }
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+}
