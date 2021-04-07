@@ -250,6 +250,11 @@
     <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsAssignedToEmployee.cs" />
+    <Compile Include="Services\Data\TypesOfData\ApplicationUserData.cs" />
+    <Compile Include="Services\Data\TypesOfData\DepartmentData.cs" />
+    <Compile Include="Services\Data\TypesOfData\ProjectData.cs" />
+    <Compile Include="Services\Data\TypesOfData\RoleData.cs" />
+    <Compile Include="Services\Data\TypesOfData\WorkerData.cs" />
     <Compile Include="StatisticsModels\Ratio.cs" />
     <Compile Include="Models\Worker.cs" />
     <Compile Include="Models\WorkingDays.cs" />
@@ -300,11 +305,14 @@
     <Content Include="EIKONES\logo.png" />
     <Content Include="EIKONES\register.jpg" />
     <Content Include="EIKONES\register_2.jpg" />
+    <Content Include="EIKONES\Xenocrates.png" />
+    <Content Include="EIKONES\Xenocrates2.png" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\materialdesignicons-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="ProjectFiles\face8.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -345,6 +353,8 @@
     <Content Include="fonts\materialdesignicons-webfont.ttf" />
     <Content Include="fonts\materialdesignicons-webfont.woff" />
     <Content Include="fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="ProjectFiles\gender-ratio-by-departme.pdf" />
+    <Content Include="ProjectFiles\test1.rar" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
@@ -499,10 +509,14 @@
     <Content Include="Views\Department\Chat.cshtml" />
     <Content Include="Views\Display\DetailsWorker.cshtml" />
     <Content Include="Views\Display\ViewAllWorkersList.cshtml" />
+    <Content Include="Views\Display\NavbarPartial.cshtml" />
+    <Content Include="Views\Display\DetailsProject.cshtml" />
     <Content Include="Views\Worker\Calendar.cshtml" />
     <Content Include="Views\Display\AdminDashboard.cshtml" />
     <Content Include="Views\Display\SupervisorDashboard.cshtml" />
     <Content Include="Views\Payment\WorkerPaymentHistory.cshtml" />
+    <Content Include="Views\Display\SidebarPartial.cshtml" />
+    <Content Include="Views\Display\EmployeeDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -17,12 +17,14 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
         private ApplicationDbContext _db;
         private UserStore<ApplicationUser> _store;
         private UserManager<ApplicationUser> _manager;
+        private RoleManager<IdentityRole> _roleManager;
 
         public ExternalServicesWorker()
         {
             _db = new ApplicationDbContext();
             _store = new UserStore<ApplicationUser>(_db);
             _manager = new UserManager<ApplicationUser>(_store);
+            _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_db));
         }
 
         public void CreateWorker(CreateWorker f2, Department f2dep, string role)
@@ -206,11 +208,15 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
                 
             }
         }
+
+       
+
         public void Dispose()
         {
             _db.Dispose();
             _store.Dispose();
             _manager.Dispose();
+            _roleManager.Dispose();
         }
     }
 }

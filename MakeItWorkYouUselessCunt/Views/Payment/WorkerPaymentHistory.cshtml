@@ -33,13 +33,13 @@
             <div class="card-body" style="">
                 <h5 class="card-title">@wo.FullName</h5>
                 <table style="display: flex; justify-content: center; align-items: center;">
-                    <tr >
+                    <tr>
                         <td style="padding:8px; font-size:15px;">Amount</td>
                         <td style="padding:8px; font-size:15px;">Date</td>
-                    </tr >
+                    </tr>
                     @foreach (var payment in wo.Payments)
                     {
-                        <tr >
+                        <tr>
                             <td style="padding:8px; font-size:15px;">@payment.Amount</td>
                             <td style="padding:8px; font-size:15px;">@payment.Date.Date.ToString("yyyy-MM-dd")</td>
                         </tr>
