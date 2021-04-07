@@ -26,27 +26,26 @@
         </div>
     }
 </div>
-<table class="table history-payments table-striped">
-    <thead>
-        <tr>
-            <th>Fullname</th>
-            <th>Salary</th>
-            <th>Payment Dates</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var wo in Model)
-        {
-            <tr>
-                <td>@wo.FullName</td>
-                <td>@wo.Salary</td>
-                <td>
+<div class="row">
+    @foreach (var wo in Model)
+    {
+        <div class="card col-md-4" style="width: 18rem; padding:0px; border:ridge">
+            <div class="card-body" style="">
+                <h5 class="card-title">@wo.FullName</h5>
+                <table style="display: flex; justify-content: center; align-items: center;">
+                    <tr>
+                        <td style="padding:8px; font-size:15px;">Amount</td>
+                        <td style="padding:8px; font-size:15px;">Date</td>
+                    </tr>
                     @foreach (var payment in wo.Payments)
                     {
-                    <span> @Html.DisplayFor(p => payment.Date)</span> <br/><br/>
+                        <tr>
+                            <td style="padding:8px; font-size:15px;">@payment.Amount</td>
+                            <td style="padding:8px; font-size:15px;">@payment.Date.Date.ToString("yyyy-MM-dd")</td>
+                        </tr>
                     }
-                </td>
-            </tr>
-        }
-    </tbody>
-</table>
+                </table>
+            </div>
+        </div>
+    }
+</div>
