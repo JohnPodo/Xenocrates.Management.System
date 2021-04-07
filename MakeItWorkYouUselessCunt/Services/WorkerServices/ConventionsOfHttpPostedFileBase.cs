@@ -9,9 +9,6 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
     public static class ConventionsOfHttpPostedFileBase
     {
         
-        ///<summary>
-        ///Save Picture to File
-        ///</summary>
         public static string ForPostedPicture(HttpPostedFileBase Pic)
         {
             //Check If File Name Description Images Exists and If Not He make It
@@ -31,12 +28,8 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
 
         }
 
-        /// <summary>
-        ///  Give me the PDF HttpPostedFileBase I will save it in the folder you want and return you the string name to save in db
-        /// </summary>
         public static string ForCV(HttpPostedFileBase CV)
         {
-            //Check If File Name Description Images Exists and If Not He make It
             string path = System.Web.Hosting.HostingEnvironment.MapPath("~/CVs/");
             if (!Directory.Exists(path))
             {
@@ -53,9 +46,6 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
 
         }
 
-        /// <summary>
-        ///  Give me the ContractOfEmployment HttpPostedFileBase I will save it in the folder you want and return you the string name to save in db
-        /// </summary>
         public static string ForContractOfEmployments(HttpPostedFileBase ContractOfEmployment)
         {
             string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ContractOfEmployments/");
