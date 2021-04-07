@@ -8,6 +8,7 @@ using ManagementSystemVersionTwo.Models;
 using ManagementSystemVersionTwo.Services.Data;
 using ManagementSystemVersionTwo.Services.WorkerServices;
 using ManagementSystemVersionTwo.ViewModels;
+using Microsoft.AspNet.Identity;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -29,12 +30,12 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult CreateWorkerForApplicationUser(ApplicationUser user)
         {
-            //if (user == null)
-            //{
-            //    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-            //} Otan Teleiwsei to Front End na to Vgalw apo ta sxolia
-            //Elenxei an o User pou dexetai exei eidi rolo An exei akyrwnei tin diadikasia
-            if (user.Roles.Count != 0)
+            if (user == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+           
+                if (user.Roles.Count != 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
@@ -152,6 +153,12 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult Calendar(int? id)
         {
+            ViewBag.Role = User.IsInRole("Employee");
+            if (ViewBag.Role)
+            {
+                var user = _data.FindUserByID(User.Identity.GetUserId());
+                id = user.Worker.ID;
+            }
             if (id is null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);

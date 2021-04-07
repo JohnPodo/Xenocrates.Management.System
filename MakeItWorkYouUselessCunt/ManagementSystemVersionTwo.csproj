@@ -307,6 +307,7 @@
     <Content Include="fonts\materialdesignicons-webfont.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="ProjectFiles\face8.png" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
@@ -347,6 +348,8 @@
     <Content Include="fonts\materialdesignicons-webfont.ttf" />
     <Content Include="fonts\materialdesignicons-webfont.woff" />
     <Content Include="fonts\materialdesignicons-webfont.woff2" />
+    <Content Include="ProjectFiles\gender-ratio-by-departme.pdf" />
+    <Content Include="ProjectFiles\test1.rar" />
     <None Include="Scripts\jquery-3.5.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.5.1.js" />
     <Content Include="Scripts\jquery-3.5.1.min.js" />
@@ -507,6 +510,8 @@
     <Content Include="Views\Display\AdminDashboard.cshtml" />
     <Content Include="Views\Display\SupervisorDashboard.cshtml" />
     <Content Include="Views\Payment\WorkerPaymentHistory.cshtml" />
+    <Content Include="Views\Display\SidebarPartial.cshtml" />
+    <Content Include="Views\Display\EmployeeDashboard.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -46,6 +46,9 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID, string viewType)
         {
+            ViewBag.Supervisor = User.IsInRole("Supervisor");
+
+
             var data = _data.AllWorkers();
             if (!string.IsNullOrEmpty(searchName))
             {
@@ -63,7 +66,11 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 data = _data.GetWorkersPerDepartmentForSort(int.Parse(depID), data);
             }
-
+            if (User.IsInRole("Supervisor"))
+            {
+                var user = _data.FindUserByID(User.Identity.GetUserId());
+                data = data.Where(w => w.DepartmentID == user.Worker.DepartmentID).ToList();
+            }
             ViewBag.SortOptions = _data.WorkerSortingOptionsViewBag();
 
             ViewBag.RoleOptions = _data.AvailableRolesFilteringViewBag();
@@ -106,6 +113,10 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult ViewAllProjects(string title, string orderBy, string depID, string status)
         {
+            ViewBag.Admin = User.IsInRole("Admin");
+            ViewBag.Supervisor = User.IsInRole("Supervisor");
+            
+
             var data = _data.AllProjects();
             if (!string.IsNullOrEmpty(title))
             {
@@ -123,7 +134,16 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 data = _data.StatusProject(status, data);
             }
-
+            if (ViewBag.Supervisor)
+            {
+                var user = _data.FindUserByID(User.Identity.GetUserId());
+                data = data.Where(x => x.WorkersInMe.FirstOrDefault().Worker.DepartmentID == user.Worker.DepartmentID).ToList();
+            }
+            else if (!ViewBag.Admin && !ViewBag.Supervisor)
+            {
+                var user = _data.FindUserByID(User.Identity.GetUserId());
+                data = data.Where(x => x.WorkersInMe.FirstOrDefault().Worker.DepartmentID == user.Worker.DepartmentID).ToList();
+            }
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
             {
@@ -208,9 +228,20 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(department);
         }
 
-        public ActionResult AdminDashboard()
+        public ActionResult Dashboard()
         {
-            return View();
+            if (User.IsInRole("Admin"))
+            {
+                return View("AdminDashboard");
+            }
+            else if (User.IsInRole("Supervisor"))
+            {
+                return View("SupervisorDashboard");
+            }
+            else
+            {
+                return View("EmployeeDashboard");
+            }
         }
 
         //Chart For Departments Per City
@@ -228,10 +259,6 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
 
-        public ActionResult SupervisorDashboard()
-        {
-            return View();
-        }
 
         public ActionResult ChartsForSupervisor()
         {
@@ -265,16 +292,31 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             return PartialView(user);
         }
-        //public ActionResult FinalizeProject(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
-        //    }
-        //    _data.FinalizeProject((int)id);
-        //        return RedirectToAction("AllProjectsPerEmployee");
-        //}
-        
+
+        public ActionResult SidebarPartial()
+        {
+            var ifIsAdmin = User.IsInRole("Admin");
+            var ifIsSupervisor = User.IsInRole("Supervisor");
+            ViewBag.Admin = ifIsAdmin;
+            ViewBag.Supervisor = ifIsSupervisor;
+            return PartialView();
+        }
+
+        public ActionResult FinalizeProject(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var pro = _data.FindProjectById((int)id);
+            if(pro is null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            _data.FinalizeProject(pro);
+            return RedirectToAction("ViewAllProjects");
+        }
+
 
     }
 }
