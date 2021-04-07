@@ -7,16 +7,27 @@ using Microsoft.AspNet.Identity.EntityFramework;
 using System.Data.Entity;
 using System.Web.Mvc;
 using ManagementSystemVersionTwo.StatisticsModels;
+using ManagementSystemVersionTwo.Services.Data.TypesOfData;
 
 namespace ManagementSystemVersionTwo.Services.Data
 {
     public class DataRepository : IDisposable
     {
         private ApplicationDbContext _context;
+        public ApplicationUserData ApplicationUser;
+        public DepartmentData Department;
+        public RoleData Role;
+        public WorkerData Worker;
+        public ProjectData Project;
 
         public DataRepository()
         {
             _context = new ApplicationDbContext();
+            ApplicationUser = new ApplicationUserData();
+            Department = new DepartmentData();
+            Role = new RoleData();
+            Worker = new WorkerData();
+            Project = new ProjectData();
         }
 
         #region DataForViewbags
@@ -124,7 +135,7 @@ namespace ManagementSystemVersionTwo.Services.Data
         public List<SelectListItem> AvailableRolesFilteringViewBag()
         {
             List<SelectListItem> roleItems = new List<SelectListItem>();
-            var allroles = AllRoles();
+            var allroles = Role.AllRoles();
             foreach (var items in allroles)
             {
                 roleItems.Add(new SelectListItem
@@ -140,7 +151,7 @@ namespace ManagementSystemVersionTwo.Services.Data
         public List<SelectListItem> AvailableDepartmentsFilteringViewBag()
         {
             List<SelectListItem> departmentItems = new List<SelectListItem>();
-            var allDepartments = AllDepartments();
+            var allDepartments = Department.AllDepartments();
             foreach (var items in allDepartments)
             {
                 departmentItems.Add(new SelectListItem
@@ -197,7 +208,7 @@ namespace ManagementSystemVersionTwo.Services.Data
                 case "Projects":
                     return data.OrderBy(w => w.MyProjects.Count).ToList();
                 default:
-                    return AllWorkers();
+                    return Worker.AllWorkers();
             }
         }
 
@@ -312,7 +323,7 @@ namespace ManagementSystemVersionTwo.Services.Data
                 case "End Date":
                     return data.OrderBy(w => w.EndDate).ToList();
                 default:
-                    return AllProjects();
+                    return data;
             }
         }
 
@@ -325,7 +336,7 @@ namespace ManagementSystemVersionTwo.Services.Data
                 case "Not Finished":
                     return data.Where(w => (w.Finished) == false).ToList();
                 default:
-                    return AllProjects();
+                    return data;
             }
         }
 
@@ -333,83 +344,11 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         #endregion
 
-        #region DepartmentData
-        public List<Department> AllDepartments() => _context.Departments.Include(s => s.WorkersInThisDepartment).ToList();
-
-        public Department FindDepartmentByID(int id) => _context.Departments.Include(s => s.WorkersInThisDepartment).SingleOrDefault(s => s.ID == id);
-
-        public Department FindDepartmentByCity(string City) => _context.Departments.Include(s => s.WorkersInThisDepartment).Single(s => s.City == City);
-
-
-        #endregion
-
-        #region RoleData
-
-        public IdentityRole FindRoleByName(string name) => _context.Roles.Include(r => r.Users).Single(s => s.Name == name);
-
-        public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).Where(s => s.Name != "Admin").ToList();
-
-        public IdentityRole FindRoleByID(string id) => _context.Roles.Include(r => r.Users).Single(s => s.Id == id);
-
         public List<IdentityRole> GetRoleByName(string searchString, List<IdentityRole> roles) => roles.Where(x => x.Name.Contains(searchString)).ToList();
 
-
-        #endregion
-
-        #region WorkerData
-
-        public Worker FindWorkerByID(int id) => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(w => w.MyProjects).Include(w => w.Payments).SingleOrDefault(w => w.ID == id);
-
-        public List<Worker> WorkerPaymentDate(DateTime date)
-        {
-            var paymentDate = _context.Workers.Include(w => w.Payments.Where(d => d.Date == date)).ToList();
-            return paymentDate;
-        }
-        public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(p=>p.MyProjects).Include(u => u.Payments).ToList();
         
-        public List<Worker> GetWorkersInRole(string roleID)
-        {
-            var workers = _context.Workers.Where(r => r.ApplicationUser.Roles.SingleOrDefault(w => w.RoleId == roleID) != null).ToList();
-            return workers;
-        }
 
-
-
-        #endregion
-
-        #region ApplicationUserData
-        public List<ApplicationUser> UsersPerDepartment(int id) => _context.Users.Include(w => w.Worker).Include(r => r.Roles).Where(u => u.Worker.DepartmentID == id).ToList();
-
-        public ApplicationUser FindUserByID(string id) => _context.Users.Include(w => w.Worker).Include(w => w.Roles).Single(w => w.Id == id);
-        public List<ProjectsAssignedToEmployee> ProjectsPerEmployee(int id) => _context.ProjectsToEmployees.Include(s => s.Project).Include(w => w.Worker).Where(s => s.WorkerID == id).ToList();
-
-        public List<ProjectsAssignedToEmployee> ActiveProjectsPerEmployee(int workerId, int projectId) => _context.ProjectsToEmployees.Include(s => s.Worker).Include(p => p.Project).Where(s => s.WorkerID == workerId).Where(p => p.ProjectID == projectId).ToList();
-
-        #endregion
-
-        #region ProjectData
-
-        public Project FindProjectById(int id) => _context.Projects.Include(s => s.WorkersInMe).SingleOrDefault(p => p.ID == id);
-
-        public List<Project> AllProjects() => _context.Projects.Include(s => s.WorkersInMe).ToList();
-
-        public List<Project> AllActiveProjects() => _context.Projects.Include(s => s.WorkersInMe).Where(s => s.Finished == false).ToList();
-
-        public List<Project> AllFinishedProjects() => _context.Projects.Include(s => s.WorkersInMe).Where(s => s.Finished == true).ToList();
-
-        public void FinalizeProject(Project pro)
-        {
-            var projectInDb = _context.Projects.Find(pro.ID);
-            if (!projectInDb.Finished)
-            {
-                projectInDb.Finished = true;
-                _context.Entry(projectInDb).State = EntityState.Modified;
-                _context.SaveChanges();
-            }
-            
-        }
-        #endregion
-
+       
         #region Statistics
 
         //Gets the number of Departments Per City
@@ -564,6 +503,11 @@ namespace ManagementSystemVersionTwo.Services.Data
         public void Dispose()
         {
             _context.Dispose();
+            ApplicationUser.Dispose();
+            Department.Dispose();
+            Role.Dispose();
+            Worker.Dispose();
+            Project.Dispose();
         }
     }
 }

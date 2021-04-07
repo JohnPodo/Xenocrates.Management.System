@@ -53,7 +53,7 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var role = _data.FindRoleByID(id);
+            var role = _data.Role.FindRoleByID(id);
             if (role == null)
             {
                 return HttpNotFound();

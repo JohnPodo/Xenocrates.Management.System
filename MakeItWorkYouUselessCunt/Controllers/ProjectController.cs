@@ -31,8 +31,8 @@ namespace ManagementSystemVersionTwo.Controllers
         
         public ActionResult CreateProject()
         {
-            var employees = _data.UsersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
-            var roleId = _data.FindRoleByName("Employee").Id;
+            var employees = _data.ApplicationUser.UsersPerDepartment(_data.ApplicationUser.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+            var roleId = _data.Role.FindRoleByName("Employee").Id;
             List<DummyForProject> f3 = new List<DummyForProject>();
             for(int i=0;i<employees.Count;i++)
             {
@@ -71,7 +71,7 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var pro = _data.FindProjectById((int)id);
+            var pro = _data.Project.FindProjectById((int)id);
             if (pro == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -93,13 +93,13 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var pro = _data.FindProjectById((int)id);
+            var pro = _data.Project.FindProjectById((int)id);
             if (pro == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var employees = _data.UsersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
-            var roleId = _data.FindRoleByName("Employee").Id;
+            var employees = _data.ApplicationUser.UsersPerDepartment(_data.ApplicationUser.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+            var roleId = _data.Role.FindRoleByName("Employee").Id;
             List<DummyForProject> f3 = new List<DummyForProject>();
             for(int i=0;i<employees.Count;i++)
             {
@@ -152,6 +152,21 @@ namespace ManagementSystemVersionTwo.Controllers
                 return RedirectToAction("ViewAllProjects", "Display");
             }
             return View(f2);
+        }
+
+        public ActionResult FinalizeProject(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var pro = _data.Project.FindProjectById((int)id);
+            if (pro is null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            _external.FinalizeProject(pro);
+            return RedirectToAction("ViewAllProjects", "Display");
         }
 
         public FileResult DownloadFile(string fileName)

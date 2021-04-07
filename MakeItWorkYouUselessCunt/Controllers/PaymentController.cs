@@ -33,7 +33,7 @@ namespace ManagementSystemVersionTwo.Controllers
         // GET: Payment
         public ActionResult Index(string searchName, string orderBy)
         {
-            var data = _data.AllWorkers();
+            var data = _data.Worker.AllWorkers();
             if (!string.IsNullOrEmpty(searchName))
             {
                 data = _data.FindWorkerByName(searchName, data);
@@ -50,14 +50,14 @@ namespace ManagementSystemVersionTwo.Controllers
         
         public ActionResult ShowPartial(int id)
         {
-            var worker = _data.FindWorkerByID(id);
+            var worker = _data.Worker.FindWorkerByID(id);
 
             return PartialView("PartialViewForPayment",worker);
         }
 
         public async Task<ActionResult> MakePayment(int id)
         {
-            var worker = _data.FindWorkerByID(id);
+            var worker = _data.Worker.FindWorkerByID(id);
             var statusOfPayment = await Paypal.Paypal.MakePayment(worker.Salary, worker.ApplicationUser.Email);
             if (statusOfPayment is null)
             {
@@ -72,7 +72,7 @@ namespace ManagementSystemVersionTwo.Controllers
         }
         public ActionResult WorkerPaymentHistory(string searchName, string orderBy, string dateOrder)
         {
-            var data = _data.AllWorkers();
+            var data = _data.Worker.AllWorkers();
             if (!string.IsNullOrEmpty(searchName))
             {
                 data = _data.FindWorkerByName(searchName, data);

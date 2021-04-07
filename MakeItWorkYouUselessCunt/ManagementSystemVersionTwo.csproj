@@ -250,6 +250,11 @@
     <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsAssignedToEmployee.cs" />
+    <Compile Include="Services\Data\TypesOfData\ApplicationUserData.cs" />
+    <Compile Include="Services\Data\TypesOfData\DepartmentData.cs" />
+    <Compile Include="Services\Data\TypesOfData\ProjectData.cs" />
+    <Compile Include="Services\Data\TypesOfData\RoleData.cs" />
+    <Compile Include="Services\Data\TypesOfData\WorkerData.cs" />
     <Compile Include="StatisticsModels\Ratio.cs" />
     <Compile Include="Models\Worker.cs" />
     <Compile Include="Models\WorkingDays.cs" />

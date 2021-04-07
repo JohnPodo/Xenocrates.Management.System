@@ -32,6 +32,7 @@ namespace ManagementSystemVersionTwo.Controllers
         {
             return View();
         }
+
         [HttpPost]
         public ActionResult CreateDepartment(Department department)
         {
@@ -49,7 +50,8 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var department = _data.FindDepartmentByID((int)id);
+            var department = _data.Department.FindDepartmentByID((int)id);
+
             if (department == null)
             {
                 return HttpNotFound();
@@ -77,7 +79,7 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var department = _data.FindDepartmentByID((int)id);
+            var department = _data.Department.FindDepartmentByID((int)id);
             if (department == null)
             {
                 return HttpNotFound();
@@ -91,7 +93,7 @@ namespace ManagementSystemVersionTwo.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult DeleteDepartment(int id)
         {
-            var department = _data.FindDepartmentByID(id);
+            var department = _data.Department.FindDepartmentByID(id);
             _crud.DeleteDepartment(department);
             return RedirectToAction("ViewAllDepartments", "Display");
         }
@@ -100,7 +102,7 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult Chat()
         {
             var id = User.Identity.GetUserId();
-            var user = _data.FindUserByID(id);
+            var user = _data.ApplicationUser.FindUserByID(id);
             var messages = user.Worker.Department.Messages.ToList();
             ViewBag.Name = user.Worker.FullName;
             return View(messages);

@@ -122,5 +122,18 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
                 File.Delete(Path.Combine(path, fileName));
             }
         }
+
+        public void FinalizeProject(Project pro)
+        {
+            var projectInDb = _db.Projects.Find(pro.ID);
+            if (!projectInDb.Finished)
+            {
+                projectInDb.Finished = true;
+                _db.Entry(projectInDb).State = EntityState.Modified;
+                _db.SaveChanges();
+            }
+
+        }
+
     }
 }
