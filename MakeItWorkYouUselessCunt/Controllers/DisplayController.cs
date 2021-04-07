@@ -222,7 +222,8 @@ namespace ManagementSystemVersionTwo.Controllers
             var averageAgePerDepartment = _data.AverageAgeChart();
             var totalSalariesPerMonth = _data.TotalSalariesPerMonthChart();
             var totalSalaryPerDepartment = _data.TotalSalaryPerDepartmentChart();
-            var ratioArray = new Ratio[] { departmentsPerCity, employeesPerDepartment, averageSalaryPerDepartment, averageAgePerDepartment, totalSalariesPerMonth, totalSalaryPerDepartment };
+            var genderPerDepartment = _data.GenderPerDepartmentChart();
+            var ratioArray = new Ratio[] { departmentsPerCity, employeesPerDepartment, averageSalaryPerDepartment, averageAgePerDepartment, totalSalariesPerMonth, totalSalaryPerDepartment, genderPerDepartment };
 
             return Json(ratioArray, JsonRequestBehavior.AllowGet);
 
@@ -237,8 +238,8 @@ namespace ManagementSystemVersionTwo.Controllers
         {
             var salaryPerEmployee = _data.SalaryPerEmployeeChart();
             var agePerEmployee = _data.AgePerEmployeeChart();
-            var genderPerDepartment = _data.GenderPerDepartmentChart();
-            var RatioArray = new Ratio[] { salaryPerEmployee, agePerEmployee, genderPerDepartment };
+            
+            var RatioArray = new Ratio[] { salaryPerEmployee, agePerEmployee };
 
 
             return Json(RatioArray, JsonRequestBehavior.AllowGet);
