@@ -179,7 +179,7 @@ namespace ManagementSystemVersionTwo.Services.Data
 
 
 
-        public List<Worker> FindWorkerByName(string search, List<Worker> data) => data.Where(w => (w.FirstName + " " +w.LastName).Contains(search)).ToList();
+        public List<Worker> FindWorkerByName(string search, List<Worker> data) => data.Where(w => (w.FirstName + " " + w.LastName).Contains(search)).ToList();
 
         public List<Worker> SortWorker(string sort, List<Worker> data)
         {
@@ -207,7 +207,7 @@ namespace ManagementSystemVersionTwo.Services.Data
             return workers;
         }
 
-        public List<Worker> GetWorkersPerDepartmentForSort(int id, List<Worker> data) =>data.Where(u => u.DepartmentID == id).ToList();
+        public List<Worker> GetWorkersPerDepartmentForSort(int id, List<Worker> data) => data.Where(u => u.DepartmentID == id).ToList();
 
         public List<Department> SortDepartments(string sort, List<Department> departments)
         {
@@ -321,7 +321,7 @@ namespace ManagementSystemVersionTwo.Services.Data
             switch (status)
             {
                 case "Finished":
-                    return data.Where( w => (w.Finished) == true).ToList();
+                    return data.Where(w => (w.Finished) == true).ToList();
                 case "Not Finished":
                     return data.Where(w => (w.Finished) == false).ToList();
                 default:
@@ -329,7 +329,11 @@ namespace ManagementSystemVersionTwo.Services.Data
             }
         }
 
-        public List<Project> GetProjectsPerDepartmentForSort(int id, List<Project> data) => data.Where(u => u.ID == id).ToList();
+        public List<Project> GetProjectsPerDepartmentForSort(int id, List<Project> data) 
+        {
+            data = _context.Projects.Where(u => u.WorkersInMe.FirstOrDefault().Worker.DepartmentID == id).ToList();
+            return data;
+        }
 
         #endregion
 

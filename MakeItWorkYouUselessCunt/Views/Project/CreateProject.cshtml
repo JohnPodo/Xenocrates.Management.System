@@ -52,6 +52,7 @@
                 @Html.ValidationMessageFor(model => model.Project.EndDate, "", new { @class = "text-danger", id="endError" })
             </div>
         </div>
+        <div style="height: 10px; padding: 10px; color: #ff6258; margin-bottom:10px;" id="errorDiv"></div>
         <div class="form-group">
             <table class="table table-striped">
                 <thead>
@@ -123,19 +124,19 @@
     function checkBox() {
         var check = 0;
         var checkboxes = document.getElementsByClassName('valid');
+        var error = document.getElementById('errorDiv')
 
         for (var i = 0; i < checkboxes.length; i++) {
             if (checkboxes[i].checked == true) {
-                check = 1;
-                console.log('kanw th loopa');
+                check++;
                 break;
             }
         }
 
-        if (check == 1) {
+        if (check >= 1) {
             return true;
         } else {
-            alert('dialekse tagari');
+            error.innerText = "You must choose at least one employee.";
             return false;
             
         }
