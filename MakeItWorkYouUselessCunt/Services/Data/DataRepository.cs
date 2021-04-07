@@ -340,7 +340,7 @@ namespace ManagementSystemVersionTwo.Services.Data
             }
         }
 
-        public List<Project> GetProjectsPerDepartmentForSort(int id, List<Project> data) => data.Where(u => u.ID == id).ToList();
+        public List<Project> GetProjectsPerDepartmentForSort(int id, List<Project> data) => data.Where(u => u.WorkersInMe.FirstOrDefault().Worker.DepartmentID == id).ToList();
 
         #endregion
 
