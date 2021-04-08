@@ -3,109 +3,117 @@
     ViewBag.Title = "EditProject";
 }
 
-<h2>EditProject</h2>
-
-@using (Html.BeginForm("EditProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(s => s.Project.ID)
-<form class="forms-sample">
-    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-xs-12">
-            @Html.EditorFor(model => model.Project.Title, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Project.Title, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-xs-12">
-            @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <label>Project Attachments</label>
-        <input type="file" name="img[]" class="file-upload-default">
-        <div class="input-group col-xs-12">
-            @Html.TextBoxFor(m => m.Attach, new { type = "file", @class = "" })
-            @Html.ValidationMessageFor(model => model.Attach, "", new { @class = "text-danger" })
-
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-xs-12">
-            @Html.TextBoxFor(model => model.Project.StartDate, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Project.StartDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        @Html.LabelFor(model => model.Project.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-xs-12">
-            @Html.TextBoxFor(model => model.Project.EndDate, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Project.EndDate, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <div class="col-xs-12">
-            <span class="control-label col-md-2"> Is it Completed ?</span>
-            @Html.CheckBoxFor(model => model.Project.Finished, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.Project.Finished, "", new { @class = "text-danger" })
-        </div>
-    </div>
-    <div class="form-group">
-        <table class="table table-striped">
-            <thead>
-                <tr class="row">
-                    <th class="col-sm-1"> Assign </th>
-                    <th class="col-sm-1"> Picture </th>
-                    <th class="col-sm-4"> Full Name </th>
-                    <th class="col-sm-2"> Amount </th>
-                    <th class="col-sm-2"> Active Projects </th>
-                    <th class="col-sm-2"> CV </th>
-                </tr>
-            </thead>
-            <tbody>
-                @for (int i = 0; i < Model.Users.Count; i++)
-                {
-                    <tr class="row">
-                        <td class="col-sm-1">
-                            @Html.HiddenFor(m => m.Users[i].ID)
-                            @if (Model.Users[i].IsSelected == true)
-                            {
-                                @Html.CheckBoxFor(m => m.Users[i].IsSelected, new { @checked = "checked" })
-                            }
-                            else
-                            {
-                                @Html.CheckBoxFor(m => m.Users[i].IsSelected)
-                            }
-                        </td>
-                        <td style="height:3rem" class="col-sm-1 py-1">
-                            <img src="~/ProfPics/@Model.Users[i].Pic" alt="image" />
-                        </td>
-                        <td class="col-sm-4"> @Html.DisplayFor(m => m.Users[i].Fullname) </td>
-                        <td class="col-sm-2">
-                            <div class="progress">
-                                <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                    <h3 class="views-headings">Edit Project</h3>
+                    <p class="views-comments">Here you can edit the Project Information.</p>
+                    <hr />
+                    @using (Html.BeginForm("EditProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" }))
+                    {
+                        @Html.AntiForgeryToken()
+                        @Html.HiddenFor(s => s.Project.ID)
+                        <form class="forms-sample">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-5">
+                                    @Html.EditorFor(model => model.Project.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Project.Title, "", new { @class = "text-danger" })
+                                </div>
                             </div>
-                        </td>
-                        <td class="col-sm-2">  </td>
-                        <td class="col-sm-2"> <a href="~/CVs/@Model.Users[i].CV" target="_blank">CV Details</a> </td>
-                    </tr>
-                }
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-5">
+                                    @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Project Attachments</label>
+                                <input type="file" name="img[]" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    @Html.TextBoxFor(m => m.Attach, new { type = "file", @class = "" })
+                                    @Html.ValidationMessageFor(model => model.Attach, "", new { @class = "text-danger" })
 
-            </tbody>
-        </table>
-    </div>
-    <div style="margin:auto">
-        <button type="submit" class="btn btn-success mr-2">Create</button>
-        <button class="btn btn-light">@Html.ActionLink("Back to List", "ViewAllProjects", "Display")</button>
-    </div>
-</form>
-}
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Project.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-5">
+                                    @Html.TextBoxFor(model => model.Project.StartDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Project.StartDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Project.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-5">
+                                    @Html.TextBoxFor(model => model.Project.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Project.EndDate, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-5">
+                                    <span class="control-label col-md-2"> Is it Completed ?</span>
+                                    @Html.CheckBoxFor(model => model.Project.Finished, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Project.Finished, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <table class="create-project table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th> Assign </th>
+                                            <th> Picture </th>
+                                            <th> Full Name </th>
+                                            <th> Amount </th>
+                                            <th> Active Projects </th>
+                                            <th> CV </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.Users.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.HiddenFor(m => m.Users[i].ID)
+                                                    @if (Model.Users[i].IsSelected == true)
+                                                    {
+                                                        @Html.CheckBoxFor(m => m.Users[i].IsSelected, new { @checked = "checked" })
+                                                    }
+                                                    else
+                                                    {
+                                                        @Html.CheckBoxFor(m => m.Users[i].IsSelected)
+                                                    }
+                                                </td>
+                                                <td>
+                                                    <img src="~/ProfPics/@Model.Users[i].Pic" alt="image" />
+                                                </td>
+                                                <td> @Html.DisplayFor(m => m.Users[i].Fullname) </td>
+                                                <td>
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </td>
+                                                <td>  </td>
+                                                <td> <a href="~/CVs/@Model.Users[i].CV" target="_blank">CV Details</a> </td>
+                                            </tr>
+                                        }
 
-<div>
-    @Html.ActionLink("Back to List", "ViewAllProjects", "Display")
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex flex-row bd-highlight mb-3">
+                                <button type="submit" class="btn btn-info btn-fw">Update</button>
+                                <button class="btn btn-light">@Html.ActionLink("Back to List", "ViewAllProjects", "Display")</button>
+                            </div>
+                        </form>
+                    }
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
