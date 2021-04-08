@@ -496,7 +496,7 @@ namespace ManagementSystemVersionTwo.Services.Data
             return obj;
         }
 
-        public List<Project> FindProjectsPerWorker(int id) => _context.Projects.Include(s => s.WorkersInMe).Where(p => p.WorkersInMe.FirstOrDefault(w=>w.WorkerID==id)!=null).ToList();
+        
 
         #endregion
 
