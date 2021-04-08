@@ -250,6 +250,7 @@
     <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsAssignedToEmployee.cs" />
+    <Compile Include="Services\StatisticsServices\StatisticsForDashboard.cs" />
     <Compile Include="Services\Data\TypesOfData\ApplicationUserData.cs" />
     <Compile Include="Services\Data\TypesOfData\DepartmentData.cs" />
     <Compile Include="Services\Data\TypesOfData\ProjectData.cs" />
@@ -287,6 +288,7 @@
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
     <Content Include="Content\ionicons.css" />
+    <Content Include="Content\landingPage.css" />
     <Content Include="Content\LoginStyle.css" />
     <Content Include="Content\materialdesignicons.min.css" />
     <Content Include="Content\navStyle.css" />
@@ -295,10 +297,12 @@
     <Content Include="Content\vendor.bundle.addons.css" />
     <Content Include="Content\vendor.bundle.base.css" />
     <Content Include="EIKONES\13606-10ee503b.jpg" />
+    <Content Include="EIKONES\admin.png" />
     <Content Include="EIKONES\bg-01.jpg" />
     <Content Include="EIKONES\bg-02.jpg" />
     <Content Include="EIKONES\boss.png" />
     <Content Include="EIKONES\dark_pattern-wallpaper-1920x1080.jpg" />
+    <Content Include="EIKONES\employee2.png" />
     <Content Include="EIKONES\login_1.jpg" />
     <Content Include="EIKONES\login_2.jpg" />
     <Content Include="EIKONES\logo-mini.png" />
@@ -517,6 +521,7 @@
     <Content Include="Views\Payment\WorkerPaymentHistory.cshtml" />
     <Content Include="Views\Display\SidebarPartial.cshtml" />
     <Content Include="Views\Display\EmployeeDashboard.cshtml" />
+    <Content Include="Views\Home\LandingPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

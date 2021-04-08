@@ -201,9 +201,19 @@ body {
     padding: 20px;
 }
 
-    .incoming .bubble {
-        background: #b2b2b2;
-    }
+.incoming-bubble {
+    position: relative;
+    display: inline-block;
+    margin-bottom: 5px;
+    color: rgb(0 0 0);
+    font-size: 0.7em;
+    padding: 10px 10px 10px 12px;
+    border-radius: 20px;
+    background: #b2b2b2;
+}
+.bubble {
+    background: #b2b2b2;
+}
 .outgoing {
     position: absolute;
     padding: 20px;
@@ -213,9 +223,9 @@ body {
     height: 100%;
 }
 
-    .outgoing .bubble {
+    .bubble {
         background: #79c7c5;
-        float: right;
+       
     }
 .typing {
     position: absolute;

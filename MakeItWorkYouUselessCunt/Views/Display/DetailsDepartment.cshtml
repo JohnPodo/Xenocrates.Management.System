@@ -9,7 +9,7 @@
                 <div class="card-body">
                     <h2 class="views-headings">@Html.DisplayFor(d => Model.City) Department</h2>
                     <p class="views-comments">Address: @Html.DisplayFor(d => Model.Adress)</p>
-                    <table class="table table-striped">
+                    <table class="details-departments table table-striped">
                         <thead>
                             <tr>
                                 <th> Name </th>
@@ -37,7 +37,7 @@
                             }
                         </tbody>
                     </table>
-                    <div>
+                    <div style="padding-top:15px">
                         <a href="@Url.Action("ViewAllDepartments", "Display" )" style="font-size: 12px;" class="btn btn-info btn-fw">Return to List</a>
                     </div>
                 </div>
