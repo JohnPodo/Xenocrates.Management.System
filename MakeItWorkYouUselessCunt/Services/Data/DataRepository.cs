@@ -242,6 +242,7 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         public List<Department> GetDepartmentsByCity(string searchString, List<Department> departments) => departments.Where(x => x.City.Contains(searchString)).ToList();
 
+        public List<IdentityRole> GetRoleByName(string searchString, List<IdentityRole> roles) => roles.Where(x => x.Name.Contains(searchString)).ToList();
         public List<IdentityRole> SortRoles(string sort, List<IdentityRole> roles)
         {
             switch (sort)
