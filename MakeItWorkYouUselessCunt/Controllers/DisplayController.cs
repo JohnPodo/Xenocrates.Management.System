@@ -7,16 +7,19 @@ using System.Web.Mvc;
 using ManagementSystemVersionTwo.Services.Data;
 using Microsoft.AspNet.Identity;
 using ManagementSystemVersionTwo.StatisticsModels;
+using ManagementSystemVersionTwo.Services.StatisticsServices;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
     public class DisplayController : Controller
     {
         private DataRepository _data;
+        private StatisticsForDashboard _stats; 
 
         public DisplayController()
         {
             _data = new DataRepository();
+            _stats = new StatisticsForDashboard();
         }
 
         protected override void Dispose(bool disposing)
@@ -247,13 +250,13 @@ namespace ManagementSystemVersionTwo.Controllers
         //Chart For Departments Per City
         public ActionResult ChartsForAdmin()
         {
-            var departmentsPerCity = _data.DepartmentsPerCityChart();
-            var employeesPerDepartment = _data.EmployeesPerDepartmentChart();
-            var averageSalaryPerDepartment = _data.AverageSalaryChart();
-            var averageAgePerDepartment = _data.AverageAgeChart();
-            var totalSalariesPerMonth = _data.TotalSalariesPerMonthChart();
-            var totalSalaryPerDepartment = _data.TotalSalaryPerDepartmentChart();
-            var genderPerDepartment = _data.GenderPerDepartmentChart();
+            var departmentsPerCity = _stats.DepartmentsPerCityChart();
+            var employeesPerDepartment = _stats.EmployeesPerDepartmentChart();
+            var averageSalaryPerDepartment = _stats.AverageSalaryChart();
+            var averageAgePerDepartment = _stats.AverageAgeChart();
+            var totalSalariesPerMonth = _stats.TotalSalariesPerMonthChart();
+            var totalSalaryPerDepartment = _stats.TotalSalaryPerDepartmentChart();
+            var genderPerDepartment = _stats.GenderPerDepartmentChart();
             var ratioArray = new Ratio[] { departmentsPerCity, employeesPerDepartment, averageSalaryPerDepartment, averageAgePerDepartment, totalSalariesPerMonth, totalSalaryPerDepartment, genderPerDepartment };
 
             return Json(ratioArray, JsonRequestBehavior.AllowGet);
@@ -263,10 +266,12 @@ namespace ManagementSystemVersionTwo.Controllers
 
         public ActionResult ChartsForSupervisor()
         {
-            var salaryPerEmployee = _data.SalaryPerEmployeeChart();
-            var agePerEmployee = _data.AgePerEmployeeChart();
-            
-            var RatioArray = new Ratio[] { salaryPerEmployee, agePerEmployee };
+            var salaryPerEmployee = _stats.SalaryPerEmployeeChart(User.Identity.GetUserId());
+            var agePerEmployee = _stats.AgePerEmployeeChart(User.Identity.GetUserId());
+            var projectsPerMonth = _stats.ProjectsPerMonthChart(User.Identity.GetUserId());
+
+
+            var RatioArray = new Ratio[] { salaryPerEmployee, agePerEmployee, projectsPerMonth };
 
 
             return Json(RatioArray, JsonRequestBehavior.AllowGet);
