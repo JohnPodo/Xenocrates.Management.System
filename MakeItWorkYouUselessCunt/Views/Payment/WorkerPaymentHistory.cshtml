@@ -16,9 +16,6 @@
                     }
                 </datalist>
             </p>
-            <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortSalary, "Value", "Text"), "None", new { @class = "" })
-            </p>
             <p class="col-md-1">
                 <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
                 @Html.ActionLink("Reset", "WorkerPaymentHistory", "Payment", new { @class = "fa fa-refresh" })

@@ -135,7 +135,7 @@
 
         if (check >= 1) {
             return true;
-        } else {
+        } else if(check == 0) {
             error.innerText = "You must choose at least one employee.";
             return false;
             
