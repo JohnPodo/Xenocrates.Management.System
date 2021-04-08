@@ -197,7 +197,21 @@ namespace ManagementSystemVersionTwo.Controllers
 
             return View(data);
         }
+        public ActionResult DetailsWorker(string id)
+        {
+            ViewBag.Role = User.IsInRole("Admin");
 
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            var worker = _data.FindUserByID(id);
+            if (worker == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            return View(worker);
+        }
         public ActionResult DetailsProject(int? id)
         {
             if(id is null)

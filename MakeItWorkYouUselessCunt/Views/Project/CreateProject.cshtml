@@ -4,141 +4,148 @@
     ViewBag.Title = "CreateProject"; 
 }
 
-<div class="card">
-    <div class="card-body">
-        <h2 style="text-align:center">Create Project</h2>
-
-        @using (Html.BeginForm("CreateProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" , id="myform", onsubmit= "return checkBox()" }))
-        {
-            @Html.ValidationSummary()
-            @Html.AntiForgeryToken()
-    <form class="forms-sample">
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-xs-12">
-                @Html.EditorFor(model => model.Project.Title, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Project.Title, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-xs-12">
-                @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
-            </div>
-        </div>
-        <div class="form-group">
-            <label>Project Attachments</label>
-            <input type="file" name="img[]" class="file-upload-default">
-            <div class="uploaded-text input-group col-xs-12">
-                @Html.TextBoxFor(m => m.Attach, new  { type = "file" , @class = "uploaded-text" })
-                @Html.ValidationMessageFor(model => model.Attach, "" , new { @class="text-danger"})
-                
-            </div>
-        </div>
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-xs-12">
-                @Html.EditorFor(model => model.Project.StartDate, new { htmlAttributes = new { @class = "form-control", id="start" } })
-                @Html.ValidationMessageFor(model => model.Project.StartDate, "", new { @class = "text-danger", id="startError" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Project.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-xs-12">
-                @Html.EditorFor(model => model.Project.EndDate, new { htmlAttributes = new { @class = "form-control" , id = "end" } })
-                @Html.ValidationMessageFor(model => model.Project.EndDate, "", new { @class = "text-danger", id="endError" })
-            </div>
-        </div>
-        <div class="form-group">
-            <table class="table table-striped">
-                <thead>
-                    <tr class="row">
-                        <th class="col-sm-1"> Assign </th>
-                        <th class="col-sm-1"> Picture </th>
-                        <th class="col-sm-4"> Full Name </th>
-                        <th class="col-sm-2"> Amount </th>
-                        <th class="col-sm-2"> Active Projects </th>
-                        <th class="col-sm-2"> CV </th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @for (int i = 0; i < Model.Users.Count; i++)
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                    <h3 class="views-headings">Create Project</h3>
+                    <p class="views-comments">Here you can create a new project for your employees.</p>
+                    <hr />
+                    @using (Html.BeginForm("CreateProject", "Project", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off", id = "myform", onsubmit = "return checkBox()" }))
                     {
-                        <tr class="row">
-                            <td class="col-sm-1">
-                                @Html.HiddenFor(m => m.Users[i].ID)
-                                @Html.CheckBoxFor(m => m.Users[i].IsSelected)
-                            </td>
-                            <td style="" class="col-sm-1 py-1">
-                                <img src="~/ProfPics/@Model.Users[i].Pic" alt="image" />
-                            </td>
-                            <td class="col-sm-4"> @Html.DisplayFor(m => m.Users[i].Fullname) </td>
-                            <td class="col-sm-2">
-                                <div class="progress">
-                                    <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                        @Html.ValidationSummary()
+                        @Html.AntiForgeryToken()
+                        <form class="forms-sample">
+                            @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-5">
+                                    @Html.EditorFor(model => model.Project.Title, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Project.Title, "", new { @class = "text-danger" })
                                 </div>
-                            </td>
-                            <td class="col-sm-2">  </td>
-                            <td class="col-sm-2"> <a href="~/CVs/@Model.Users[i].CV" target="_blank">CV Details</a> </td>
-                        </tr>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Project.Description, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-5">
+                                    @Html.EditorFor(model => model.Project.Description, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.ValidationMessageFor(model => model.Project.Description, "", new { @class = "text-danger" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label>Project Attachments</label>
+                                <input type="file" name="img[]" class="file-upload-default">
+                                <div class="input-group col-xs-12">
+                                    @Html.TextBoxFor(m => m.Attach, new { type = "file", @class = "" })
+                                    @Html.ValidationMessageFor(model => model.Attach, "", new { @class = "text-danger" })
+
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Project.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-5">
+                                    @Html.EditorFor(model => model.Project.StartDate, new { htmlAttributes = new { @class = "form-control", id = "start" } })
+                                    @Html.ValidationMessageFor(model => model.Project.StartDate, "", new { @class = "text-danger", id = "startError" })
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                @Html.LabelFor(model => model.Project.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
+                                <div class="col-sm-5">
+                                    @Html.EditorFor(model => model.Project.EndDate, new { htmlAttributes = new { @class = "form-control", id = "end" } })
+                                    @Html.ValidationMessageFor(model => model.Project.EndDate, "", new { @class = "text-danger", id = "endError" })
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <table class="create-project table table-striped">
+                                    <thead>
+                                        <tr>
+                                            <th> Assign </th>
+                                            <th> Picture </th>
+                                            <th> Full Name </th>
+                                            <th> Amount </th>
+                                            <th> Active Projects </th>
+                                            <th> CV </th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @for (int i = 0; i < Model.Users.Count; i++)
+                                        {
+                                            <tr>
+                                                <td>
+                                                    @Html.HiddenFor(m => m.Users[i].ID)
+                                                    @Html.CheckBoxFor(m => m.Users[i].IsSelected)
+                                                </td>
+                                                <td>
+                                                    <img src="~/ProfPics/@Model.Users[i].Pic" alt="image" />
+                                                </td>
+                                                <td> @Html.DisplayFor(m => m.Users[i].Fullname) </td>
+                                                <td>
+                                                    <div class="progress">
+                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                                                    </div>
+                                                </td>
+                                                <td>  </td>
+                                                <td> <a href="~/CVs/@Model.Users[i].CV" target="_blank">CV Details</a> </td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-flex flex-row bd-highlight mb-3">
+                                <button type="submit" class="btn btn-info btn-fw" id="submit">Create</button>
+                                <a class="p-2 bd-highlight">@Html.ActionLink("Back to List", "ViewAllProjects", "Display", new { @class = "btn btn-info btn-fw" })</a>
+                            </div>
+                        </form>
                     }
-                    </tbody>
-            </table>
-        </div>
-        <div style="margin:auto">
-            <button type="submit" class="btn btn-success mr-2" id="submit">Create</button>
-            <button class="btn btn-light">@Html.ActionLink("Back to List", "ViewAllProjects", "Display")</button>
-        </div>
-    </form>
-        }
-    </div>
+                </div>
+            </div>
+       </div>
+   </div>
 </div>
-<script src="~/Scripts/jquery-3.5.1.min.js"></script>
-<script>
+            <script src="~/Scripts/jquery-3.5.1.min.js"></script>
+            <script>
 
-    $('#end').change(function () {
-        var start = document.getElementById('start').value;
-        var end = document.getElementById('end').value;
-        var error = document.getElementById('endError');
+                $('#end').change(function () {
+                    var start = document.getElementById('start').value;
+                    var end = document.getElementById('end').value;
+                    var error = document.getElementById('endError');
 
-        if ((Date.parse(start) >= Date.parse(end))) {
-            error.innerText = "End Date must be greater than Start Date.";
-            document.getElementById('end').value = "";
-        }
-    });
+                    if ((Date.parse(start) >= Date.parse(end))) {
+                        error.innerText = "End Date must be greater than Start Date.";
+                        document.getElementById('end').value = "";
+                    }
+                });
 
-    $('#start').change(function () {
-        var start = document.getElementById('start').value;
-        var error = document.getElementById('startError');
-        var now = new Date();
-        if ((Date.parse(start) < Date.parse(now))) {
-            error.innerText = "Start Date can't be in the past";
-            document.getElementById('start').value = "";
-        }
-    })
+                $('#start').change(function () {
+                    var start = document.getElementById('start').value;
+                    var error = document.getElementById('startError');
+                    var now = new Date();
+                    if ((Date.parse(start) < Date.parse(now))) {
+                        error.innerText = "Start Date can't be in the past";
+                        document.getElementById('start').value = "";
+                    }
+                })
 
-    function checkBox() {
-        var check = 0;
-        var checkboxes = document.getElementsByClassName('valid');
+                function checkBox() {
+                    var check = 0;
+                    var checkboxes = document.getElementsByClassName('valid');
 
-        for (var i = 0; i < checkboxes.length; i++) {
-            if (checkboxes[i].checked == true) {
-                check = 1;
-                console.log('kanw th loopa');
-                break;
-            }
-        }
+                    for (var i = 0; i < checkboxes.length; i++) {
+                        if (checkboxes[i].checked == true) {
+                            check = 1;
+                            console.log('kanw th loopa');
+                            break;
+                        }
+                    }
 
-        if (check == 1) {
-            return true;
-        } else {
-            alert('dialekse tagari');
-            return false;
-            
-        }
-    }
+                    if (check == 1) {
+                        return true;
+                    } else {
+                        alert('dialekse tagari');
+                        return false;
 
-</script>
+                    }
+                }
+
+            </script>
