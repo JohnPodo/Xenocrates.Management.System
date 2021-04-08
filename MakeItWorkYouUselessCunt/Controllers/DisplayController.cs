@@ -208,7 +208,7 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var worker = _data.FindUserByID(id);
+            var worker = _data.ApplicationUser.FindUserByID(id);
             if (worker == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
