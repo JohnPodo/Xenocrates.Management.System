@@ -346,9 +346,9 @@ namespace ManagementSystemVersionTwo.Services.Data
 
         #endregion
 
-        
 
-        
+        public List<Project> FindProjectsPerWorker(int id) => _context.Projects.Include(s => s.WorkersInMe).Where(p => p.WorkersInMe.FirstOrDefault(w => w.WorkerID == id) != null).ToList();
+
 
         public void Dispose()
         {
