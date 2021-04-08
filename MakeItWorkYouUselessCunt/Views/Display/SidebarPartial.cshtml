@@ -5,7 +5,7 @@
             <li class="nav-item nav-profile">
                 <a href="#" class="nav-link">
                     <div class="profile-image">
-                        <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="profile image">
+                        <img class="img-xs rounded-circle" src="~/EIKONES/admin.png" alt="profile image">
                         <div class="dot-indicator bg-success"></div>
                     </div>
                     <div class="text-wrapper">
@@ -14,12 +14,14 @@
                 </a>
             </li>
             <li class="nav-item nav-category">Admin Menu</li>
+            <br />
             <li class="nav-item">
                 <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
                     <i class="menu-icon typcn typcn-document-text"></i>
                     <span class="menu-title">Dashboard</span>
                 </a>
             </li>
+
             <li class="nav-item">
                 <a title="View Every Independent Active Role in the Company" class="nav-link" href="@Url.Action("ViewAllRoles", "Display" )">
                     <i class="menu-icon typcn typcn-shopping-bag"></i>
@@ -81,6 +83,7 @@ else if (ViewBag.Supervisor)
                 </a>
             </li>
             <li class="nav-item nav-category">Supervisor Menu</li>
+            <br />
             <li class="nav-item">
                 <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
                     <i class="menu-icon typcn typcn-document-text"></i>
@@ -114,7 +117,7 @@ else
             <li class="nav-item nav-profile">
                 <a href="#" class="nav-link">
                     <div class="profile-image">
-                        <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="profile image">
+                        <img class="img-xs rounded-circle" src="~/EIKONES/employee2.png" alt="profile image">
                         <div class="dot-indicator bg-success"></div>
                     </div>
                     <div class="text-wrapper">
@@ -122,7 +125,8 @@ else
                     </div>
                 </a>
             </li>
-            <li class="nav-item nav-category">Admin Menu</li>
+            <li class="nav-item nav-category">Worker Menu</li>
+            <br />
             <li class="nav-item">
                 <a title="Personal Calendar for Projects,Working days,Day-Offs" class="nav-link" href="@Url.Action("Calendar", "Worker" )">
                     <i class="menu-icon typcn typcn-document-text"></i>

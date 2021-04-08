@@ -15,11 +15,11 @@
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
                     @if (!ViewBag.roleIdentity)
                     {
-                        <img class="img-xs rounded-circle" src="~/ProfPics/@Model.Worker.Pic" alt="Profile image">
+                        <img class="img-sm rounded-circle" src="~/ProfPics/@Model.Worker.Pic" alt="Profile image">
                     }
                     else
                     {
-                        <img class="img-md rounded-circle" src="~/EIKONES/boss.png" alt="Profile image">
+                        <img class="img-sm rounded-circle" src="~/EIKONES/admin.png" alt="Profile image">
                     }
                 </a>
                 <div class="dropdown-menu dropdown-menu-right navbar-dropdown" aria-labelledby="UserDropdown">
@@ -32,7 +32,7 @@
                         }
                         else
                         {
-                            <img class="img-md rounded-circle" src="~/EIKONES/boss.png" alt="Profile image">
+                            <img class="img-md rounded-circle" src="~/EIKONES/admin.png" alt="Profile image">
                             <p class="mb-1 mt-3 font-weight-semibold">@Model.UserName</p>
                             <p class="font-weight-light text-muted mb-0">@Model.Email</p>
                         }
