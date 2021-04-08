@@ -8,6 +8,10 @@ namespace ManagementSystemVersionTwo.Controllers
 {
     public class HomeController : Controller
     {
+        public ActionResult LandingPage()
+        {
+            return View();
+        }
         public ActionResult Index()
         {
             return View();

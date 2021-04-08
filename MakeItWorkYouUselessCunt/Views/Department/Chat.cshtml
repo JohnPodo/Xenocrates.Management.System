@@ -30,31 +30,33 @@
             </div>
             <div class="middle">
                 <div class="voldemort">
-
-                    <div style="overflow-y: scroll;  height:340px;" id="discussion" class="incoming">
+                   
+                    <div style="overflow-y: scroll;  height:340px; padding:15px;" id="discussion">
                         @foreach (var item in Model)
                         {
+                        <div class="d-flex flex-column bd-highlight mb-1">
+                            @if (item.Name == ViewBag.Name)
+                            {
+                                <div class="d-flex align-items-end flex-column bd-highlight mb-1">
+                                    <div style="padding-bottom: 5px; font-size: 12px;" class="p-2 bd-highlight">@item.Date</div>
+                                    <div class="p-2 bd-highlight bubble">@item.Text </div>
+                                </div>
+                            }
+                            else
+                            {
+                        <div class="d-flex align-items-start flex-column bd-highlight mb-1">
+                            <div style="font-size: 12px;" class="p-2 bd-highlight">@item.Date</div>
+                            <div style="font-weight:bold; font-size: 12px;" class="p-2 bd-highlight">@item.Name</div>
+                            <div class="p-2 bd-highlight incoming-bubble">  @item.Text </div>
+                        </div>
+                            }
 
 
 
-
-                            <div style=" font-size: 12px;">@item.Date</div>
-                            <div class="bubble">  @item.Name @item.Text </div>
-
-                            <br />
-
-
-
-
-
+                        </div>
                         }
-                    </div>
-
-                    <div style="overflow-y: scroll;  height:340px;" id="discussion" class="outgoing">
 
                     </div>
-
-
                 </div>
             </div>
             <div class="bottom-bar">
@@ -77,6 +79,12 @@
         <!--SignalR script to update the chat page and send messages.-->
         <script>
             $(function () {
+                window.onload = function () {
+                    var objDiv = document.getElementById("discussion");
+                    objDiv.scrollTop = objDiv.scrollHeight;
+                }
+
+
 
                 // Reference the auto-generated proxy for the hub.
                 var chat = $.connection.chatHub;
@@ -86,6 +94,7 @@
                     /**/
                     $('.outgoing').append('<div style="float:right;  font-size: 12px;">' + htmlEncode(new Date(Date.now()).toLocaleString()) + '</div><div class="bubble lower">' + htmlEncode(message) + '</div>');
                     /**/
+                    location.reload();
                 };
                 // Get the user name and store it to prepend to messages.
                 $('#displayname').val();
@@ -93,6 +102,12 @@
                 $('#message').focus();
                 // Start the connection.
                 $.connection.hub.start().done(function () {
+                    $('#sendmessage').keyup(function (event) {
+                        if (event.keyCode === 13) {
+                            event.preventDefault();
+                            $('#sendmessage').click();
+                        }
+                    })
                     $('#sendmessage').click(function () {
                         // Call the Send method on the hub.
                         chat.server.send($('#displayname').val(), $('#message').val());
