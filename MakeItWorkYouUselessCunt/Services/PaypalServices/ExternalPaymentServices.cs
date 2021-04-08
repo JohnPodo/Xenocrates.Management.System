@@ -19,9 +19,9 @@ namespace ManagementSystemVersionTwo.Services.PaypalServices
 
         public void SavePayment(string task,int workerID)
         {
-            var x= _db.Workers.Find(workerID);
+            var worker= _db.Workers.Find(workerID);
             PaymentDetails payment = JsonConvert.DeserializeObject<PaymentDetails>(task);
-            payment.Worker = x;
+            payment.Worker = worker;
             _db.Payments.Add(payment);
             _db.SaveChanges();
         }

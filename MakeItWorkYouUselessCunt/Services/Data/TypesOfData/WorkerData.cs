@@ -22,7 +22,6 @@ namespace ManagementSystemVersionTwo.Services.Data.TypesOfData
         public List<Worker> AllWorkers() => _context.Workers.Include(w => w.ApplicationUser).Include(w => w.Department).Include(p => p.MyProjects).Include(u => u.Payments).ToList();
 
 
-
         public void Dispose()
         {
             _context.Dispose();

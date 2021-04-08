@@ -23,39 +23,63 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
             _db.Dispose();
         }
 
-        public void CreateProject(CreateProjectViewModel f2,string SupervisorID)
+        #region CreateProject
+
+        public void CreateProject(CreateProjectViewModel f2,string supervisorID)
         {
-            var worker = _db.Users.Find(SupervisorID).Worker;
-            var project = new Project()
-            {
-                Title=f2.Project.Title,
-                Description=f2.Project.Description,
-                StartDate=f2.Project.StartDate,
-                EndDate=f2.Project.EndDate,
-                Finished=false,
-                Attachments=DeserializeAttach(f2.Attach),
-                WorkersInMe=new List<ProjectsAssignedToEmployee>()
-            };
-            project.WorkersInMe.Add(new ProjectsAssignedToEmployee() {
-                Project= project,
-                Worker= worker
-            });
-            foreach(var emp in f2.Users)
-            {
-                if (emp.IsSelected)
-                {
-                    worker = _db.Users.Find(emp.ID).Worker;
-                    project.WorkersInMe.Add(new ProjectsAssignedToEmployee()
-                    {
-                        Project = project,
-                        Worker = worker
-                    });
-                }
-            }
-            _db.Projects.Add(project);
+            
+            var newProject = NewProject(f2.Project,f2.Attach);
+            AddSupervisorToNewProject(supervisorID, newProject);
+            AddEmployeesToNewProject(newProject, f2.Users);
+            _db.Projects.Add(newProject);
             _db.SaveChanges();
         }
 
+        private Project NewProject(Project newProject,HttpPostedFileBase attachment)
+        {
+            Project projectToSave = new Project()
+            {
+                Title = newProject.Title,
+                Description = newProject.Description,
+                StartDate = newProject.StartDate,
+                EndDate = newProject.EndDate,
+                Finished = false,
+                Attachments = DeserializeAttach(attachment),
+                WorkersInMe = new List<ProjectsAssignedToEmployee>()
+            };
+            return projectToSave;
+        }
+
+        private void AddSupervisorToNewProject(string supervisorId,Project newProject)
+        {
+            var supervisorOfProject = _db.Users.Find(supervisorId).Worker;
+            newProject.WorkersInMe.Add(new ProjectsAssignedToEmployee()
+            {
+                Project = newProject,
+                Worker = supervisorOfProject
+            });
+        }
+
+        private void AddEmployeesToNewProject(Project newProject,List<DummyForProject> employees)
+        {
+            var workerOfProject = new Worker();
+            foreach (var emp in employees)
+            {
+                if (emp.IsSelected)
+                {
+                    workerOfProject = _db.Users.Find(emp.ID).Worker;
+                    newProject.WorkersInMe.Add(new ProjectsAssignedToEmployee()
+                    {
+                        Project = newProject,
+                        Worker = workerOfProject
+                    });
+                }
+            }
+        }
+
+        #endregion
+
+        #region DeleteProject
         public void DeleteProject(int id)
         {
             var pro = _db.Projects.Find(id);
@@ -63,42 +87,61 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
             _db.Projects.Remove(pro);
             _db.SaveChanges();
         }
+        #endregion
 
-
+        #region Edit Project
         public void EditProject(EditProjectViewModel f2)
         {
-            var pro = _db.Projects.Find(f2.Project.ID);
-            if (!(f2.Attach is null))
+            var projectToEdit = _db.Projects.Find(f2.Project.ID);
+            CheckIfAttachmentChanged(f2.Attach, projectToEdit);
+            CheckChangesInEmployeesOfProject(projectToEdit, f2.Users);
+            UpdateProjectProperties(projectToEdit, f2.Project);
+            _db.Entry(projectToEdit).State = EntityState.Modified;
+            _db.SaveChanges();
+        }
+
+        private void CheckIfAttachmentChanged(HttpPostedFileBase changedAttachment,Project projectToEdit)
+        {
+            if (!(changedAttachment is null))
             {
-                DeleteProjectFiles(pro.Attachments);
-                pro.Attachments = DeserializeAttach(f2.Attach);
+                DeleteProjectFiles(projectToEdit.Attachments);
+                projectToEdit.Attachments = DeserializeAttach(changedAttachment);
             }
-            foreach (var workers in f2.Users)
+        }
+
+        private void CheckChangesInEmployeesOfProject(Project projectToEdit,List<DummyForProject> employees)
+        {
+            foreach (var workers in employees)
             {
-                var worker=_db.Workers.SingleOrDefault(s=>s.ApplicationUser.Id==workers.ID);
-                if (pro.WorkersInMe.SingleOrDefault(w => w.WorkerID == worker.ID) != null && workers.IsSelected == false)
+                var worker = _db.Workers.SingleOrDefault(s => s.ApplicationUser.Id == workers.ID);
+                if (projectToEdit.WorkersInMe.SingleOrDefault(w => w.WorkerID == worker.ID) != null && workers.IsSelected == false)
                 {
-                    var protodel = worker.MyProjects.SingleOrDefault(s=>s.ProjectID==pro.ID);
-                    _db.ProjectsToEmployees.Remove(protodel);
+                    var projectToDelete = worker.MyProjects.SingleOrDefault(s => s.ProjectID == projectToEdit.ID);
+                    _db.ProjectsToEmployees.Remove(projectToDelete);
                 }
-                if (pro.WorkersInMe.SingleOrDefault(w => w.WorkerID == _db.Users.Find(workers.ID).Worker.ID) == null && workers.IsSelected == true)
+                if (projectToEdit.WorkersInMe.SingleOrDefault(w => w.WorkerID == _db.Users.Find(workers.ID).Worker.ID) == null && workers.IsSelected == true)
                 {
-                    pro.WorkersInMe.Add(new ProjectsAssignedToEmployee() {
-                        Project=pro,
+                    projectToEdit.WorkersInMe.Add(new ProjectsAssignedToEmployee()
+                    {
+                        Project = projectToEdit,
                         Worker = worker
                     });
                 }
-                
             }
-            pro.Description = f2.Project.Description;
-            pro.Title = f2.Project.Title;
-            pro.StartDate = f2.Project.StartDate;
-            pro.EndDate = f2.Project.EndDate;
-            pro.Finished = f2.Project.Finished;
-            _db.Entry(pro).State = EntityState.Modified;
-            _db.SaveChanges();
         }
-        public string DeserializeAttach(HttpPostedFileBase File)
+
+        private void UpdateProjectProperties(Project projectToEdit,Project editedOne)
+        {
+            projectToEdit.Description = editedOne.Description;
+            projectToEdit.Title = editedOne.Title;
+            projectToEdit.StartDate = editedOne.StartDate;
+            projectToEdit.EndDate = editedOne.EndDate;
+            projectToEdit.Finished = editedOne.Finished;
+        }
+        #endregion
+
+        #region Usefull Methods
+        private string DeserializeAttach(HttpPostedFileBase File)
         {
             string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ProjectFiles/");
             if (!Directory.Exists(path))
@@ -113,8 +156,8 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
             }
             return null;
         }
-        
-        public void DeleteProjectFiles(string fileName)
+
+        private void DeleteProjectFiles(string fileName)
         {
             string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ProjectFiles/");
             if (File.Exists(Path.Combine(path, fileName)))
@@ -134,6 +177,7 @@ namespace ManagementSystemVersionTwo.Services.ProjectServices
             }
 
         }
+        #endregion
 
     }
 }

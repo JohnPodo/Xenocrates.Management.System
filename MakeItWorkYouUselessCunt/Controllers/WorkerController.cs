@@ -178,7 +178,7 @@ namespace ManagementSystemVersionTwo.Controllers
             List<WorkingDays> projects = new List<WorkingDays>();
             if (!(worker is null))
             {
-                var workersprojects = _data.FindProjectsPerWorker(worker.ID);
+                var workersprojects = _data.Project.FindProjectsPerWorker(worker.ID);
                 foreach (var p in workersprojects)
                 {
                     projects.Add(new WorkingDays()
