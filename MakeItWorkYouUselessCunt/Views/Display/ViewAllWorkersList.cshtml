@@ -5,10 +5,10 @@
 }
 @if (ViewBag.Supervisor)
 {
-    <div>
-        <div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { viewType = "List" })">List View</a></div>
-        <div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw  btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3]})">Card View</a></div>
-    </div>
+<div>
+    <a href="@Url.Action("ViewAllWorkers" , "Display",new { viewType = "List",searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3] })" style="margin:4px; float:right" class="btn btn-inverse-info btn-fw">List View</a>
+    <a href="@Url.Action("ViewAllWorkers" , "Display")" style="margin:4px; float:right" class="btn btn-info btn-fw">Card View</a>
+</div>
     <br />
     <br />
     <br />
@@ -23,8 +23,8 @@
                         <hr />
                         @using (Html.BeginForm())
                         {
-                            <div style="width:100%" class="row">
-                                <p>
+                            <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                                <div class="p-2 bd-highlight">
                                     Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
                                     <datalist id="browsers">
                                         @foreach (var item in ViewBag.Names)
@@ -32,17 +32,17 @@
                                             <option value="@item" />
                                         }
                                     </datalist>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="p-2 bd-highlight">
                                     Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
-                                </p>
-                                <p>
+                                </div>
+                                <div class="p-2 bd-highlight">
                                     See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "uploaded-text" })
-                                </p>
-                                <p style="float:left">
-                                    <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <input class="btn btn-info btn-fw" type="submit" value="Search" />
                                     @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "resbut fa fa-times" })
-                                </p>
+                                </div>
                             </div>
                         }
                         <hr />
@@ -120,8 +120,8 @@ else
 {
     <div>
         <a href="@Url.Action("Register", "Account")" style="font-size: 12px;" class="btn btn-info btn-fw">Create New Worker</a>
-        <div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { viewType = "List" })">List View</a></div>
-        <div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw  btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3]})">Card View</a></div>
+        <a href="@Url.Action("ViewAllWorkers", "Display", new { viewType = "List" })" class="btn btn-inverse-info btn-fw" style="margin:4px; float:right">List View</a>
+        <a href="@Url.Action("ViewAllWorkers", "Display", new { searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3]})" style="margin:4px; float:right" class="btn btn-info btn-fw  btn btn-info btn-fw">Card View</a>
     </div>
     <br />
     <div class="row">
@@ -134,8 +134,8 @@ else
                         <hr />
                         @using (Html.BeginForm())
                         {
-                            <div style="width:100%" class="row">
-                                <p>
+                            <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                                <div class="p-2 bd-highlight">
                                     Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
                                     <datalist id="browsers">
                                         @foreach (var item in ViewBag.Names)
@@ -143,17 +143,17 @@ else
                                             <option value="@item" />
                                         }
                                     </datalist>
-                                </p>
-                                <p>
+                                </div>
+                                <div class="p-2 bd-highlight">
                                     Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
-                                </p>
-                                <p>
+                                </div>
+                                <div class="p-2 bd-highlight">
                                     See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "uploaded-text" }) in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "uploaded-text" }) Departments
-                                </p>
-                                <p style="float:left">
-                                    <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <input class="btn btn-info btn-fw" type="submit" value="Search" />
                                     @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "resbut fa fa-times" })
-                                </p>
+                                </div>
                             </div>
                         }
                         <hr />

@@ -1,0 +1,47 @@
+﻿@{ Layout = null;}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page - Xenocrates</title>
+    @Styles.Render("~/Content/font-awesome.css")
+    @Styles.Render("~/Content/materialdesignicons.min.css")
+    @Styles.Render("~/Content/ionicons.css")
+    @Styles.Render("~/Content/style.css")
+    @Styles.Render("~/Content/landingPage.css")
+</head>
+<body>
+    <div class="container-scroller">
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="login-button">
+                <div class="col-md-11"></div>
+                <div class="navbar">
+                    <a href="@Url.Action("Login","Account")">Login</a>
+                    <a href="@Url.Action("Contact","Home")">Contact</a>
+                    <a href="@Url.Action("About","Home")">About Us</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid page-body-wrapper">
+            <div class="row">
+                <div class="landing-page">
+                    <img class="fade-in" src="~/EIKONES/Xenocrates.png" width="400" alt="">
+                    <p class="page-quote fade-more">
+                        "Welcome to Xenocrates, <br>
+                        a management system <br>
+                        application for Companies."
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/off-canvas.js")
+    @Scripts.Render("~/Scripts/misc.js")
+</body>
+</html>

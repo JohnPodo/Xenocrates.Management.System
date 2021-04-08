@@ -16,8 +16,8 @@
                     <hr />
                     @using (Html.BeginForm())
                     {
-                        <div class="row">
-                            <div class="col-md-6 filters-main">
+                        <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
+                            <div class="p-2 bd-highlight">
                                 <p>Search By City: @Html.TextBox("searchString", "", new { list = "cities", @class = "uploaded-text" })</p>
                                 <datalist id="cities">
                                     @foreach (var item in ViewBag.Cities)
@@ -26,11 +26,11 @@
                                     }
                                 </datalist>
                             </div>
-                            <div class="col-md-3 filters-main">
+                            <div class="p-2 bd-highlight">
                                 <p>Order by: @Html.DropDownList("sort", new SelectList(ViewBag.SortByCity, "Value", "Text"), "", new { @class = "uploaded-text" })</p>
                             </div>
-                            <div class="col-md-3 filters-main">
-                                <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                            <div class="p-2 bd-highlight">
+                                <input class="btn btn-info btn-fw" type="submit" value="Search" />
                                 @Html.ActionLink(" ", "ViewAllDepartments", "Display", new { }, new { @class = "resbut fa fa-times" })
 
                             </div>
