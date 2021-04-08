@@ -10,6 +10,11 @@
         </a>
     </div>
     <div class="navbar-menu-wrapper d-flex align-items-center">
+        <figure class="text-center">
+            <figcaption class="blockquote-footer">
+                <cite title="Source Title">Xenocrates</cite> , a Management System for Companies
+            </figcaption>
+        </figure>
         <ul class="navbar-nav ml-auto">
             <li class="nav-item dropdown d-none d-xl-inline-block user-dropdown">
                 <a class="nav-link dropdown-toggle" id="UserDropdown" href="#" data-toggle="dropdown" aria-expanded="false">
@@ -34,11 +39,10 @@
                         {
                             <img class="img-md rounded-circle" src="~/EIKONES/admin.png" alt="Profile image">
                             <p class="mb-1 mt-3 font-weight-semibold">@Model.UserName</p>
-                            <p class="font-weight-light text-muted mb-0">@Model.Email</p>
+                            <p class="font-weight-light mb-0">@Model.Email</p>
                         }
                     </div>
-                    <a class="dropdown-item">Messages<i class="dropdown-item-icon ti-comment-alt"></i></a>
-                    <a class="dropdown-item">Contact IT<i class="dropdown-item-icon ti-help-alt"></i></a>
+                    <a class="dropdown-item" href="@Url.Action("Contact","Home")">Contact IT<i class="dropdown-item-icon ti-help-alt"></i></a>
                     @Html.Partial("_LoginPartial")
                 </div>
             </li>

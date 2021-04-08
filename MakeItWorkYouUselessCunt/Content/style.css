@@ -332,7 +332,7 @@ pre {
 }
 
 figure {
-    margin: 0 0 1rem;
+   /* margin: 0 0 1rem;*/
 }
 
 img {
@@ -16015,3 +16015,8 @@ td.text-right {
 }
 
 /*NEW CHAT STYLE*/
+.quote{
+    justify-self:center;
+    color:azure;
+
+}
