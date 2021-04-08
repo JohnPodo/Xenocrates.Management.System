@@ -19,7 +19,10 @@ namespace ManagementSystemVersionTwo.Services.Data.TypesOfData
         public Project FindProjectById(int id) => _context.Projects.Include(s => s.WorkersInMe).SingleOrDefault(p => p.ID == id);
 
         public List<Project> AllProjects() => _context.Projects.Include(s => s.WorkersInMe).ToList();
-        
+
+        public List<Project> FindProjectsPerWorker(int id) => _context.Projects.Include(s => s.WorkersInMe).Where(p => p.WorkersInMe.FirstOrDefault(w => w.WorkerID == id) != null).ToList();
+
+
         public void Dispose()
         {
             _context.Dispose();
