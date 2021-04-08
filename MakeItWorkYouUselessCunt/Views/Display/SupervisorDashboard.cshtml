@@ -22,7 +22,13 @@
             This chart shows the age of each employee.
         </p>
     </figure>
-    
+    <figure class="highcharts-figure">
+        <div id="projects"></div>
+        <p class="highcharts-description">
+            This chart shows the number of projects per month for the department.
+        </p>
+    </figure>
+
 </div>
 
 @section Scripts{
@@ -40,10 +46,12 @@
             getdata.done(function (data) {
                 var salaryperemployee = data[0];
                 var ageperemployee = data[1];
+                var projectspermonth = data[2];
                 
 
                 salarychart(salaryperemployee);
                 agechart(ageperemployee);
+                projectschart(projectspermonth);
                 
             })
         });
@@ -116,7 +124,39 @@
             });
         }
 
-        
+        function projectschart(data) {
+            Highcharts.chart('projects', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Projects Per Month'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data.Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Months'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Projects',
+                    data: data.Count
+                }]
+            });
+        }
 
 
     </script>
