@@ -195,16 +195,7 @@ namespace ManagementSystemVersionTwo.Controllers
             if (!(worker is null))
             {
                 var workersprojects = _data.Project.FindProjectsPerWorker(worker.ID);
-                foreach (var p in workersprojects)
-                {
-                    projects.Add(new WorkingDays()
-                    {
-                        Start = p.StartDate.Date.ToString("yyyy-MM-dd"),
-                        End = p.EndDate.Date.ToString("yyyy-MM-dd"),
-                        Title = p.Title
-                    });
-                }
-
+                projects = _external.FillProjectsOfWorkerForCalendar(workersprojects);
                 return new JsonResult { Data = projects, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
 
@@ -227,22 +218,10 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 worker = _data.Worker.FindWorkerByID((int)workerid);
             }
-            var days = new List<WorkingDays>();
+            List<WorkingDays> days = new List<WorkingDays>();
             if (!(worker is null))
             {
-                foreach (var day in worker.Days)
-                {
-                    days.Add(new WorkingDays
-                    {
-                        Start = day.Start,
-                        Title = day.Title,
-                        Display = day.Display,
-                        BackgroundColor = day.BackgroundColor,
-                        ID = day.ID,
-                        End = day.End
-                    });
-                }
-
+                days=_external.FillWorkingDaysOfWorkerForCalendar(worker.Days.ToList());
                 return new JsonResult { Data = days, JsonRequestBehavior = JsonRequestBehavior.AllowGet };
             }
 
