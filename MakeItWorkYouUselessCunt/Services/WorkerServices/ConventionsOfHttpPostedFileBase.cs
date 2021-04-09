@@ -8,7 +8,11 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
 {
     public static class ConventionsOfHttpPostedFileBase
     {
-        
+        /// <summary>
+        /// Give me an Uploaded Picture For Profile Picture I will save it to Folder and return you the file Name
+        /// </summary>
+        /// <param name="Pic"></param>
+        /// <returns></returns>
         public static string ForPostedPicture(HttpPostedFileBase Pic)
         {
             //Check If File Name Description Images Exists and If Not He make It
@@ -28,6 +32,11 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
 
         }
 
+        /// <summary>
+        /// Give me an Uploaded Picture For CV I will save it to Folder and return you the file Name
+        /// </summary>
+        /// <param name="Pic"></param>
+        /// <returns></returns>
         public static string ForCV(HttpPostedFileBase CV)
         {
             string path = System.Web.Hosting.HostingEnvironment.MapPath("~/CVs/");
@@ -46,6 +55,11 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
 
         }
 
+        /// <summary>
+        /// Give me an Uploaded Picture For Contract of Employment I will save it to Folder and return you the file Name
+        /// </summary>
+        /// <param name="Pic"></param>
+        /// <returns></returns>
         public static string ForContractOfEmployments(HttpPostedFileBase ContractOfEmployment)
         {
             string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ContractOfEmployments/");
