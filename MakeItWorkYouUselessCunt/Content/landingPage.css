@@ -839,4 +839,10 @@
     display: none;
 }
 
+.quote-xenocrates {
+    background-color: rgba(128, 128, 128, 0.62);
+    font-size: 28px;
+    padding-bottom:10px;
+    border-radius:10px;
+}
 /*# sourceMappingURL=style.css.map */

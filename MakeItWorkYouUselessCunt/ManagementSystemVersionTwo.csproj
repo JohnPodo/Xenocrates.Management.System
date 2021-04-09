@@ -300,9 +300,12 @@
     <Content Include="EIKONES\admin.png" />
     <Content Include="EIKONES\bg-01.jpg" />
     <Content Include="EIKONES\bg-02.jpg" />
+    <Content Include="EIKONES\bg-about.jpg" />
     <Content Include="EIKONES\boss.png" />
     <Content Include="EIKONES\dark_pattern-wallpaper-1920x1080.jpg" />
     <Content Include="EIKONES\employee2.png" />
+    <Content Include="EIKONES\lagos-it.jpg" />
+    <Content Include="EIKONES\lagos.jpg" />
     <Content Include="EIKONES\login_1.jpg" />
     <Content Include="EIKONES\login_2.jpg" />
     <Content Include="EIKONES\logo-mini.png" />
@@ -522,6 +525,7 @@
     <Content Include="Views\Display\SidebarPartial.cshtml" />
     <Content Include="Views\Display\EmployeeDashboard.cshtml" />
     <Content Include="Views\Home\LandingPage.cshtml" />
+    <Content Include="Views\Home\ContactIT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -573,6 +577,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

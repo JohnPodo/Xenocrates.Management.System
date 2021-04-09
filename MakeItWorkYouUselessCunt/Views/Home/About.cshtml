@@ -1,6 +1,203 @@
 ﻿@{
-    ViewBag.Title = "About";
+    ViewBag.Title = "About"; Layout = null;
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
-<p>Use this area to provide additional information.</p>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Xenocrates</title>
+    @Styles.Render("~/Content/font-awesome.css")
+    @Styles.Render("~/Content/materialdesignicons.min.css")
+    @Styles.Render("~/Content/ionicons.css")
+    @Styles.Render("~/Content/style.css")
+    @Styles.Render("~/Content/landingPage.css")
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="navbar navbar-expand-lg navbar-light bg-light">
+            <a href="@Url.Action("Login","Account")">Login</a>
+            <a href="@Url.Action("Contact","Hοme")">Contact</a>
+            <a href="@Url.Action("About","Home")">About Us</a>
+        </div>
+
+        <div style="background-image: url(../../EIKONES/bg-about.jpg)" class="">
+          <br/>
+            
+            <figure class="quote-xenocrates text-center">
+                <blockquote class="blockquote-footer">
+                    <p>"Happiness is the possession of the excellence proper to us, and of the power subservient to it."</p>
+                </blockquote>
+                <figcaption style="color:honeydew" class="blockquote-footer">
+                    <cite title="Source Title">Xenocrates</cite>
+                </figcaption>
+            </figure>
+            
+            
+            <header class="text-center py-5 mb-4">
+                <div class="container">
+                    <h1 class="font-weight-light text-white">About Team Pyravlos</h1>
+                </div>
+            </header>
+            
+            
+            
+            
+            <header class="text-center py-5 mb-4">
+                <div class="container">
+                    <h1 class="font-weight-light text-white">Meet the Team</h1>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="container">
+                <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
+                    <!-- Team Member 1 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow">
+                            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">George Chatziadis</h5>
+                                <div class="card-text text-black-50">Full Stack Dev</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Member 1 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow">
+                            <img src="https://source.unsplash.com/TMgQMXoglsM/500x350" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">John Podogorianiotis</h5>
+                                <div class="card-text text-black-50">Team Leader</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Member 2 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow">
+                            <img src="https://source.unsplash.com/9UVmlIb0wJU/500x350" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Iliana Beikou</h5>
+                                <div class="card-text text-black-50">Database Developer</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Member 3 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow">
+                            <img src="https://source.unsplash.com/sNut2MqSmds/500x350" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Spyros Tsamis</h5>
+                                <div class="card-text text-black-50">UX/UI</div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Team Member 4 -->
+                    <div class="col-xl-3 col-md-6 mb-4">
+                        <div class="card border-0 shadow">
+                            <img src="https://source.unsplash.com/ZI6p3i9SbVU/500x350" class="card-img-top" alt="...">
+                            <div class="card-body text-center">
+                                <h5 class="card-title mb-0">Christos Lagos</h5>
+                                <div class="card-text text-black-50">Front End Developer</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container -->
+
+        </div>
+        <!-- content-wrapper ends -->
+        <!-- page-body-wrapper ends -->
+    </div>
+
+
+
+
+
+
+
+
+
+
+
+
+    @*<div style="background-image: url(../../EIKONES/bg-about.jpg)" class="container-scroller">
+        <nav class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+            <div class="login-button">
+                <div class="navbar">
+                    <a href="@Url.Action("Login","Account")">Login</a>
+                    <a href="@Url.Action("Contact","Hοme")">Contact</a>
+                    <a href="@Url.Action("About","Home")">About Us</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container-fluid page-body-wrapper">
+            <div class="row">
+                <div class="col-md-12 header">
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h1 class="display-4">Fluid jumbotron</h1>
+                            <p class="lead">This is a modified jumbotron that occupies the entire horizontal space of its parent.</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="d-flex flex-column bd-highlight mb-3">
+                    <div class="p-2 bd-highlight">
+                        <div class="card">
+                            <div class="profile-pic-div">
+                                <img src="~/EIKONES/bg-02.jpg" width="400px" id="photo">
+                            </div>
+                            <div class="prof-info">
+                                <h2>Σπύρος Τσάμης</h2>
+                                <p class="title">Front-End Developer</p>
+                                <p>Degree in Graphic Design.</p>
+                                <div class="row">
+                                    <a class=" button contact-btn " href="mailto: spyros.tsamis1@icloud.com">Contact</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 header">
+                        <h1>Our Project</h1>
+                        <div class="about-us-content">
+                            <h1>About The Project</h1>
+                            <h5>Some text about the Project.</h5>
+                        </div>
+                    </div>
+                    <div class="col-12 grid-margin">
+                        <div class="col-md-12 row second-row">
+                            <div class="user-card">
+                                <div class="card  card-workers">
+                                    <div class="first-col">
+                                        <div class="our-team">
+                                            <div class="picture">
+                                                <img class="img-fluid" src="">
+                                            </div>
+                                            <div class="team-content">
+                                                <h3 class="name"></h3>
+                                                <h4 class="title">Department in</h4>
+                                            </div>
+                                            <div class="button">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+    @Scripts.Render("~/bundles/modernizr")
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+
+    @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/off-canvas.js")
+    @Scripts.Render("~/Scripts/misc.js")
+</body>
+</html>
