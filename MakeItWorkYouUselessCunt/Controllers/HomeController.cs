@@ -22,8 +22,13 @@ namespace ManagementSystemVersionTwo.Controllers
 
             return View();
         }
+        public ActionResult ContactIT()
+        {
+            ViewBag.Message = "IT Hotline.";
 
-        
+            return View();
+        }
+        [AllowAnonymous]
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
