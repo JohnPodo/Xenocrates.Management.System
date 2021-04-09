@@ -241,6 +241,10 @@
     <Compile Include="Migrations\202104031626431_Calendar.Designer.cs">
       <DependentUpon>202104031626431_Calendar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104091845473_FinalEditionOfDatabase.cs" />
+    <Compile Include="Migrations\202104091845473_FinalEditionOfDatabase.Designer.cs">
+      <DependentUpon>202104091845473_FinalEditionOfDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHub.cs" />
@@ -567,6 +571,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\202104031626431_Calendar.resx">
       <DependentUpon>202104031626431_Calendar.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104091845473_FinalEditionOfDatabase.resx">
+      <DependentUpon>202104091845473_FinalEditionOfDatabase.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>

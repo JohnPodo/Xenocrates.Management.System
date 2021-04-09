@@ -361,6 +361,53 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
         }
         #endregion
 
+        #region Calendar Methods
+        /// <summary>
+        /// Give me a Project List to convert it to WorkingDays so Calendar Can understand
+        /// </summary>
+        /// <param name="projects"></param>
+        /// <returns></returns>
+        public List<WorkingDays> FillProjectsOfWorkerForCalendar(List<Project> projects)
+        {
+            List<WorkingDays> ListOfWorkingDays = new List<WorkingDays>();
+            foreach (var p in projects)
+            {
+                ListOfWorkingDays.Add(new WorkingDays()
+                {
+                    Start = p.StartDate.Date.ToString("yyyy-MM-dd"),
+                    End = p.EndDate.Date.ToString("yyyy-MM-dd"),
+                    Title = p.Title
+                });
+            }
+            return ListOfWorkingDays;
+
+        }
+
+        /// <summary>
+        /// Give me a List of WorkingDays to tranlate it in List of WorkingDays that Calendar understands
+        /// </summary>
+        /// <param name="days"></param>
+        /// <returns></returns>
+        public List<WorkingDays> FillWorkingDaysOfWorkerForCalendar(List<WorkingDays> days)
+        {
+            List<WorkingDays> ListOfWorkingDays = new List<WorkingDays>();
+            foreach (var day in days)
+            {
+                days.Add(new WorkingDays
+                {
+                    Start = day.Start,
+                    Title = day.Title,
+                    Display = day.Display,
+                    BackgroundColor = day.BackgroundColor,
+                    ID = day.ID,
+                    End = day.End
+                });
+            }
+            return ListOfWorkingDays;
+
+        }
+        #endregion
+
         public void Dispose()
         {
             _db.Dispose();
