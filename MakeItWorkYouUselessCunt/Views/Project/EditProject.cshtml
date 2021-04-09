@@ -40,24 +40,25 @@
 
                                 </div>
                             </div>
+                            <div id=""></div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Project.StartDate, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-sm-5">
-                                    @Html.TextBoxFor(model => model.Project.StartDate, new { htmlAttributes = new { @class = "form-control" } })
-                                    @Html.ValidationMessageFor(model => model.Project.StartDate, "", new { @class = "text-danger" })
+                                    @Html.TextBoxFor(model => model.Project.StartDate,"{0:MM/dd/yyyy}", new { htmlAttributes = new { @class = "form-control default-datepicker"} })
+                                    @Html.ValidationMessageFor(model => model.Project.StartDate, "", new { @class = "text-danger"})
                                 </div>
                             </div>
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Project.EndDate, htmlAttributes: new { @class = "control-label col-md-2" })
                                 <div class="col-sm-5">
-                                    @Html.TextBoxFor(model => model.Project.EndDate, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.TextBoxFor(model => model.Project.EndDate, "{0:MM/dd/yyyy}", new { htmlAttributes = new { @class = "form-control default-datepicker" , onchange="end(this)"} })
                                     @Html.ValidationMessageFor(model => model.Project.EndDate, "", new { @class = "text-danger" })
                                 </div>
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-5">
                                     <span class="control-label col-md-2"> Is it Completed ?</span>
-                                    @Html.CheckBoxFor(model => model.Project.Finished, new { htmlAttributes = new { @class = "form-control" } })
+                                    @Html.CheckBoxFor(model => model.Project.Finished, new { htmlAttributes = new { @class = "form-control", id = "start" } })
                                     @Html.ValidationMessageFor(model => model.Project.Finished, "", new { @class = "text-danger" })
                                 </div>
                             </div>
@@ -117,3 +118,28 @@
         </div>
     </div>
 </div>
+
+<script src="~/Scripts/jquery-3.5.1.min.js"></script>
+<script>
+    function end(obj) {
+        var start = document.getElementById('Project_StartDate').value;
+        var end = obj.value;
+        var error = document.getElementById('Project_EndDate-error');
+
+        if ((Date.parse(start) >= Date.parse(end))) {
+            error.innerText = "End Date must be greater than Start Date.";
+            end.value = "";
+        }
+    };
+
+    $('#Project_StartDate').change(function () {
+        var start = document.getElementById('Project_StartDate').value;
+        var error = document.getElementById('Project_StartDate-error');
+        var now = new Date();
+        if ((Date.parse(start) < Date.parse(now))) {
+            error.innerText = "Start Date can't be in the past";
+            start.value = "";
+        }
+    })
+
+</script>

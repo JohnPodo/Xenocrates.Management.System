@@ -77,10 +77,10 @@
                                             @pro.Description
                                         </td>
                                         <td style="overflow:hidden">
-                                            @pro.StartDate
+                                            @pro.StartDate.ToString("dd-MM-yyyy")
                                         </td>
                                         <td style="overflow:hidden">
-                                            @pro.EndDate
+                                            @pro.EndDate.ToString("dd-MM-yyyy")
                                         </td>
                                         <td style="overflow:hidden">
                                             @if (pro.Finished)
@@ -183,10 +183,10 @@ else if (ViewBag.Supervisor)
                                             @pro.Description
                                         </td>
                                         <td style="overflow:hidden">
-                                            @pro.StartDate
+                                            @pro.StartDate.ToString("dd-MM-yyyy")
                                         </td>
                                         <td style="overflow:hidden">
-                                            @pro.EndDate
+                                            @pro.EndDate.ToString("dd-MM-yyyy")
                                         </td>
                                         <td style="overflow:hidden">
                                             @if (pro.Finished)
