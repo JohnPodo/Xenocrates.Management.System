@@ -95,6 +95,7 @@
     <Reference Include="Microsoft.Owin.Security.Twitter, Version=4.1.1.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Owin.Security.Twitter.4.1.1\lib\net45\Microsoft.Owin.Security.Twitter.dll</HintPath>
     </Reference>
+    <Reference Include="Microsoft.VisualBasic" />
     <Reference Include="Newtonsoft.Json, Version=12.0.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
       <HintPath>..\packages\Newtonsoft.Json.12.0.3\lib\net45\Newtonsoft.Json.dll</HintPath>
     </Reference>
@@ -240,6 +241,10 @@
     <Compile Include="Migrations\202104031626431_Calendar.Designer.cs">
       <DependentUpon>202104031626431_Calendar.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104091845473_FinalEditionOfDatabase.cs" />
+    <Compile Include="Migrations\202104091845473_FinalEditionOfDatabase.Designer.cs">
+      <DependentUpon>202104091845473_FinalEditionOfDatabase.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\ChatHub.cs" />
@@ -250,12 +255,16 @@
     <Compile Include="Models\PaymentDetails.cs" />
     <Compile Include="Models\Project.cs" />
     <Compile Include="Models\ProjectsAssignedToEmployee.cs" />
+    <Compile Include="Services\Filtering\FilteringServices.cs" />
+    <Compile Include="Services\SortingAndFiltering\SortingAndFilteringData.cs" />
+    <Compile Include="Services\Sorting\SortingServices.cs" />
     <Compile Include="Services\StatisticsServices\StatisticsForDashboard.cs" />
     <Compile Include="Services\Data\TypesOfData\ApplicationUserData.cs" />
     <Compile Include="Services\Data\TypesOfData\DepartmentData.cs" />
     <Compile Include="Services\Data\TypesOfData\ProjectData.cs" />
     <Compile Include="Services\Data\TypesOfData\RoleData.cs" />
     <Compile Include="Services\Data\TypesOfData\WorkerData.cs" />
+    <Compile Include="Services\ViewBags\FillViewBags.cs" />
     <Compile Include="StatisticsModels\Ratio.cs" />
     <Compile Include="Models\Worker.cs" />
     <Compile Include="Models\WorkingDays.cs" />
@@ -300,9 +309,12 @@
     <Content Include="EIKONES\admin.png" />
     <Content Include="EIKONES\bg-01.jpg" />
     <Content Include="EIKONES\bg-02.jpg" />
+    <Content Include="EIKONES\bg-about.jpg" />
     <Content Include="EIKONES\boss.png" />
     <Content Include="EIKONES\dark_pattern-wallpaper-1920x1080.jpg" />
     <Content Include="EIKONES\employee2.png" />
+    <Content Include="EIKONES\lagos-it.jpg" />
+    <Content Include="EIKONES\lagos.jpg" />
     <Content Include="EIKONES\login_1.jpg" />
     <Content Include="EIKONES\login_2.jpg" />
     <Content Include="EIKONES\logo-mini.png" />
@@ -522,6 +534,7 @@
     <Content Include="Views\Display\SidebarPartial.cshtml" />
     <Content Include="Views\Display\EmployeeDashboard.cshtml" />
     <Content Include="Views\Home\LandingPage.cshtml" />
+    <Content Include="Views\Home\ContactIT.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -559,6 +572,9 @@
     <EmbeddedResource Include="Migrations\202104031626431_Calendar.resx">
       <DependentUpon>202104031626431_Calendar.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104091845473_FinalEditionOfDatabase.resx">
+      <DependentUpon>202104091845473_FinalEditionOfDatabase.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Paypal\Paypal.csproj">
@@ -573,6 +589,9 @@
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
     <VSToolsPath Condition="'$(VSToolsPath)' == ''">$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)</VSToolsPath>
+  </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets" Condition="Exists('$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\TypeScript\Microsoft.TypeScript.targets')" />

@@ -9,8 +9,6 @@ namespace ManagementSystemVersionTwo.Models
     {
         public int ID { get; set; }
 
-        public string PaymentID { get; set; }
-
         public decimal Amount { get; set; }
 
         public DateTime Date { get; set; }
