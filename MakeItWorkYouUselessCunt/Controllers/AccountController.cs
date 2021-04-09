@@ -145,7 +145,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
@@ -401,7 +401,7 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult LogOff()
         {
             AuthenticationManager.SignOut(DefaultAuthenticationTypes.ApplicationCookie);
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("LandingPage", "Home");
         }
 
         //

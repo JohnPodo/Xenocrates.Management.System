@@ -6,8 +6,10 @@ using System.Web.Mvc;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
+    [AllowAnonymous]
     public class HomeController : Controller
     {
+        
         public ActionResult LandingPage()
         {
             return View();

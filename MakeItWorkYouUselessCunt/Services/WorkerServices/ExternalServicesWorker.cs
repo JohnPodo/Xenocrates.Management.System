@@ -5,6 +5,7 @@ using System.Data.Entity.ModelConfiguration.Conventions;
 using System.IO;
 using System.Linq;
 using System.Web;
+using System.Web.Mvc;
 using ManagementSystemVersionTwo.Models;
 using ManagementSystemVersionTwo.ViewModels;
 using Microsoft.AspNet.Identity;
@@ -26,106 +27,166 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
             _manager = new UserManager<ApplicationUser>(_store);
             _roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(_db));
         }
+        #region Create Worker
 
+        /// <summary>
+        /// Give me the ViewModel From the View the Chosen Department and the role and I will connect Everything and save it in DB
+        /// </summary>
+        /// <param name="f2"></param>
+        /// <param name="f2dep"></param>
+        /// <param name="role"></param>
         public void CreateWorker(CreateWorker f2, Department f2dep, string role)
         {
             _manager.AddToRole(f2.userID, role);
-            var worker = new Worker()
-            {
-                Address = f2.Address,
-                Pic = ConventionsOfHttpPostedFileBase.ForPostedPicture(f2.ProfilePicture),
-                CV = ConventionsOfHttpPostedFileBase.ForCV(f2.CV),
-                ContractOfEmployment = ConventionsOfHttpPostedFileBase.ForContractOfEmployments(f2.ContractOfEmployment),
-                FirstName = f2.FirstName,
-                LastName = f2.LastName,
-                DateOfBirth = f2.DateOfBirth,
-                Gender = f2.Gender,
-                BankAccount = f2.BankAccount,
-                Salary = f2.Salary,
-                Department = _db.Departments.Single(s => s.ID == f2dep.ID),
-                DepartmentID = _db.Departments.Single(s => s.ID == f2dep.ID).ID,
-                ApplicationUser = _db.Users.Find(f2.userID)
 
-            };
-            _db.Workers.Add(worker);
+            var newWorker = NewWorker(f2, f2dep);
+
+            _db.Workers.Add(newWorker);
+
             _db.SaveChanges();
         }
 
-        public void DeleteProfPicOfWorker(string fileName)
+        /// <summary>
+        /// Make a new Worker
+        /// </summary>
+        /// <param name="newWorker"></param>
+        /// <param name="departmentOfNewWorker"></param>
+        /// <returns></returns>
+        private Worker NewWorker(CreateWorker newWorker, Department departmentOfNewWorker)
         {
-            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ProfPics/");
-            // Check if file exists with its full path    
-            if (File.Exists(Path.Combine(path, fileName)))
+            Worker newWorkerToAdd = new Worker()
             {
-                // If file found, delete it    
-                File.Delete(Path.Combine(path, fileName));
-            }
+                Address = newWorker.Address,
+                Pic = ConventionsOfHttpPostedFileBase.ForPostedPicture(newWorker.ProfilePicture),
+                CV = ConventionsOfHttpPostedFileBase.ForCV(newWorker.CV),
+                ContractOfEmployment = ConventionsOfHttpPostedFileBase.ForContractOfEmployments(newWorker.ContractOfEmployment),
+                FirstName = newWorker.FirstName,
+                LastName = newWorker.LastName,
+                DateOfBirth = newWorker.DateOfBirth,
+                Gender = newWorker.Gender,
+                BankAccount = newWorker.BankAccount,
+                Salary = newWorker.Salary,
+                Department = _db.Departments.Single(s => s.ID == departmentOfNewWorker.ID),
+                DepartmentID = _db.Departments.Single(s => s.ID == departmentOfNewWorker.ID).ID,
+                ApplicationUser = _db.Users.Find(newWorker.userID)
+            };
+            return newWorkerToAdd;
         }
 
-        public void DeleteCVOfWorker(string fileName)
-        {
-            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/CVs/");
-            // Check if file exists with its full path    
-            if (File.Exists(Path.Combine(path, fileName)))
-            {
-                // If file found, delete it    
-                File.Delete(Path.Combine(path, fileName));
-            }
-        }
+        #endregion
 
-        public void DeleteContractOfEmployementOfWorker(string fileName)
-        {
-            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ContractOfEmployments/");
-            // Check if file exists with its full path    
-            if (File.Exists(Path.Combine(path, fileName)))
-            {
-                // If file found, delete it    
-                File.Delete(Path.Combine(path, fileName));
-            }
-        }
-
+        #region Delete Worker
         public void DeleteWorkersApplicationUser(string id)
         {
             var user = _db.Users.Find(id);
-            DeleteProfPicOfWorker(user.Worker.Pic);
-            DeleteCVOfWorker(user.Worker.CV);
-            DeleteContractOfEmployementOfWorker(user.Worker.ContractOfEmployment);
-            _db.Workers.Remove(user.Worker);
-            _manager.Delete(user);
+
+            var worker = _db.Workers.Find(user.Worker.ID);
+
+            var payments = worker.Payments.ToList();
+
+            var days = worker.Days.ToList();
+
+            DeletePayments(payments);
+
+            DeleteDays(days);
+          
+            DeleteProfPicOfWorker(worker.Pic);
+
+            DeleteCVOfWorker(worker.CV);
+
+            DeleteContractOfEmployementOfWorker(worker.ContractOfEmployment);
+
+            _db.Workers.Remove(worker);
+
+            _db.Users.Remove(user);
+
             _db.SaveChanges();
         }
-        public void EditWorkersApplicationUser(string id)
+
+        /// <summary>
+        /// Delete all payments details of user 
+        /// </summary>
+        /// <param name="payments"></param>
+        private void DeletePayments(List<PaymentDetails> payments)
+        {
+            for (int i = 0; i < payments.Count; i++)
+            {
+                var pay = _db.Payments.Find(payments[i].ID);
+                _db.Payments.Remove(pay);
+            }
+
+        }
+
+        /// <summary>
+        /// Delete all working day details of user 
+        /// </summary>
+        /// <param name="payments"></param>
+        private void DeleteDays(List<WorkingDays> days)
+        {
+            for (int i = 0; i < days.Count; i++)
+            {
+                var da = _db.CaldendarDays.Find(days[i].ID);
+                _db.CaldendarDays.Remove(da);
+            }
+
+
+        }
+        #endregion
+
+        #region Edit Worker
+        public void EditWorker(EditWorker editworker)
+        {
+            var workerInDb = _db.Users.Find(editworker.UserID);
+
+            var role = _db.Roles.Find(editworker.SelectedRole);
+
+            CheckAndUpdateEverything(workerInDb, editworker, role);
+
+            UpdatePropertiesOfEditedWorker(workerInDb, editworker);
+
+            EditWorkersApplicationUser(workerInDb.Id);
+
+            _db.Entry(workerInDb.Worker).State = EntityState.Modified;
+
+            _db.SaveChanges();
+        }
+
+        /// <summary>
+        /// Update ApplicationUser
+        /// </summary>
+        /// <param name="id"></param>
+        private void EditWorkersApplicationUser(string id)
         {
             var user = _db.Users.Find(id);
             _manager.Update(user);
         }
 
-        public EditWorker FillEditWorkerViewModel(ApplicationUser user)
+        /// <summary>
+        /// Update the Properties that needs to be updated
+        /// </summary>
+        /// <param name="workerInDb"></param>
+        /// <param name="editworker"></param>
+        private void UpdatePropertiesOfEditedWorker(ApplicationUser workerInDb, EditWorker editworker)
         {
-            EditWorker f2 = new EditWorker()
-            {
-                UserID = user.Id,
-                Username = user.UserName,
-                Email = user.Email,
-                FirstName = user.Worker.FirstName,
-                LastName = user.Worker.LastName,
-                DateOfBirth = user.Worker.DateOfBirth,
-                Gender = user.Worker.Gender,
-                Address = user.Worker.Address,
-                BankAccount = user.Worker.BankAccount,
-                Salary = user.Worker.Salary,
-                IdOfDepartment = user.Worker.DepartmentID,
-                SelectedRole = _db.Roles.Find(user.Roles.First().RoleId).Name,
-                AllDepartments = _db.Departments.ToList(),
-                Roles = _db.Roles.Where(s => s.Name != "Admin").ToList()
-            };
-            return f2;
+            workerInDb.UserName = editworker.Username;
+            workerInDb.Email = editworker.Email;
+            workerInDb.Worker.FirstName = editworker.FirstName;
+            workerInDb.Worker.LastName = editworker.LastName;
+            workerInDb.Worker.DateOfBirth = editworker.DateOfBirth;
+            workerInDb.Worker.Gender = editworker.Gender;
+            workerInDb.Worker.Address = editworker.Address;
+            workerInDb.Worker.BankAccount = editworker.BankAccount;
+            workerInDb.Worker.Salary = editworker.Salary;
         }
 
-        public void EditWorker(EditWorker editworker)
+        /// <summary>
+        /// I will check if attachments and role changed and update them 
+        /// </summary>
+        /// <param name="workerInDb"></param>
+        /// <param name="editworker"></param>
+        /// <param name="role"></param>
+        private void CheckAndUpdateEverything(ApplicationUser workerInDb, EditWorker editworker, IdentityRole role)
         {
-            var workerInDb = _db.Users.Find(editworker.UserID);
-            var role = _db.Roles.Find(editworker.SelectedRole);
             if (!workerInDb.Roles.Any(r => r.RoleId == role.Id))
             {
                 workerInDb.Roles.Remove(workerInDb.Roles.First());
@@ -155,22 +216,88 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
                 DeleteContractOfEmployementOfWorker(workerInDb.Worker.ContractOfEmployment);
                 workerInDb.Worker.Pic = ConventionsOfHttpPostedFileBase.ForContractOfEmployments(editworker.ContractOfEmployment);
             }
-            workerInDb.UserName = editworker.Username;
-            workerInDb.Email = editworker.Email;
-            workerInDb.Worker.FirstName = editworker.FirstName;
-            workerInDb.Worker.LastName = editworker.LastName;
-            workerInDb.Worker.DateOfBirth = editworker.DateOfBirth;
-            workerInDb.Worker.Gender = editworker.Gender;
-            workerInDb.Worker.Address = editworker.Address;
-            workerInDb.Worker.BankAccount = editworker.BankAccount;
-            workerInDb.Worker.Salary = editworker.Salary;
-            EditWorkersApplicationUser(workerInDb.Id);
-            _db.Entry(workerInDb.Worker).State = EntityState.Modified;
-            _db.SaveChanges();
+        }
+        #endregion
+
+        #region Usefull Methods
+
+        /// <summary>
+        /// Give me the name of file and I will find and delete it
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void DeleteCVOfWorker(string fileName)
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/CVs/");
+            // Check if file exists with its full path    
+            if (File.Exists(Path.Combine(path, fileName)))
+            {
+                // If file found, delete it    
+                File.Delete(Path.Combine(path, fileName));
+            }
         }
 
-        public void FinalizeProject(int id) => _db.Projects.SingleOrDefault(p => p.ID == id).Finished = true;
+        /// <summary>
+        /// Give me the name of file and I will find and delete it
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void DeleteContractOfEmployementOfWorker(string fileName)
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ContractOfEmployments/");
+            // Check if file exists with its full path    
+            if (File.Exists(Path.Combine(path, fileName)))
+            {
+                // If file found, delete it    
+                File.Delete(Path.Combine(path, fileName));
+            }
+        }
 
+        /// <summary>
+        /// Give me the name of file and I will find and delete it
+        /// </summary>
+        /// <param name="fileName"></param>
+        public void DeleteProfPicOfWorker(string fileName)
+        {
+            string path = System.Web.Hosting.HostingEnvironment.MapPath("~/ProfPics/");
+            // Check if file exists with its full path    
+            if (File.Exists(Path.Combine(path, fileName)))
+            {
+                // If file found, delete it    
+                File.Delete(Path.Combine(path, fileName));
+            }
+        }
+
+        /// <summary>
+        /// Fill ViewModel of EditWorker of Edit
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        public EditWorker FillEditWorkerViewModel(ApplicationUser user)
+        {
+            EditWorker f2 = new EditWorker()
+            {
+                UserID = user.Id,
+                Username = user.UserName,
+                Email = user.Email,
+                FirstName = user.Worker.FirstName,
+                LastName = user.Worker.LastName,
+                DateOfBirth = user.Worker.DateOfBirth,
+                Gender = user.Worker.Gender,
+                Address = user.Worker.Address,
+                BankAccount = user.Worker.BankAccount,
+                Salary = user.Worker.Salary,
+                IdOfDepartment = user.Worker.DepartmentID,
+                SelectedRole = _db.Roles.Find(user.Roles.First().RoleId).Name,
+                AllDepartments = _db.Departments.ToList(),
+                Roles = _db.Roles.Where(s => s.Name != "Admin").ToList()
+            };
+            return f2;
+        }
+
+        /// <summary>
+        /// Give me an Array of WorkingDays and the Id of the Worker That you want to save the days in
+        /// </summary>
+        /// <param name="tosave"></param>
+        /// <param name="id"></param>
         public void SaveWorkingDays(WorkingDays[] tosave, int id)
         {
             if (tosave.Length > 0 && tosave != null)
@@ -195,21 +322,44 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
             }
         }
 
+        /// <summary>
+        /// Give me an array of Working days and the id Of the Worker and I will find the days and delete them
+        /// </summary>
+        /// <param name="tosave"></param>
+        /// <param name="id"></param>
         public void DeleteWorkingDays(WorkingDays[] tosave, int id)
         {
             foreach (var item in tosave)
             {
                 var day = _db.CaldendarDays.SingleOrDefault(d => d.Start == item.Start && d.Worker.ID == id);
-               if(!(day is null))
+                if (!(day is null))
                 {
                     _db.CaldendarDays.Remove(day);
                     _db.SaveChanges();
                 }
-                
+
             }
         }
 
-       
+        /// <summary>
+        /// I return List of SelectListItem with Gender Options For DropDown
+        /// </summary>
+        /// <returns></returns>
+        public List<SelectListItem> GenderOptionsInSelectListItem()
+        {
+            var genders = new List<SelectListItem>() {
+                                                new SelectListItem(){
+            Text="Male",
+            Value="Male"
+            },
+                                                new SelectListItem(){
+            Text="Female",
+            Value="Female"
+            }
+                };
+            return genders;
+        }
+        #endregion
 
         public void Dispose()
         {

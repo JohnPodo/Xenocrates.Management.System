@@ -43,6 +43,7 @@ namespace ManagementSystemVersionTwo.Controllers
         {
 
             _crud.CreateRole(role);
+
             return RedirectToAction("ViewAllRoles","Display");
         }
 
@@ -53,11 +54,14 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var role = _data.Role.FindRoleByID(id);
+
             if (role == null)
             {
                 return HttpNotFound();
             }
+
             return View(role);
         }
 
@@ -67,6 +71,7 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult DeleteRole(IdentityRole role)
         {
             _crud.DeleteRole(role);
+
             return RedirectToAction("ViewAllRoles", "Display");
         }
     }

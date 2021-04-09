@@ -28,12 +28,14 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
         }
 
+        [Authorize(Roles ="Admin")]
         public ActionResult CreateDepartment()
         {
             return View();
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateDepartment(Department department)
         {
             if (ModelState.IsValid)
@@ -44,6 +46,7 @@ namespace ManagementSystemVersionTwo.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult EditDepartment(int? id)
         {
             if (id == null)
@@ -62,6 +65,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditDepartment(Department department)
         {
             if (ModelState.IsValid)
@@ -72,7 +76,7 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(department);
         }
 
-        // GET: Departments/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteDepartment(int? id)
         {
             if (id == null)
@@ -91,13 +95,13 @@ namespace ManagementSystemVersionTwo.Controllers
         // POST: Departments/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteDepartment(int id)
         {
             var department = _data.Department.FindDepartmentByID(id);
             _crud.DeleteDepartment(department);
             return RedirectToAction("ViewAllDepartments", "Display");
         }
-
 
         public ActionResult Chat()
         {

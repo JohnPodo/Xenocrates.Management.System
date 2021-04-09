@@ -32,24 +32,16 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult CreateProject()
         {
             var employees = _data.ApplicationUser.UsersPerDepartment(_data.ApplicationUser.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+
             var roleId = _data.Role.FindRoleByName("Employee").Id;
-            List<DummyForProject> f3 = new List<DummyForProject>();
-            for(int i=0;i<employees.Count;i++)
-            {
-                if (!(employees[i].Roles.SingleOrDefault(r=>r.RoleId==roleId)==null)) {
-                    f3.Add(new DummyForProject()
-                    {
-                        ID = employees[i].Id,
-                        Fullname = employees[i].Worker.FullName,
-                        CV = employees[i].Worker.CV,
-                        Pic = employees[i].Worker.Pic
-                    });
-                }
-            }
+
+            var f3 = _external.FillTheListOfDummies(employees, roleId);
+           
             CreateProjectViewModel f2 = new CreateProjectViewModel()
             {
                 Users=f3
             };
+
             return View(f2);
         }
 
@@ -60,6 +52,7 @@ namespace ManagementSystemVersionTwo.Controllers
             if (ModelState.IsValid&&f2.Users.Count!=0)
             {
                 _external.CreateProject(f2,User.Identity.GetUserId());
+
                 return RedirectToAction("ViewAllProjects", "Display");
             }
             return RedirectToAction("CreateProject");
@@ -84,6 +77,7 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult DeleteProject(int id)
         {
             _external.DeleteProject(id);
+
             return RedirectToAction("ViewAllProjects","Display");
         }
 
@@ -93,52 +87,29 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var pro = _data.Project.FindProjectById((int)id);
-            if (pro == null)
+
+            var projectToEdit = _data.Project.FindProjectById((int)id);
+
+            if (projectToEdit == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var employees = _data.ApplicationUser.UsersPerDepartment(_data.ApplicationUser.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+            
             var roleId = _data.Role.FindRoleByName("Employee").Id;
-            List<DummyForProject> f3 = new List<DummyForProject>();
-            for(int i=0;i<employees.Count;i++)
-            {
-                if (employees[i].Roles.SingleOrDefault(r => r.RoleId == roleId) == null)
-                {
-                    employees.Remove(employees[i]);
-                }
-                else
-                {
-                    if (pro.WorkersInMe.FirstOrDefault(s=>s.WorkerID== employees[i].Worker.ID)!=null)
-                    {
-                        f3.Add(new DummyForProject()
-                        {
-                            ID = employees[i].Id,
-                            Fullname = employees[i].Worker.FullName,
-                            CV = employees[i].Worker.CV,
-                            Pic = employees[i].Worker.Pic,
-                            IsSelected = true
-                        });
-                    }
-                    else
-                    {
-                        f3.Add(new DummyForProject()
-                        {
-                            ID = employees[i].Id,
-                            Fullname = employees[i].Worker.FullName,
-                            CV = employees[i].Worker.CV,
-                            Pic = employees[i].Worker.Pic,
-                            IsSelected = false
-                        });
-                    }
-                }
-            }
+            
+            var f3 = _external.FillTheListOfDummiesForEdit(employees, roleId, projectToEdit);
+           
             EditProjectViewModel f2 = new EditProjectViewModel()
             {
                 Users =new List<DummyForProject>()
             };
-            f2.Project = pro;
+
+            f2.Project = projectToEdit;
+
             f2.Users = f3;
+
             return View(f2);
         }
 
@@ -149,6 +120,7 @@ namespace ManagementSystemVersionTwo.Controllers
             if (ModelState.IsValid && f2.Users.Count != 0)
             {
                 _external.EditProject(f2);
+
                 return RedirectToAction("ViewAllProjects", "Display");
             }
             return View(f2);
@@ -160,18 +132,23 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var pro = _data.Project.FindProjectById((int)id);
-            if (pro is null)
+
+            var projectToFinalize = _data.Project.FindProjectById((int)id);
+
+            if (projectToFinalize is null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            _external.FinalizeProject(pro);
+
+            _external.FinalizeProject(projectToFinalize);
+
             return RedirectToAction("ViewAllProjects", "Display");
         }
 
         public FileResult DownloadFile(string fileName)
         {
             string path = HttpContext.Server.MapPath("~/ProjectFiles/" + fileName);
+
             return File(path,"application/force-download",Path.GetFileName(path));
         }
     }
