@@ -103,7 +103,6 @@ namespace ManagementSystemVersionTwo.Controllers
             return RedirectToAction("ViewAllDepartments", "Display");
         }
 
-
         [Authorize(Roles = "Supervisor,Employee")]
         public ActionResult Chat()
         {
