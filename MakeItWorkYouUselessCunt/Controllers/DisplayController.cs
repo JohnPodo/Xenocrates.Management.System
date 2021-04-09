@@ -27,6 +27,8 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
         }
 
+
+        [Authorize(Roles = "Admin")]
         public ActionResult ViewAllDepartments(string searchString, string sort)
         {
             var data = _data.Department.AllDepartments();
@@ -47,6 +49,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
 
+        [Authorize(Roles = "Admin,Supervisor")]
         public ActionResult ViewAllWorkers(string searchName, string orderBy, string roleSpec, string depID, string viewType)
         {
             ViewBag.Supervisor = User.IsInRole("Supervisor");
@@ -95,6 +98,8 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
 
+
+        [Authorize(Roles = "Admin")]
         public ActionResult ViewAllRoles(string searchString, string sort)
         {
             var data = _data.Role.AllRoles();
@@ -114,6 +119,8 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(data);
         }
 
+
+        [Authorize(Roles = "Admin,Supervisor,Employee")]
         public ActionResult ViewAllProjects(string title, string orderBy, string depID, string status)
         {
             ViewBag.Admin = User.IsInRole("Admin");
@@ -200,6 +207,8 @@ namespace ManagementSystemVersionTwo.Controllers
 
             return View(data);
         }
+
+        [Authorize(Roles = "Admin,Supervisor")]
         public ActionResult DetailsWorker(string id)
         {
             ViewBag.Role = User.IsInRole("Admin");
@@ -215,6 +224,8 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             return View(worker);
         }
+
+        [Authorize(Roles = "Admin,Supervisor")]
         public ActionResult DetailsProject(int? id)
         {
             if(id is null)
@@ -230,6 +241,7 @@ namespace ManagementSystemVersionTwo.Controllers
         }
 
 
+        [Authorize(Roles = "Admin,Supervisor")]
         public ActionResult DetailsDepartment(int? id)
         {
 
@@ -245,6 +257,8 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(department);
         }
 
+
+        [Authorize(Roles = "Admin,Supervisor,Employee")]
         public ActionResult Dashboard()
         {
             if (User.IsInRole("Admin"))
@@ -261,7 +275,8 @@ namespace ManagementSystemVersionTwo.Controllers
             }
         }
 
-        //Chart For Departments Per City
+        
+        [Authorize(Roles = "Admin")]
         public ActionResult ChartsForAdmin()
         {
             var departmentsPerCity = _stats.DepartmentsPerCityChart();
@@ -277,7 +292,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
 
-
+        [Authorize(Roles = "Supervisor")]
         public ActionResult ChartsForSupervisor()
         {
             var salaryPerEmployee = _stats.SalaryPerEmployeeChart(User.Identity.GetUserId());
@@ -291,6 +306,19 @@ namespace ManagementSystemVersionTwo.Controllers
             return Json(RatioArray, JsonRequestBehavior.AllowGet);
 
         }
+
+        
+
+        [Authorize(Roles = "Employee")]
+        public ActionResult ChartsForEmployee()
+        {
+            var projectsChart = _stats.ProjectsProgressChart(User.Identity.GetUserId());
+
+            
+            return Json(projectsChart, JsonRequestBehavior.AllowGet);
+        }
+
+
 
         public ActionResult NavbarPartial()
         {

@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using Microsoft.AspNet.Identity;
+using System.Web.Mvc;
 
 namespace ManagementSystemVersionTwo.Services.StatisticsServices
 {
@@ -191,6 +193,26 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
 
             return obj;
         }
+
+
+        #endregion
+
+
+        #region Statistics For Employee
+
+        public Ratio ProjectsProgressChart(string id)
+        {
+            var employee = _context.Users.Find(id);
+            var projectsClosed = _context.Projects.Where(x => x.Finished == true && x.WorkersInMe.Any(w=>w.WorkerID == employee.Worker.ID)).Count();
+            var projectsOpen = _context.Projects.Where(x => x.Finished == false).Count();
+
+            Ratio obj = new Ratio();
+            obj.MaleCount = projectsClosed;
+            obj.FemaleCount = projectsOpen;
+            return obj;
+        }
+
+        
 
 
         #endregion

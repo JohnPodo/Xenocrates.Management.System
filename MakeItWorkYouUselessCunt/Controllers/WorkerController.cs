@@ -28,6 +28,7 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateWorkerForApplicationUser(ApplicationUser user)
         {
             if (user is null || user.Roles.Count != 0)
@@ -41,21 +42,22 @@ namespace ManagementSystemVersionTwo.Controllers
                 userID = user.Id,
                 Roles = _data.Role.AllRoles(),
                 DropDownDataForGender = new List<SelectListItem>() {
-                                                new SelectListItem(){
-            Text="Male",
-            Value="Male"
-            },
-                                                new SelectListItem(){
-            Text="Female",
-            Value="Female"
-            }
-                }
+                    new SelectListItem(){
+                                Text="Male",
+                                Value="Male"
+                                },
+                    new SelectListItem(){
+                                Text="Female",
+                                Value="Female"
+                                }
+                    }
             };
             return View(f2);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateWorkerForApplicationUser(CreateWorker f2)
         {
             if (ModelState.IsValid)
@@ -73,18 +75,20 @@ namespace ManagementSystemVersionTwo.Controllers
                     Roles = _data.Role.AllRoles(),
                     DropDownDataForGender = new List<SelectListItem>() {
                                                 new SelectListItem(){
-            Text="Male",
-            Value="Male"
-            },
+                                                        Text="Male",
+                                                        Value="Male"
+                                                        },
                                                 new SelectListItem(){
-            Text="Female",
-            Value="Female"
-            }
-                }
+                                                        Text="Female",
+                                                        Value="Female"
+                                                        }
+                                                }
                 };
                 return View(f2);
             }
         }
+
+        [Authorize(Roles = "Admin")]
         public ActionResult EditWorker(string userID)
         {
             if (string.IsNullOrEmpty(userID))
@@ -101,6 +105,7 @@ namespace ManagementSystemVersionTwo.Controllers
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditWorker(EditWorker f2)
         {
             if (ModelState.IsValid)
@@ -115,6 +120,7 @@ namespace ManagementSystemVersionTwo.Controllers
             }
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteWorker(string userID)
         {
             if (string.IsNullOrEmpty(userID))
@@ -131,6 +137,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteWorkerConfirmed(ApplicationUser userToDelete)
         {
             if (string.IsNullOrEmpty(userToDelete.Id))
@@ -146,6 +153,8 @@ namespace ManagementSystemVersionTwo.Controllers
             return RedirectToAction("ViewAllWorkers", "Display");
         }
 
+
+        [Authorize(Roles = "Supervisor,Employee")]
         public ActionResult Calendar(int? id)
         {
             ViewBag.Role = User.IsInRole("Employee");
@@ -167,14 +176,15 @@ namespace ManagementSystemVersionTwo.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Supervisor,Employee")]
         public JsonResult GetProjects(int? workerid)
         {
-            var worker= new Worker();
+            var worker = new Worker();
             if (!(workerid is null))
             {
                 worker = _data.Worker.FindWorkerByID((int)workerid);
             }
-            
+
             List<WorkingDays> projects = new List<WorkingDays>();
             if (!(worker is null))
             {
@@ -196,11 +206,14 @@ namespace ManagementSystemVersionTwo.Controllers
         }
 
         [HttpPost]
-        public void SaveWorkingDays(WorkingDays[] tosave,int workerid)
+        [Authorize(Roles = "Supervisor")]
+        public void SaveWorkingDays(WorkingDays[] tosave, int workerid)
         {
             _external.SaveWorkingDays(tosave, workerid);
         }
 
+
+        [Authorize(Roles = "Supervisor,Employee")]
         public JsonResult GetWorkDays(int? workerid)
         {
             var worker = new Worker();
@@ -211,16 +224,16 @@ namespace ManagementSystemVersionTwo.Controllers
             var days = new List<WorkingDays>();
             if (!(worker is null))
             {
-                foreach(var day in worker.Days)
+                foreach (var day in worker.Days)
                 {
                     days.Add(new WorkingDays
                     {
-                        Start=day.Start,
-                        Title=day.Title,
-                        Display=day.Display,
-                        BackgroundColor=day.BackgroundColor,
-                        ID=day.ID,
-                        End=day.End
+                        Start = day.Start,
+                        Title = day.Title,
+                        Display = day.Display,
+                        BackgroundColor = day.BackgroundColor,
+                        ID = day.ID,
+                        End = day.End
                     });
                 }
 
@@ -231,7 +244,8 @@ namespace ManagementSystemVersionTwo.Controllers
         }
 
         [HttpPost]
-        public void DeleteWorkDays(WorkingDays[] days,int workerid)
+        [Authorize(Roles = "Supervisor")]
+        public void DeleteWorkDays(WorkingDays[] days, int workerid)
         {
             _external.DeleteWorkingDays(days, workerid);
         }

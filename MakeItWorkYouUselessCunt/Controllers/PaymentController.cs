@@ -31,6 +31,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         }
         // GET: Payment
+        [Authorize(Roles = "Admin")]
         public ActionResult Index(string searchName, string orderBy)
         {
             var data = _data.Worker.AllWorkers();
@@ -47,7 +48,8 @@ namespace ManagementSystemVersionTwo.Controllers
             ViewBag.Names = _data.GetWorkerNamesForAutocomplete();
             return View(data);
         }
-        
+
+        [Authorize(Roles = "Admin")]
         public ActionResult ShowPartial(int id)
         {
             var worker = _data.Worker.FindWorkerByID(id);
@@ -55,6 +57,8 @@ namespace ManagementSystemVersionTwo.Controllers
             return PartialView("PartialViewForPayment",worker);
         }
 
+
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> MakePayment(int id)
         {
             var worker = _data.Worker.FindWorkerByID(id);
@@ -70,6 +74,8 @@ namespace ManagementSystemVersionTwo.Controllers
             }
 
         }
+
+        [Authorize(Roles = "Admin")]
         public ActionResult WorkerPaymentHistory(string searchName, string orderBy, string dateOrder)
         {
             var data = _data.Worker.AllWorkers();

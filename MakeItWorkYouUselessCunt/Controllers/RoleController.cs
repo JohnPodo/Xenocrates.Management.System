@@ -30,7 +30,7 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
         }
 
-        [Authorize(Roles = "None")]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateRole()
         {
             return View();
@@ -38,7 +38,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "None")]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateRole(IdentityRole role)
         {
 
@@ -46,7 +46,7 @@ namespace ManagementSystemVersionTwo.Controllers
             return RedirectToAction("ViewAllRoles","Display");
         }
 
-        [Authorize(Roles = "None")]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteRole(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -63,7 +63,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        [Authorize(Roles = "None")]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteRole(IdentityRole role)
         {
             _crud.DeleteRole(role);

@@ -28,7 +28,9 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
             _external.Dispose();
         }
-        
+
+
+        [Authorize(Roles = "Supervisor")]
         public ActionResult CreateProject()
         {
             var employees = _data.ApplicationUser.UsersPerDepartment(_data.ApplicationUser.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
@@ -55,6 +57,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Supervisor")]
         public ActionResult CreateProject(CreateProjectViewModel f2)
         {
             if (ModelState.IsValid&&f2.Users.Count!=0)
@@ -65,6 +68,8 @@ namespace ManagementSystemVersionTwo.Controllers
             return RedirectToAction("CreateProject");
         }
 
+
+        [Authorize(Roles = "Supervisor")]
         public ActionResult DeleteProject(int? id)
         {
             if (id == null)
@@ -81,12 +86,15 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Supervisor")]
         public ActionResult DeleteProject(int id)
         {
             _external.DeleteProject(id);
             return RedirectToAction("ViewAllProjects","Display");
         }
 
+
+        [Authorize(Roles = "Supervisor")]
         public ActionResult EditProject(int? id)
         {
             if (id == null)
@@ -144,6 +152,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Supervisor")]
         public ActionResult EditProject(EditProjectViewModel f2)
         {
             if (ModelState.IsValid && f2.Users.Count != 0)
@@ -154,6 +163,8 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(f2);
         }
 
+
+        [Authorize(Roles = "Employee")]
         public ActionResult FinalizeProject(int? id)
         {
             if (id == null)

@@ -146,6 +146,7 @@ namespace ManagementSystemVersionTwo.Controllers
         //
         // GET: /Account/Register
         [AllowAnonymous]
+        [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {
             return View();
@@ -154,8 +155,8 @@ namespace ManagementSystemVersionTwo.Controllers
         //
         // POST: /Account/Register
         [HttpPost]
-        [Authorize(Roles = "Admin")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
             if (ModelState.IsValid)
