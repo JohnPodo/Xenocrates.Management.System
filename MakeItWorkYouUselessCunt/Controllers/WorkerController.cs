@@ -31,27 +31,21 @@ namespace ManagementSystemVersionTwo.Controllers
         [Authorize(Roles = "Admin")]
         public ActionResult CreateWorkerForApplicationUser(ApplicationUser user)
         {
+            //Check if Application User Came or an Application User Exists Already
             if (user is null || user.Roles.Count != 0)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
 
+            //Create ViewModel To Send to View
             CreateWorker f2 = new CreateWorker()
             {
                 AllDepartments = _data.Department.AllDepartments(),
                 userID = user.Id,
                 Roles = _data.Role.AllRoles(),
-                DropDownDataForGender = new List<SelectListItem>() {
-                    new SelectListItem(){
-                                Text="Male",
-                                Value="Male"
-                                },
-                    new SelectListItem(){
-                                Text="Female",
-                                Value="Female"
-                                }
-                    }
+                DropDownDataForGender = _external.GenderOptionsInSelectListItem()
             };
+
             return View(f2);
         }
 
@@ -63,7 +57,9 @@ namespace ManagementSystemVersionTwo.Controllers
             if (ModelState.IsValid)
             {
                 var dep = _data.Department.FindDepartmentByID(f2.IdOfDepartment);
+
                 _external.CreateWorker(f2, dep, _data.Role.FindRoleByID(f2.SelectedRole).Name);
+
                 return RedirectToAction("ViewAllWorkers", "Display");
             }
             else
@@ -73,16 +69,7 @@ namespace ManagementSystemVersionTwo.Controllers
                     AllDepartments = _data.Department.AllDepartments(),
                     userID = f2.userID,
                     Roles = _data.Role.AllRoles(),
-                    DropDownDataForGender = new List<SelectListItem>() {
-                                                new SelectListItem(){
-                                                        Text="Male",
-                                                        Value="Male"
-                                                        },
-                                                new SelectListItem(){
-                                                        Text="Female",
-                                                        Value="Female"
-                                                        }
-                                                }
+                    DropDownDataForGender = _external.GenderOptionsInSelectListItem()
                 };
                 return View(f2);
             }
@@ -95,14 +82,19 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var user = _data.ApplicationUser.FindUserByID(userID);
+
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             EditWorker f2 = _external.FillEditWorkerViewModel(user);
+
             return View(f2);
         }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         [Authorize(Roles = "Admin")]
@@ -111,6 +103,7 @@ namespace ManagementSystemVersionTwo.Controllers
             if (ModelState.IsValid)
             {
                 _external.EditWorker(f2);
+
                 return RedirectToAction("ViewAllWorkers", "Display");
             }
             else
@@ -127,11 +120,14 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var user = _data.ApplicationUser.FindUserByID(userID);
+
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             return View(user);
         }
 
@@ -144,12 +140,16 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var user = _data.ApplicationUser.FindUserByID(userToDelete.Id);
+
             if (user == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             _external.DeleteWorkersApplicationUser(userToDelete.Id);
+
             return RedirectToAction("ViewAllWorkers", "Display");
         }
 
@@ -158,21 +158,27 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult Calendar(int? id)
         {
             ViewBag.Role = User.IsInRole("Employee");
+
             if (ViewBag.Role)
             {
                 var user = _data.ApplicationUser.FindUserByID(User.Identity.GetUserId());
                 id = user.Worker.ID;
             }
+
             if (id is null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             var worker = _data.Worker.FindWorkerByID((int)id);
+
             if (worker is null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
+
             ViewBag.WorkerID = worker.ID;
+
             return View();
         }
 

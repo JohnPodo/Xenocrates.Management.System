@@ -145,7 +145,6 @@ namespace ManagementSystemVersionTwo.Controllers
 
         //
         // GET: /Account/Register
-        [AllowAnonymous]
         [Authorize(Roles = "Admin")]
         public ActionResult Register()
         {

@@ -28,7 +28,7 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
         }
 
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles ="Admin")]
         public ActionResult CreateDepartment()
         {
             return View();
@@ -76,7 +76,6 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(department);
         }
 
-        // GET: Departments/Delete/5
         [Authorize(Roles = "Admin")]
         public ActionResult DeleteDepartment(int? id)
         {

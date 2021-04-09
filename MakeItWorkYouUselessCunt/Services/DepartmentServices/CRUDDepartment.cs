@@ -16,21 +16,30 @@ namespace ManagementSystemVersionTwo.Services.DepartmentServices
             _context = new ApplicationDbContext();
         }
 
-        public void AddDepartment(Department x)
+        /// <summary>
+        /// Give me a Department type object and I will save it to Database
+        /// </summary>
+        public void AddDepartment(Department departmentToSave)
         {
-            _context.Departments.Add(x);
+            _context.Departments.Add(departmentToSave);
             _context.SaveChanges();
         }
 
-        public void EditDepartment(Department x)
+        /// <summary>
+        /// Give me a Department type object and I will edit it and save changes to Database
+        /// </summary>
+        public void EditDepartment(Department departmentToEdit)
         {
-            _context.Entry(x).State = EntityState.Modified;
+            _context.Entry(departmentToEdit).State = EntityState.Modified;
             _context.SaveChanges();
         }
 
-        public void DeleteDepartment(Department x)
+        /// <summary>
+        /// Give me a Department type object and I will delete it
+        /// </summary>
+        public void DeleteDepartment(Department departmentToDelete)
         {
-            var dep = _context.Departments.Find(x.ID);
+            var dep = _context.Departments.Find(departmentToDelete.ID);
             _context.Departments.Remove(dep);
             _context.SaveChanges();
         }
