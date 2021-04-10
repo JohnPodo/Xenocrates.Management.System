@@ -15,7 +15,7 @@
                     {
                         @Html.AntiForgeryToken()
                         @Html.HiddenFor(s => s.Project.ID)
-                        <form class="forms-sample">
+                        <div class="forms-sample">
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -110,7 +110,7 @@
                                 <button type="submit" class="btn btn-info btn-fw">Update</button>
                                 <button class="btn btn-light">@Html.ActionLink("Back to List", "ViewAllProjects", "Display")</button>
                             </div>
-                        </form>
+                        </div>
                     }
 
                 </div>

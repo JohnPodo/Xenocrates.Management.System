@@ -88,7 +88,7 @@
                                         @Html.DisplayFor(modelItem => worker.LastName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => worker.DateOfBirth)
+                                        @worker.DateOfBirth.ToString("dd-MM-yyyy")
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => worker.Gender)
@@ -136,7 +136,7 @@ else
                         {
                             <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
                                 <div class="p-2 bd-highlight">
-                                    Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
+                                    Search Worker By Fullname: @Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
                                     <datalist id="browsers">
                                         @foreach (var item in ViewBag.Names)
                                         {
@@ -163,13 +163,13 @@ else
                                     @Html.DisplayNameFor(model => model.Department.City)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.FirstName)
+                                   First Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.LastName)
+                                    Last Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                                   Date Of Birth
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Gender)
@@ -178,12 +178,14 @@ else
                                     @Html.DisplayNameFor(model => model.Address)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.BankAccount)
+                                   Bank Account
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Salary)
                                 </th>
-                                <th></th>
+                                <th>
+                                    Actions
+                                </th>
                             </tr>
 
                             @foreach (var worker in Model)
@@ -199,7 +201,7 @@ else
                                         @Html.DisplayFor(modelItem => worker.LastName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => worker.DateOfBirth)
+                                        @worker.DateOfBirth.ToString("dd/MM/yyyy")
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => worker.Gender)
@@ -211,7 +213,7 @@ else
                                         @Html.DisplayFor(modelItem => worker.BankAccount)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => worker.Salary)
+                                        @Html.DisplayFor(modelItem => worker.Salary) &euro;
                                     </td>
                                     <td>
                                         @Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" })

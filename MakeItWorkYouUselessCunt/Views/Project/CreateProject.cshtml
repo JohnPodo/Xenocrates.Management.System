@@ -20,7 +20,7 @@
                     {
                         @Html.ValidationSummary()
                         @Html.AntiForgeryToken()
-                        <form class="forms-sample">
+                        <div class="forms-sample">
                             @Html.ValidationSummary(true, "", new { @class = "text-danger" })
                             <div class="form-group">
                                 @Html.LabelFor(model => model.Project.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -40,7 +40,7 @@
                                 <label>Project Attachments</label>
                                 <input type="file" name="img[]" class="file-upload-default">
                                 <div class="input-group col-xs-12">
-                                    @Html.TextBoxFor(m => m.Attach, new { type = "file", @class = "" })
+                                    @Html.TextBoxFor(m => m.Attach, new { type = "file", @class = ""})
                                     @Html.ValidationMessageFor(model => model.Attach, "", new { @class = "text-danger" })
 
                                 </div>
@@ -99,9 +99,9 @@
                             </div>
                             <div class="d-flex flex-row bd-highlight mb-3">
                                 <button type="submit" class="btn btn-info btn-fw" id="submit">Create</button>
-                                <a class="p-2 bd-highlight">@Html.ActionLink("Back to List", "ViewAllProjects", "Display", new { @class = "btn btn-info btn-fw" })</a>
+                                <a class="p-2 bd-highlight">@Html.ActionLink("Back to List", "ViewAllProjects", "Display", new { @class = "btn btn-info btn-fw" },null)</a>
                             </div>
-                        </form>
+                        </div>
                     }
                 </div>
             </div>

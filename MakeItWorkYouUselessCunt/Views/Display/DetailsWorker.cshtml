@@ -18,8 +18,8 @@
                                     <td class="identity">@Html.DisplayFor(w => w.Worker.FullName)</td>
                                 </tr>
                                 <tr>
-                                    <td class="thead">Age</td>
-                                    <td class="identity">@Html.DisplayFor(w => w.Worker.DateOfBirth)</td>
+                                    <td class="thead">Date Of Birth</td>
+                                    <td class="identity">@Model.Worker.DateOfBirth.ToString("dd/MM/yyyy")</td>
                                 </tr>
                                 <tr>
                                     <td class="thead">Department</td>
@@ -31,10 +31,10 @@
                                 </tr>
                                 <tr>
                                     <td class="thead">Salary</td>
-                                    <td class="identity">@Html.DisplayFor(w => w.Worker.Salary)</td>
+                                    <td class="identity">@Html.DisplayFor(w => w.Worker.Salary) &euro;</td>
                                 </tr>
                                 <tr>
-                                    <td class="thead">Bank</td>
+                                    <td class="thead">Bank Account</td>
                                     <td class="identity">@Html.DisplayFor(w => w.Worker.BankAccount)</td>
                                 </tr>
                                 <tr>
@@ -61,6 +61,18 @@
                                     <td class="thead">Contract Of Employment</td>
                                     <td class="identity"><a href="~/ContractOfEmployments/@Model.Worker.ContractOfEmployment" target="_blank">Contract Of Employment</a></td>
                                 </tr>
+                                <tr>
+                                    <td class="thead">Projects</td>
+                                    <td class="identity">
+                                        <dl>
+                                            @foreach (var project in Model.Worker.MyProjects)
+                                            {
+                                                <dd><a href="@Url.Action("DetailsProject","Display",new { id=project.ProjectID})">@project.Project.Title</a></dd>
+
+                                            }
+                                        </dl>
+                                    </td>
+                                </tr>
                             </table>
                         </div>
                         <div style="padding-top:80px" class="p-6 bd-highlight">
@@ -68,12 +80,14 @@
                         </div>
                     </div>
                     <div class="d-flex flex-row bd-highlight mb-3">
-                        @if (ViewBag.Role) {<a class="p-2 bd-highlight">
-                        @Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = Model.Id }, new { @class = "btn btn-info btn-fw" }) </a> }
+                        @if (ViewBag.Role)
+                        {<a class="p-2 bd-highlight">
+                                @Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = Model.Id }, new { @class = "btn btn-info btn-fw" })
+                            </a>}
                         <a class="p-2 bd-highlight">@Html.ActionLink("Back to List", "ViewAllWorkers", "Display", new { @class = "btn btn-info btn-fw" })</a>
                     </div>
                 </div>
+            </div>
         </div>
-    </div>
     </div>
 </div>
