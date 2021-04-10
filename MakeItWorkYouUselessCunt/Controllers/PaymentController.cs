@@ -56,7 +56,7 @@ namespace ManagementSystemVersionTwo.Controllers
         public ActionResult ShowPartial(int id)
         {
             var worker = _data.Worker.FindWorkerByID(id);
-
+            ViewBag.LastPayment = worker.Payments.Where(s=>s.Date.Month==DateTime.Now.Month&& s.Date.Year == DateTime.Now.Year).Count();
             return PartialView("PartialViewForPayment",worker);
         }
 
