@@ -370,7 +370,7 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
         public List<WorkingDays> FillProjectsOfWorkerForCalendar(List<Project> projects)
         {
             List<WorkingDays> ListOfWorkingDays = new List<WorkingDays>();
-            if (projects.Count == 0)
+            if (projects.Count != 0)
             {
                 for (int i = 0; i < projects.Count; i++)
                 {
@@ -395,11 +395,11 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
         public List<WorkingDays> FillWorkingDaysOfWorkerForCalendar(List<WorkingDays> days)
         {
             List<WorkingDays> ListOfWorkingDays = new List<WorkingDays>();
-            if (days.Count == 0)
+            if (days.Count != 0)
             {
                 for (int i = 0; i < days.Count; i++)
                 {
-                    days.Add(new WorkingDays
+                    ListOfWorkingDays.Add(new WorkingDays
                     {
                         Start = days[i].Start,
                         Title = days[i].Title,
