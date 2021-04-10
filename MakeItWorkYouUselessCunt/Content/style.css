@@ -6849,9 +6849,7 @@ button.bg-danger:focus {
     background-color: #ff3225 !important;
 }
 
-.bg-light {
-    background-color: #fbfbfb !important;
-}
+
 
 a.bg-light:hover, a.bg-light:focus,
 button.bg-light:hover,
@@ -14765,7 +14763,6 @@ li.nav-item.active {
 /* Navbar */
 .navbar.default-layout {
     font-family: "roboto", sans-serif;
-    background: #fff;
     transition: background 0.25s ease;
     -webkit-transition: background 0.25s ease;
     -moz-transition: background 0.25s ease;
@@ -14981,7 +14978,7 @@ li.nav-item.active {
     transition: width 0.25s ease, background 0.25s ease;
     -webkit-transition: width 0.25s ease, background 0.25s ease;
     -moz-transition: width 0.25s ease, background 0.25s ease;
-    -ms-transition: width 0.25s ease, background 0.25s ease;
+    
 }
 
     .sidebar > .nav {
@@ -15122,10 +15119,11 @@ li.nav-item.active {
             .sidebar > .nav .nav-item.nav-profile .nav-link {
                 display: flex;
                 border-radius: 3px;
-                border: 1px solid rgba(255, 255, 255, 0.11);
                 background-color: rgba(255, 255, 255, 0.1);
                 color: #fff;
                 padding: 15px 25px;
+                -webkit-box-shadow: 0px 10px 13px -7px #000000, 0px 0px 11px 4px rgba(0,0,0,0.18);
+                box-shadow: 0px 9px 9px -8px #000000, 0px 0px 11px 4px rgba(0,0,0,0.18);
             }
 
                 .sidebar > .nav .nav-item.nav-profile .nav-link .profile-image {
@@ -15184,8 +15182,6 @@ li.nav-item.active {
         .sidebar > .nav:not(.sub-menu) > .nav-item > .nav-link {
             background: transparent;
             transition-duration: 0.3s;
-            transition-timing-function: "ease-in-out";
-            transition-property: "background", "color", "box-shadow", "padding";
         }
 
         .sidebar > .nav:not(.sub-menu) > .nav-item:hover:not(.nav-profile):not(.hover-open) > .nav-link:not([aria-expanded="true"]) {
@@ -15525,8 +15521,9 @@ li.nav-item.active {
     font-weight: 450;
     line-height: 50px;
     letter-spacing: 1px;
-    padding: 0 0 40px;
-    border-bottom: double #555;
+    padding: 0 0 25px;
+    border-bottom: solid 3px rgb(198 198 198);
+    margin-bottom:13px;
 }
 
 .views-comments {
@@ -15700,7 +15697,7 @@ tr {
     }
 
 td {
-    background: #c5ebeb;
+    background: #fafafa;
     padding: 20px;
     text-align: left;
     vertical-align: middle;

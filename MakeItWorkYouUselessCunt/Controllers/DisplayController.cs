@@ -153,7 +153,7 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(worker);
         }
 
-        [Authorize(Roles = "Admin,Supervisor")]
+        [Authorize(Roles = "Admin,Supervisor,Employee")]
         public ActionResult DetailsProject(int? id)
         {
             if (id is null)

@@ -1,9 +1,9 @@
 ﻿@model ManagementSystemVersionTwo.Models.Worker
 @{
-    var lastPayment = Model.Payments.Last();
+    var lastPayment = Model.Payments.LastOrDefault();
 }
 
-@if (lastPayment is null || (lastPayment.Date.Month < DateTime.Now.Month && lastPayment.Date.Year == DateTime.Now.Year))
+@if (lastPayment is null || (lastPayment.Date.Month < DateTime.Now.Month && lastPayment.Date.Year == DateTime.Now.Year) || (lastPayment.Date.Month==DateTime.Now.Month && lastPayment.Date.Year != DateTime.Now.Year))
 {
     @Html.ActionLink("Pay","MakePayment", "Payment", new { id = Model.ID },new { @class=""})
 }

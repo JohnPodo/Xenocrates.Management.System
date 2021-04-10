@@ -12,7 +12,7 @@
           <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
                 <div class="p-2 bd-highlight">
                     <p>
-                        Search Employee:@Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
+                        Search Employee: @Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
 
                         <datalist id="browsers">
                             @foreach (var item in ViewBag.Names)
@@ -24,7 +24,7 @@
                 </div>
                 <div class="p-2 bd-highlight">
                         <p>
-                            Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortSalary, "Value", "Text"), "None", new { @class = "" })
+                            Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortSalary, "Value", "Text"), "None", new { @class = "" })
                         </p>
                  </div>
                 <div class="p-2 bd-highlight">
