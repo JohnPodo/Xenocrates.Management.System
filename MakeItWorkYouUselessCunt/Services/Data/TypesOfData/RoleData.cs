@@ -27,7 +27,7 @@ namespace ManagementSystemVersionTwo.Services.Data.TypesOfData
 
 
         /// <summary>
-        /// Returns a list of all the roles in the database
+        /// Returns a list of all the roles in the database excepts Admin
         /// </summary>
         /// <returns></returns>
         public List<IdentityRole> AllRoles() => _context.Roles.Include(r => r.Users).Where(s => s.Name != "Admin").ToList();
