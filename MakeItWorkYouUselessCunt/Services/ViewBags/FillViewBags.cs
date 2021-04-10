@@ -265,6 +265,25 @@ namespace ManagementSystemVersionTwo.Services.ViewBags
             return statusItems;
         }
 
+        /// <summary>
+        /// FillViewBag for Status of Payments
+        /// </summary>
+        /// <returns></returns>
+        public List<SelectListItem> PayStatusSortOptionsViewBag()
+        {
+            List<SelectListItem> statusItems = new List<SelectListItem>();
+            statusItems.Add(new SelectListItem
+            {
+                Text = "Paid",
+                Value = "Paid"
+            });statusItems.Add(new SelectListItem
+            {
+                Text = "Not Paid",
+                Value = "Not Paid"
+            });
+            return statusItems;
+        }
+
         public List<SelectListItem> ProjectInDepartmentsSortViewBag()
         {
             List<SelectListItem> departmentItems = new List<SelectListItem>();

@@ -136,7 +136,8 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
                 for (int i = 1; i <= 12; i++)
                 {
 
-                    var payments = _context.Payments.Where(x => x.Worker.DepartmentID == item && x.Date.Month == i).Sum(x => x.Amount);
+                    var paymentsList = _context.Payments.Where(x => x.Worker.DepartmentID == item && x.Date.Month == i).Select(x => x.Amount).ToList();
+                    var payments = paymentsList.Sum();
                     obj.PaymentsPerMonth.Add(payments);
                 }
                 obj.DepartmentsPaymentsPerMonth.Add(obj.PaymentsPerMonth);
