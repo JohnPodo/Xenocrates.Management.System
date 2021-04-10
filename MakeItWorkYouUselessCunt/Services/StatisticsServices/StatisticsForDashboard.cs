@@ -61,7 +61,8 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
             Ratio obj = new Ratio();
             foreach (var item in departmentNames)
             {
-                averageSalary = _context.Workers.Where(x => x.Department.City == item).Select(x => x.Salary).Average();
+                var averageSalariesList = _context.Workers.Where(x => x.Department.City == item).Select(x => x.Salary).ToList();
+                averageSalary = averageSalariesList.Average();
                 obj.Salaries.Add(averageSalary);
             }
             obj.Names = departmentNames;
@@ -76,7 +77,8 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
             Ratio obj = new Ratio();
             foreach (var item in departmentNames)
             {
-                ages = _context.Workers.Where(x => x.Department.City == item).Select(x => DateTime.Now.Year - x.DateOfBirth.Year).Average();
+                var agesList = _context.Workers.Where(x => x.Department.City == item).Select(x => DateTime.Now.Year - x.DateOfBirth.Year).ToList();
+                ages = agesList.Average();
                 obj.AverageAge.Add(ages);
             }
             obj.Names = departmentNames;
@@ -114,7 +116,8 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
             Ratio obj = new Ratio();
             foreach (var item in months)
             {
-                salary = _context.Payments.Where(x => x.Date.Month == item).Select(x => x.Amount).Sum();
+                var salariesList = _context.Payments.Where(x => x.Date.Month == item).Select(x => x.Amount).ToList();
+                salary = salariesList.Sum();
                 obj.Salaries.Add(salary);
             }
             obj.Names = new List<string> { "January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December" };
@@ -151,7 +154,6 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
 
 
         #endregion
-
 
         #region Statistics For Supervisor
         //Gets the Salary of Each Employee
@@ -197,7 +199,6 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
 
 
         #endregion
-
 
         #region Statistics For Employee
 
