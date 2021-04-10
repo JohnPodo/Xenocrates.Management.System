@@ -20,7 +20,7 @@
                                 <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
                                         <div class="p-2 bd-highlight">
                                             <p>
-                                                Search Project by Title:@Html.TextBox("title", "", new { list = "browsers", @class = "uploaded-text" })
+                                                Search Project by Title: @Html.TextBox("title", "", new { list = "browsers", @class = "uploaded-text" })
 
                                                 <datalist id="browsers">
                                                     @foreach (var item in ViewBag.Names)
@@ -32,12 +32,12 @@
                                         </div>
                                         <div class="p-2 bd-highlight">
                                             <p>
-                                                Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
+                                                Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
                                             </p>
                                         </div>
                                         <div class="p-2 bd-highlight">
                                             <p>
-                                                Status : @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
+                                                Status: @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
                                             </p>
                                          </div>
                                         <div class="p-2 bd-highlight">

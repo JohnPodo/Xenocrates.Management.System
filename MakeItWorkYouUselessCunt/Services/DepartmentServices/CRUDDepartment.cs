@@ -40,10 +40,22 @@ namespace ManagementSystemVersionTwo.Services.DepartmentServices
         public void DeleteDepartment(Department departmentToDelete)
         {
             var dep = _context.Departments.Find(departmentToDelete.ID);
+            DeleteMessagesOfDepartment(dep.Messages.ToList());
             _context.Departments.Remove(dep);
             _context.SaveChanges();
         }
-
+        /// <summary>
+        /// Delete the chat messages of the department
+        /// </summary>
+        private void DeleteMessagesOfDepartment(List<Message> messages)
+        {
+            for (int i = 0; i < messages.Count; i++)
+            {
+                var message = _context.Messages.Find(messages[i].ID);
+                _context.Messages.Remove(message);
+            }
+            _context.SaveChanges();
+        }
         public void Dispose()
         {
             _context.Dispose();

@@ -6,17 +6,10 @@
     position:unset !important ;
   }
 
-.navbar{
-    text-align:right;
-    align-items: flex-end;
-
-}
-
 
 .navbar a {
-    color: black;
+    color: #fafafa;
     text-align: center;
-    float: right;
     padding: 14px 16px;
     font-size: 16px;
 }
@@ -27,45 +20,6 @@
 }
 
 
-@-webkit-keyframes dropdownAnimation {
-    from {
-        opacity: 0;
-        -webkit-transform: translate3d(0, -30px, 0);
-        transform: translate3d(0, -30px, 0);
-    }
-    to {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-        -webkit-transform: translate3d(0, 0px, 0);
-        transform: translate3d(0, 0px, 0);
-    }
-}
-
-@keyframes dropdownAnimation {
-    from {
-        opacity: 0;
-        -webkit-transform: translate3d(0, -30px, 0);
-        transform: translate3d(0, -30px, 0);
-    }
-    to {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-        -webkit-transform: translate3d(0, 0px, 0);
-        transform: translate3d(0, 0px, 0);
-    }
-}
-
-.dropdownAnimation, .nav .nav-item.dropdown .navbar-dropdown, .navbar-nav .nav-item.dropdown .navbar-dropdown {
-    -webkit-animation-name: dropdownAnimation;
-    animation-name: dropdownAnimation;
-    -webkit-animation-duration: 0.25s;
-    animation-duration: 0.25s;
-    -webkit-animation-fill-mode: both;
-    animation-fill-mode: both;
-}
-
 @-webkit-keyframes fadeOut {
     from {
         opacity: 1;
@@ -75,193 +29,13 @@
     }
 }
 
-@keyframes fadeOut {
-    from {
-        opacity: 1;
-    }
-    to {
-        opacity: 0;
-    }
-}
 
-.fadeOut {
-    -webkit-animation-name: fadeOut;
-    animation-name: fadeOut;
-}
 
-.infinite-spin {
-    -webkit-animation-name: spin;
-    animation-name: spin;
-    -webkit-animation-duration: 3s;
-    animation-duration: 3s;
-    -webkit-animation-iteration-count: infinite;
-    animation-iteration-count: infinite;
-    -webkit-animation-timing-function: linear;
-    animation-timing-function: linear;
-}
 
-@-webkit-keyframes spin {
-    from {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
 
-@keyframes spin {
-    from {
-        -webkit-transform: rotate(0deg);
-        transform: rotate(0deg);
-    }
-    to {
-        -webkit-transform: rotate(360deg);
-        transform: rotate(360deg);
-    }
-}
 
-@-webkit-keyframes fadeInUp {
-    from {
-        opacity: 0;
-        -webkit-transform: translate3d(0, 100%, 0);
-        transform: translate3d(0, 100%, 0);
-    }
-    to {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-    }
-}
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        -webkit-transform: translate3d(0, 100%, 0);
-        transform: translate3d(0, 100%, 0);
-    }
-    to {
-        opacity: 1;
-        -webkit-transform: none;
-        transform: none;
-    }
-}
 
-.fadeInUp {
-    -webkit-animation-name: fadeInUp;
-    animation-name: fadeInUp;
-}
-
-@-webkit-keyframes menufadeInLeft {
-    from {
-        opacity: 0;
-        -webkit-transform: translate3d(-20px, 0, 0);
-        transform: translate3d(-20px, 0, 0);
-    }
-    to {
-        opacity: 1;
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-@keyframes menufadeInLeft {
-    from {
-        opacity: 0;
-        -webkit-transform: translate3d(-20px, 0, 0);
-        transform: translate3d(-20px, 0, 0);
-    }
-    to {
-        opacity: 1;
-        -webkit-transform: translate3d(0, 0, 0);
-        transform: translate3d(0, 0, 0);
-    }
-}
-
-.menufadeInLeft {
-    -webkit-animation-name: menufadeInLeft;
-    animation-name: menufadeInLeft;
-}
-
-.nav .nav-item, .navbar-nav .nav-item {
-    line-height: 1;
-}
-
-@media (max-width: 992px) {
-    .nav .nav-item.dropdown, .navbar-nav .nav-item.dropdown {
-        position: unset;
-    }
-}
-
-.nav .nav-item.dropdown .dropdown-toggle:after, .navbar-nav .nav-item.dropdown .dropdown-toggle:after {
-    border: none;
-    content: "\F140";
-    font-family: "Material Design Icons";
-    font-size: 20px;
-    color: grey;
-    text-rendering: auto;
-    line-height: inherit;
-    vertical-align: 0;
-}
-
-.nav .nav-item.dropdown .count-indicator, .navbar-nav .nav-item.dropdown .count-indicator {
-    position: relative;
-    text-align: center;
-}
-
-.nav .nav-item.dropdown .count-indicator i, .navbar-nav .nav-item.dropdown .count-indicator i {
-    font-size: 21px;
-    margin-right: 0;
-    vertical-align: middle;
-}
-
-.nav .nav-item.dropdown .count-indicator .count, .navbar-nav .nav-item.dropdown .count-indicator .count {
-    position: absolute;
-    left: 50%;
-    width: 1rem;
-    height: 1rem;
-    border-radius: 100%;
-    background: #FF0017;
-    color: #ffffff;
-    font-size: 11px;
-    top: -1px;
-    font-weight: 600;
-    line-height: 1rem;
-    border: none;
-    text-align: center;
-}
-
-.nav .nav-item.dropdown .count-indicator:after, .navbar-nav .nav-item.dropdown .count-indicator:after {
-    display: none;
-}
-
-.nav .nav-item.dropdown i, .navbar-nav .nav-item.dropdown i {
-    margin-right: 0.5rem;
-    vertical-align: middle;
-}
-
-.rtl .nav .nav-item.dropdown i, .rtl .navbar-nav .nav-item.dropdown i {
-    margin-left: 0.5rem;
-    margin-right: 0;
-}
-
-.nav .nav-item.dropdown .navbar-dropdown, .navbar-nav .nav-item.dropdown .navbar-dropdown {
-    font-size: 0.9rem;
-    margin-top: 15px;
-    position: absolute;
-    right: 0;
-    left: auto;
-    border: 1px solid rgba(182, 182, 182, 0.1);
-    padding: 0 0 20px;
-    min-width: 100%;
-    border-radius: 2px;
-    box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.13);
-    overflow-x: hidden;
-    max-height: 350px;
-    overflow-y: auto;
-    overflow: hidden;
-}
 
 .rtl .nav .nav-item.dropdown .navbar-dropdown, .rtl .navbar-nav .nav-item.dropdown .navbar-dropdown {
     right: auto;
@@ -335,7 +109,7 @@
 
 .navbar.default-layout {
     font-family: "roboto", sans-serif;
-    background: #fff;
+    
     transition: background 0.25s ease;
     -webkit-transition: background 0.25s ease;
     -moz-transition: background 0.25s ease;
@@ -347,7 +121,7 @@
     -webkit-transition: width 0.25s ease, background 0.25s ease;
     -moz-transition: width 0.25s ease, background 0.25s ease;
     -ms-transition: width 0.25s ease, background 0.25s ease;
-    background: #1c45ef;
+    
     width: 270px;
     height: 63px;
 }
@@ -592,7 +366,6 @@
 .card {
     box-shadow: 0 0 0 0 rgba(90, 113, 208, 0.11), 0 4px 16px 0 rgba(167, 175, 183, 0.33);
     border: solid 1px #dde4eb;
-    border-radius: 0px;
 }
 
 .card .card-title {
