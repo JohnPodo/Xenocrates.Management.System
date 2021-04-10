@@ -61,22 +61,22 @@ namespace ManagementSystemVersionTwo.Services.ViewBags
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
             {
-                Text = "Role",
+                Text = "Name ⯅",
                 Value = "Role"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "Role_desc",
+                Text = "Name ⯆",
                 Value = "Role_desc"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "High-Low",
+                Text = "Count ⯅",
                 Value = "High-Low"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "Low-High",
+                Text = "Count ⯆",
                 Value = "Low-High"
             });
             return listItems;
@@ -91,12 +91,12 @@ namespace ManagementSystemVersionTwo.Services.ViewBags
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
             {
-                Text = "Salary Desc",
+                Text = "Salary ⯆",
                 Value = "Salary Desc"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "Salary Asc",
+                Text = "Salary ⯅",
                 Value = "Salary Asc"
             });
             return listItems;
@@ -111,22 +111,22 @@ namespace ManagementSystemVersionTwo.Services.ViewBags
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
             {
-                Text = "City",
+                Text = "City ⯅",
                 Value = "City"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "City_desc",
+                Text = "City ⯆",
                 Value = "City_desc"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "High-Low",
+                Text = "Count ⯅",
                 Value = "High-Low"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "Low-High",
+                Text = "Count ⯆",
                 Value = "Low-High"
             });
             return listItems;
@@ -248,7 +248,10 @@ namespace ManagementSystemVersionTwo.Services.ViewBags
             return listItems;
         }
 
-
+        /// <summary>
+        /// Status option For Filter
+        /// </summary>
+        /// <returns></returns>
         public List<SelectListItem> StatusSortOptionsViewBag()
         {
             List<SelectListItem> statusItems = new List<SelectListItem>();
@@ -265,6 +268,10 @@ namespace ManagementSystemVersionTwo.Services.ViewBags
             return statusItems;
         }
 
+        /// <summary>
+        /// I fill the options to choose Department to See Projects
+        /// </summary>
+        /// <returns></returns>
         public List<SelectListItem> ProjectInDepartmentsSortViewBag()
         {
             List<SelectListItem> departmentItems = new List<SelectListItem>();
