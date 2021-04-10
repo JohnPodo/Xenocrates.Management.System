@@ -39,11 +39,17 @@ namespace ManagementSystemVersionTwo.Controllers
         }
         // GET: Payment
         [Authorize(Roles = "Admin")]
-        public ActionResult Index(string searchName, string orderBy)
+        public ActionResult Index(string searchName, string orderBy, string status)
         {
             var data = _data.Worker.AllWorkers();
 
             data = SortingAndFilteringData.SortAndFilteringPayments(searchName, orderBy, data);
+
+
+            data = FilteringServices.PaymentStatus(status, data);
+
+
+            ViewBag.PaymentStatus = _fillViewBag.PayStatusSortOptionsViewBag();
 
             ViewBag.SortSalary = _fillViewBag.SalarySortingOptionsViewBag();
 
@@ -82,11 +88,12 @@ namespace ManagementSystemVersionTwo.Controllers
         }
 
         [Authorize(Roles = "Admin")]
-        public ActionResult WorkerPaymentHistory(string searchName, string orderBy, string dateOrder)
+        public ActionResult WorkerPaymentHistory(string searchName, string orderBy )
         {
             var data = _data.Worker.AllWorkers();
-
             data = SortingAndFilteringData.SortAndFilteringPayments(searchName, orderBy, data);
+
+            
 
             ViewBag.SortSalary = _fillViewBag.SalarySortingOptionsViewBag();
 

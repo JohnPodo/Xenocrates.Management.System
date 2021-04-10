@@ -68,6 +68,46 @@ namespace ManagementSystemVersionTwo.Services.Filtering
             }
         }
 
+
+        /// <summary>
+        /// Give a list of Paid or Not Paid Workers
+        /// </summary>
+        /// <param name="status"></param>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static List<Worker> PaymentStatus(string status, List<Worker> data)
+        {
+            List<Worker> worker = new List<Worker>();
+            if (status == "Paid")
+            {
+                foreach (var item in data)
+                {
+                    var count =  item.Payments.Where(d => d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year).Count();
+                    if(count != 0)
+                    {
+                        worker.Add(item);
+                    }
+                }
+            }
+            else if (status == "Not Paid")
+            {
+                foreach (var item in data)
+                {
+                    var count = item.Payments.Where(d => d.Date.Month == DateTime.Now.Month && d.Date.Year == DateTime.Now.Year).Count();
+                    if (count == 0)
+                    {
+                        worker.Add(item);
+                    }
+                }
+            }
+            else
+            {
+                worker = data;
+            }
+            return worker;
+            
+        }
+
         /// <summary>
         /// Give a list of Projects and a Department to check and I will Filter the list and return it
         /// </summary>
