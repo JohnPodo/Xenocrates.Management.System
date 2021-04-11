@@ -1,6 +1,6 @@
 ﻿@model ManagementSystemVersionTwo.Models.Project
 @{
-    ViewBag.Title = "DetailsProject";
+    ViewBag.Title = "Details Project";
 }
 
 <div class="row">
@@ -41,11 +41,16 @@
                                 <tr>
                                     <td class="thead">Assigned To</td>
                                     <td class="identity">
-                                        @foreach(var worker in Model.WorkersInMe)
-                                        {
-                                        <a href="@Url.Action("ViewAllWorkers","Display",new { searchName = worker.Worker.FullName })"> @Html.DisplayFor(p => worker.Worker.FullName)</a>
-                                        }
+                                        <dl>
+                                            @foreach (var worker in Model.WorkersInMe)
+                                            {
+                                            <dd><a href="@Url.Action("ViewAllWorkers","Display",new { searchName = worker.Worker.FullName })"> @Html.DisplayFor(p => worker.Worker.FullName)</a></dd>
+                                            }
+                                        </dl>
                                     </td>
+                                </tr>
+                                <tr>
+                                    @Html.ActionLink("Return to List", "ViewAllProjects", "Display", null, new { @class = "btn btn-info btn-fw" })
                                 </tr>
                             </table>
                         </div>
