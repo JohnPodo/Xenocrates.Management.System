@@ -21,7 +21,10 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
         #region Statistics For Administrator
 
 
-        //Gets the number of Departments Per City
+        /// <summary>
+        /// Provides data for chart to display the percentage of Departments Per City
+        /// </summary>
+        /// <returns></returns>
         public Ratio DepartmentsPerCityChart()
         {
             int count;
@@ -41,7 +44,10 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
             return obj;
         }
 
-        //Gets the number of Employees Per Department
+        /// <summary>
+        /// Provides data for chart to display the Employees Per Department
+        /// </summary>
+        /// <returns></returns>
         public Ratio EmployeesPerDepartmentChart()
         {
             var departmentNames = _context.Departments.Select(x => x.City + " " + x.Adress).ToList();
@@ -53,7 +59,10 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
             return obj;
         }
 
-        //Gets the Average Salary of Employees Per Department
+        /// <summary>
+        /// Provides data for chart to display the Average Salary of Employees Per Department
+        /// </summary>
+        /// <returns></returns>
         public Ratio AverageSalaryChart()
         {
             decimal averageSalary;
@@ -69,7 +78,10 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
             return obj;
         }
 
-        //Gets the Average Age of Employees Per Department
+        /// <summary>
+        /// Provides data for chart to display the Average Age of Employees Per Department
+        /// </summary>
+        /// <returns></returns>
         public Ratio AverageAgeChart()
         {
             double ages;
@@ -87,7 +99,10 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
         }
 
 
-        //Gets the Number of Male and Female Employees Per Department 
+        /// <summary>
+        /// Provides data for chart to display the Gender Ratio Per Department
+        /// </summary>
+        /// <returns></returns>
         public Ratio GenderPerDepartmentChart()
         {
             Ratio obj = new Ratio();
@@ -108,7 +123,10 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
 
         }
 
-        //Total Amount of Payments Per Month
+        /// <summary>
+        /// Provides data for chart to display the Total Amount of Salaries Paid Per Month
+        /// </summary>
+        /// <returns></returns>
         public Ratio TotalSalariesPerMonthChart()
         {
             decimal salary;
@@ -125,6 +143,11 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
             return obj;
         }
 
+
+        /// <summary>
+        /// Provides data for chart to display the Total Amount of Salaries Paid Per Department
+        /// </summary>
+        /// <returns></returns>
         public Ratio TotalSalaryPerDepartmentChart()
         {
 
@@ -156,7 +179,12 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
         #endregion
 
         #region Statistics For Supervisor
-        //Gets the Salary of Each Employee
+
+        /// <summary>
+        /// Provides data for chart to display the Salary of Each Employee that belongs to the department of the supervisor that is logged in
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Ratio SalaryPerEmployeeChart(string id)
         {
             var supervisor = _context.Users.Find(id);
@@ -168,7 +196,11 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
             return obj;
         }
 
-        //Gets The Age of each Employee
+        /// <summary>
+        /// Provides data for chart to display the Age of Each Employee that belongs to the department of the supervisor that is logged in
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Ratio AgePerEmployeeChart(string id)
         {
             var supervisor = _context.Users.Find(id);
@@ -180,7 +212,11 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
             return obj;
         }
 
-        //Get the number of projects per month
+        /// <summary>
+        /// Provides data for chart to display the number of Projects for the department of the supervisor that is logged in 
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Ratio ProjectsPerMonthChart(string id)
         {
             int projects;
@@ -202,6 +238,12 @@ namespace ManagementSystemVersionTwo.Services.StatisticsServices
 
         #region Statistics For Employee
 
+
+        /// <summary>
+        /// Provides data for chart to display the percentage of Active and Finished Projects for the employee that is logged in
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
         public Ratio ProjectsProgressChart(string id)
         {
             var employee = _context.Users.Find(id);
