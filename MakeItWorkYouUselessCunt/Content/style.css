@@ -299,11 +299,12 @@ a {
     color: #2128B6;
     text-decoration: none;
     background-color: transparent;
+    font-weight:500;
 }
 
     a:hover {
-        color: #1a1f86;
-        text-decoration: underline;
+        color: #15DB95;
+        text-decoration: none;
     }
 
     a:not([href]):not([class]) {
@@ -403,6 +404,7 @@ select {
 
 select {
     word-wrap: normal;
+    height:28px;
 }
 
 button,
@@ -8387,7 +8389,7 @@ button.bg-dark:focus {
 }
 
 .p-1 {
-    padding: 0.25rem !important;
+    padding-left: 0.6rem !important;
 }
 
 .pt-1,
@@ -11345,8 +11347,9 @@ address p {
 }
 
 .card-description {
-    margin-bottom: 0.9375rem;
+    margin-bottom: 1.5rem;
     font-family: "roboto", sans-serif;
+    
 }
 
 .rtl .card-description {
@@ -13447,13 +13450,14 @@ pre {
 .resbut {
     color: brown;
     text-decoration: none;
+    
 }
 
     .resbut:hover {
         color: crimson;
     }
 
-
+   
 
 .input-group-append,
 .input-group-prepend {
@@ -15261,6 +15265,7 @@ li.nav-item.active {
 .card {
     box-shadow: 0 0 0 0 rgba(90, 113, 208, 0.11), 0 4px 16px 0 rgba(167, 175, 183, 0.33);
     border-radius: 0.4rem;
+    
 }
 
     .card .card-title {
@@ -15588,7 +15593,7 @@ li.nav-item.active {
 .all-projects{
 
 }
-@media only screen and (min-width:1300px){
+@media only screen and (min-width:1600px){
     .all-projects{
         display: table;
     }
@@ -15743,11 +15748,9 @@ td.text-right {
 }
 
 #livechat-compact-container {
-    height: 153px;
     position: fixed;
     right: 0;
-    top: 200px;
-    top: 30vh;
+    top: 600px;
     z-index: 10000;
 }
 

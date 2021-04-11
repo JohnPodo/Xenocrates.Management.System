@@ -54,7 +54,7 @@
                                 </div>
                               }
                             </div>
-                        <table class="all-projects table table-striped">
+                        <table class="all-projects table table-striped col-md-12">
                             <thead>
                                 <tr>
                                     <th>Title</th>
@@ -132,7 +132,7 @@ else if (ViewBag.Supervisor)
                                 <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
                                     <div class="p-2 bd-highlight">
                                         <p>
-                                            Search Project by Title:@Html.TextBox("title", "", new { list = "browsers", @class = "" })
+                                            Search Project by Title: @Html.TextBox("title", "", new { list = "browsers", @class = "" })
                                             <datalist id="browsers">
                                                 @foreach (var item in ViewBag.Names)
                                                 {
@@ -143,12 +143,12 @@ else if (ViewBag.Supervisor)
                                     </div>
                                     <div class="p-2 bd-highlight">
                                         <p>
-                                            Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
+                                            Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
                                         </p>
                                     </div>
                                     <div class="p-2 bd-highlight">
                                         <p>
-                                            Status : @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
+                                            Status: @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
                                         </p>
                                     </div>
                                     <div class="p-2 bd-highlight">
@@ -160,7 +160,7 @@ else if (ViewBag.Supervisor)
                                 </div>
                             }
                         </div>
-                        <table class="all-projects table table-striped">
+                        <table class="all-projects table table-striped col-md-12">
                             <thead>
                                 <tr>
                                     <th>Title</th>
@@ -238,7 +238,7 @@ else
                                 <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
                                     <div class="p-2 bd-highlight">
                                         <p>
-                                            Search Project by Title:@Html.TextBox("title", "", new { list = "browsers", @class = "" })
+                                            Search Project by Title: @Html.TextBox("title", "", new { list = "browsers", @class = "" })
                                             <datalist id="browsers">
                                                 @foreach (var item in ViewBag.Names)
                                                 {
@@ -249,12 +249,12 @@ else
                                     </div>
                                     <div class="p-2 bd-highlight">
                                         <p>
-                                            Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
+                                            Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
                                         </p>
                                     </div>
                                     <div class="p-2 bd-highlight">
                                         <p>
-                                            Status : @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
+                                            Status: @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
                                         </p>
                                     </div>
                                     <div class="p-2 bd-highlight">
@@ -266,7 +266,7 @@ else
                                 </div>
                             }
                         </div>
-                        <table class="all-projects table table-striped">
+                        <table class="all-projects table table-striped col-md-12">
                             <thead>
                                 <tr>
                                     <th>Title</th>

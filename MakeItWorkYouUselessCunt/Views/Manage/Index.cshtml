@@ -14,8 +14,6 @@
 <div class="tab-content" id="nav-tabContent">
     <div class="tab-pane fade show active" id="nav-account" role="tabpanel" aria-labelledby="nav-account-tab">
         <dl class="dl-horizontal">
-            <dt>@Html.DisplayNameFor(model => model.User.Id)</dt>
-            <dd>@Html.DisplayFor(model => model.User.Id)</dd>
             <dt>@Html.DisplayNameFor(model => model.User.UserName)</dt>
             <dd>@Html.DisplayFor(model => model.User.UserName)</dd>
             <dt>@Html.DisplayNameFor(model => model.User.Email)</dt>
@@ -41,7 +39,7 @@
             <dt>@Html.DisplayNameFor(model => model.User.Worker.BankAccount)</dt>
             <dd>@Html.DisplayFor(model => model.User.Worker.BankAccount)</dd>
             <dt>@Html.DisplayNameFor(model => model.User.Worker.Salary)</dt>
-            <dd>@Html.DisplayFor(model => model.User.Worker.Salary)</dd>
+            <dd>@Html.DisplayFor(model => model.User.Worker.Salary) &euro;</dd>
             <dt>Department City</dt>
             <dd>@Html.DisplayFor(model => model.User.Worker.Department.City)</dd>
         </dl>

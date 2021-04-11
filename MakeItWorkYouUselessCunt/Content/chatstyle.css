@@ -210,6 +210,7 @@ body {
     padding: 10px 10px 10px 12px;
     border-radius: 20px;
     background: #b2b2b2;
+    padding-left:3px;
 }
 .bubble {
     background: #b2b2b2;
@@ -289,7 +290,6 @@ body {
 }
 
 input {
-    padding: 7px;
     width: 74%;
     left: 5%;
     position: absolute;
@@ -327,7 +327,6 @@ button {
     }
 
 footer {
-    position: absolute;
     bottom: 0;
     right: 0;
     text-align: center;
