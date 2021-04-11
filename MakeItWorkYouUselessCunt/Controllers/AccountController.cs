@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ManagementSystemVersionTwo.Models;
+using ValidationsThroughApi;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -22,7 +23,7 @@ namespace ManagementSystemVersionTwo.Controllers
         {
         }
 
-        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager )
+        public AccountController(ApplicationUserManager userManager, ApplicationSignInManager signInManager)
         {
             UserManager = userManager;
             SignInManager = signInManager;
@@ -34,9 +35,9 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return _signInManager ?? HttpContext.GetOwinContext().Get<ApplicationSignInManager>();
             }
-            private set 
-            { 
-                _signInManager = value; 
+            private set
+            {
+                _signInManager = value;
             }
         }
 
@@ -72,18 +73,26 @@ namespace ManagementSystemVersionTwo.Controllers
             {
                 return View(model);
             }
-            //// Require the user to have a confirmed email before they can log on.
-            //var user = await UserManager.FindByNameAsync(model.Username); //Na to Ksemarkarw Gia tin Prova Generale
-            //if (user != null)
-            //{
-            //    if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-            //    {
-            //        ViewBag.errorMessage = "You must have a confirmed email to log on.";
-            //        return View();
-            //    }
-            //}
-            // This doesn't count login failures towards account lockout
-            // To enable password failures to trigger account lockout, change to shouldLockout: true
+            // Require the user to have a confirmed email before they can log on.
+            var user = await UserManager.FindByNameAsync(model.Username);
+            if (user != null)
+            {
+                var email = await UserManager.IsEmailConfirmedAsync(user.Id);
+                var phone = await UserManager.IsPhoneNumberConfirmedAsync(user.Id);
+                var admin = await UserManager.IsInRoleAsync(user.Id, "Admin");
+                if (!(email && phone))
+                {
+                    if (!admin)
+                    {
+                        string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                        var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                        await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                        ViewBag.errorMessage = "You must have a confirmed email and phone to log in. An Email was sent to your email to do all that.";
+                        return View();
+                    }
+
+                }
+            }
             var result = await SignInManager.PasswordSignInAsync(model.Username, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
@@ -129,7 +138,7 @@ namespace ManagementSystemVersionTwo.Controllers
             // If a user enters incorrect codes for a specified amount of time then the user account 
             // will be locked out for a specified amount of time. 
             // You can configure the account lockout settings in IdentityConfig
-            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent:  model.RememberMe, rememberBrowser: model.RememberBrowser);
+            var result = await SignInManager.TwoFactorSignInAsync(model.Provider, model.Code, isPersistent: model.RememberMe, rememberBrowser: model.RememberBrowser);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -158,7 +167,7 @@ namespace ManagementSystemVersionTwo.Controllers
         [Authorize(Roles = "Admin")]
         public async Task<ActionResult> Register(RegisterViewModel model)
         {
-            if (ModelState.IsValid)
+            if (ModelState.IsValid && EmailValidation.CheckEmail(model.Email))
             {
                 var user = new ApplicationUser { UserName = model.Username, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
@@ -168,15 +177,15 @@ namespace ManagementSystemVersionTwo.Controllers
 
                     // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
-                    //string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
-                    //var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
-                    //await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                    string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);
+                    var callbackUrl = Url.Action("ConfirmEmail", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                    await UserManager.SendEmailAsync(user.Id, "Confirm your account", "Please confirm your account by clicking <a href=\"" + callbackUrl + "\">here</a>");
 
-                    return RedirectToAction("CreateWorkerForApplicationUser", "Worker",user);
+                    return RedirectToAction("CreateWorkerForApplicationUser", "Worker", user);
                 }
                 AddErrors(result);
             }
-
+            ViewBag.Email = "No E-mail exists with that address. Please enter valid e-mail.";
             // If we got this far, something failed, redisplay form
             return View(model);
         }
@@ -220,10 +229,10 @@ namespace ManagementSystemVersionTwo.Controllers
 
                 // For more information on how to enable account confirmation and password reset please visit https://go.microsoft.com/fwlink/?LinkID=320771
                 // Send an email with this link
-                // string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
-                // var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);		
-                // await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
-                // return RedirectToAction("ForgotPasswordConfirmation", "Account");
+                string code = await UserManager.GeneratePasswordResetTokenAsync(user.Id);
+                var callbackUrl = Url.Action("ResetPassword", "Account", new { userId = user.Id, code = code }, protocol: Request.Url.Scheme);
+                await UserManager.SendEmailAsync(user.Id, "Reset Password", "Please reset your password by clicking <a href=\"" + callbackUrl + "\">here</a>");
+                return RedirectToAction("ForgotPasswordConfirmation", "Account");
             }
 
             // If we got this far, something failed, redisplay form

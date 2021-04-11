@@ -8,7 +8,7 @@ using RestSharp;
 
 namespace ValidationsThroughApi
 {
-    class PhoneValidation
+    public class PhoneValidation
     {
         public static bool CheckPhone(string phone)
         {

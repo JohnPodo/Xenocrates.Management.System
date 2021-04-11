@@ -7,6 +7,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using ManagementSystemVersionTwo.Models;
+using ValidationsThroughApi;
 
 namespace ManagementSystemVersionTwo.Controllers
 {
@@ -114,22 +115,25 @@ namespace ManagementSystemVersionTwo.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
         {
-            if (!ModelState.IsValid)
+            if (ModelState.IsValid && PhoneValidation.CheckPhone(model.Number))
             {
-                return View(model);
-            }
-            // Generate the token and send it
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
-            if (UserManager.SmsService != null)
-            {
-                var message = new IdentityMessage
+                var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+                if (UserManager.SmsService != null)
                 {
-                    Destination = model.Number,
-                    Body = "Your security code is: " + code
-                };
-                await UserManager.SmsService.SendAsync(message);
+                    var message = new IdentityMessage
+                    {
+                        Destination = model.Number,
+                        Body = "Your security code is: " + code
+                    };
+                    await UserManager.SmsService.SendAsync(message);
+                }
+                return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+                
             }
-            return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+            ViewBag.Error = "Phone Number is not valid";
+            return View(model);
+            // Generate the token and send it
+
         }
 
         //
