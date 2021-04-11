@@ -1,6 +1,6 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Worker>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Payments";
 }
 <div class="row">
     <div class="col-12 grid-margin">
@@ -16,7 +16,7 @@
                         <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
                             <div class="p-2 bd-highlight">
                                 <p>
-                                    Search Employee:@Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
+                                    Search Employee: @Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
 
                                     <datalist id="browsers">
                                         @foreach (var item in ViewBag.Names)
@@ -50,7 +50,7 @@
                     <table class="table all-payments table-striped">
                         <thead>
                             <tr>
-                                <th>Fullname</th>
+                                <th>Full Name</th>
                                 <th>Salary</th>
                                 <th>Pay</th>
                             </tr>
@@ -60,7 +60,7 @@
                             {
                                 <tr>
                                     <td>@wo.FullName</td>
-                                    <td>@wo.Salary</td>
+                                    <td>@wo.Salary &euro;</td>
                                     <td>
                                         @{
                                             Html.RenderAction("ShowPartial", "Payment", new { id = wo.ID });

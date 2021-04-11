@@ -1,6 +1,6 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Department>
 @{
-    ViewBag.Title = "ViewAllDepartments";
+    ViewBag.Title = "Departments";
 }
 <div>
     <a href="@Url.Action("CreateDepartment", "Department" )" style="font-size: 12px;" class="btn btn-info btn-fw">Add New Department</a>
@@ -12,7 +12,7 @@
             <div style="margin: auto;" class="card">
                 <div class="card-body">
                     <h3 class="views-headings">Departments</h3>
-                    <p class="views-comments">Here you can view all the departments of the Company.</p>
+                    <p class="views-comments">Here you can view all the departments of the company.</p>
                     <hr />
                     @using (Html.BeginForm())
                     {

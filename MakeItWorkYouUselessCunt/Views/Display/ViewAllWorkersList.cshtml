@@ -1,7 +1,7 @@
 ﻿@model IEnumerable<ManagementSystemVersionTwo.Models.Worker>
 
 @{
-    ViewBag.Title = "ViewAllWorkersList";
+    ViewBag.Title = "Workers";
 }
 @if (ViewBag.Supervisor)
 {
@@ -19,7 +19,7 @@
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Employees</h3>
-                        <p class="views-comments">Here you can view all the Employees working for the Company.</p>
+                        <p class="views-comments">Here you can view all the employees working in your department.</p>
                         <hr />
                         @using (Html.BeginForm())
                         {
@@ -52,13 +52,13 @@
                                     @Html.DisplayNameFor(model => model.Department.City)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.FirstName)
+                                    First Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.LastName)
+                                    Last Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                                    Date Of Birth
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Gender)
@@ -67,12 +67,14 @@
                                     @Html.DisplayNameFor(model => model.Address)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.BankAccount)
+                                    Bank Account
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Salary)
                                 </th>
-                                <th></th>
+                                <th>
+                                    Actions
+                                </th>
                             </tr>
 
                             @foreach (var worker in Model)
@@ -100,7 +102,7 @@
                                         @Html.DisplayFor(modelItem => worker.BankAccount)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => worker.Salary)
+                                        @Html.DisplayFor(modelItem => worker.Salary) &euro;
                                     </td>
                                     <td>
                                         @Html.ActionLink("Details", "DetailsWorker", "Display", new { id = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" })
@@ -130,7 +132,7 @@ else
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Employees</h3>
-                        <p class="views-comments">Here you can view all the Employees working for the Company.</p>
+                        <p class="views-comments">Here you can view all the employees working for the company.</p>
                         <hr />
                         @using (Html.BeginForm())
                         {
@@ -201,7 +203,7 @@ else
                                         @Html.DisplayFor(modelItem => worker.LastName)
                                     </td>
                                     <td>
-                                        @worker.DateOfBirth.ToString("dd/MM/yyyy")
+                                        @worker.DateOfBirth.ToString("dd-MM-yyyy")
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => worker.Gender)
