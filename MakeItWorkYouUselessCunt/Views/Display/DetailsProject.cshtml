@@ -44,15 +44,15 @@
                                         <dl>
                                             @foreach (var worker in Model.WorkersInMe)
                                             {
-                                            <dd><a href="@Url.Action("ViewAllWorkers","Display",new { searchName = worker.Worker.FullName })"> @Html.DisplayFor(p => worker.Worker.FullName)</a></dd>
+                                                <dd><a href="@Url.Action("ViewAllWorkers","Display",new { searchName = worker.Worker.FullName })"> @Html.DisplayFor(p => worker.Worker.FullName)</a></dd>
                                             }
                                         </dl>
                                     </td>
                                 </tr>
-                                <tr>
-                                    @Html.ActionLink("Return to List", "ViewAllProjects", "Display", null, new { @class = "btn btn-info btn-fw" })
-                                </tr>
                             </table>
+                            <div style="padding-top:10px" class="form-actions no-color">
+                                @Html.ActionLink("Return to List", "ViewAllProjects", "Display", null, new { @class = "btn btn-info btn-fw" })
+                            </div>
                         </div>
                     </div>
                 </div>

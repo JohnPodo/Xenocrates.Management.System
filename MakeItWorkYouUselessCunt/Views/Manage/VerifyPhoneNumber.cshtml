@@ -3,31 +3,47 @@
     ViewBag.Title = "Verify Phone Number";
     Layout = null;
 }
-
-<h2>@ViewBag.Title.</h2>
-
-@using (Html.BeginForm("VerifyPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.Hidden("phoneNumber", @Model.PhoneNumber)
-    @Html.HiddenFor(m => m.Id, new { value = ViewBag.Id })
-    <h4>Enter verification code</h4>
-    <h5>@ViewBag.Status</h5>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Code, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Code, new { @class = "form-control" })
+@Styles.Render("~/Content/materialdesignicons.min.css")
+@Styles.Render("~/Content/ionicons.css")
+@Styles.Render("~/Content/flag-icon.min.css")
+@Styles.Render("~/Content/vendor.bundle.base.css")
+@Styles.Render("~/Content/vendor.bundle.addons.css")
+@Styles.Render("~/Content/style.css")
+@Styles.Render("~/Content/style1.css")
+@Styles.Render("~/Content/favicon.ico")
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div style="background-image:url(../../EIKONES/login_1.jpg)" class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+            <div class="row w-100">
+                <div class="col-lg-4 mx-auto">
+                    @using (Html.BeginForm("VerifyPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                    <div class="auto-form-wrapper">
+                        @Html.AntiForgeryToken()
+                        @Html.Hidden("phoneNumber", @Model.PhoneNumber)
+                        @Html.HiddenFor(m => m.Id, new { value = ViewBag.Id })
+                        @Html.ValidationSummary("", new { @class = "text-danger" })
+                        <h3 class="views-headings">Register Process</h3>
+                        <p class="views-comments">Enter the verification code sent to your phone.</p>
+                        <div style="padding:30px" class="text-center">
+                            <h2>@Html.TextBoxFor(m => m.Code, new { @class = "form-control" })</h2>
+                        </div>
+                        <div style="padding-bottom:30px" class="form-group">
+                            <input type="submit" class="btn btn-primary submit-btn btn-block" value="Submit" />
+                        </div>
+                    </div>
+                        <p class="footer-text text-center">Copyright © 2021 Xenocrates. All rights reserved.</p>
+                    }
+                </div>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Submit" />
-        </div>
-    </div>
-}
-
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/vendor.bundle.base.js")
+    @Scripts.Render("~/Scripts/vendor.bundle.addons.js")
+    @Scripts.Render("~/Scripts/off-canvas.js")
+    @Scripts.Render("~/Scripts/misc.js")
+    @Scripts.Render("~/Scripts/jquery.cookie.js")
 }
