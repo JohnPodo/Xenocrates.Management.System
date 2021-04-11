@@ -65,6 +65,8 @@ namespace ManagementSystemVersionTwo.Models
         [Phone]
         [Display(Name = "Phone Number")]
         public string Number { get; set; }
+        public string Id { get; set; }
+
     }
 
     public class VerifyPhoneNumberViewModel
@@ -77,6 +79,7 @@ namespace ManagementSystemVersionTwo.Models
         [Phone]
         [Display(Name = "Phone Number")]
         public string PhoneNumber { get; set; }
+        public string Id { get; set; }
     }
 
     public class ConfigureTwoFactorViewModel

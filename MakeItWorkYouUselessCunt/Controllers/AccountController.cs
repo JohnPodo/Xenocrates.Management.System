@@ -200,6 +200,7 @@ namespace ManagementSystemVersionTwo.Controllers
                 return View("Error");
             }
             var result = await UserManager.ConfirmEmailAsync(userId, code);
+            ViewBag.User = userId;
             return View(result.Succeeded ? "ConfirmEmail" : "Error");
         }
 

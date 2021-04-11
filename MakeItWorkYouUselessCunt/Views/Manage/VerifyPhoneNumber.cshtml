@@ -10,6 +10,7 @@
 {
     @Html.AntiForgeryToken()
     @Html.Hidden("phoneNumber", @Model.PhoneNumber)
+    @Html.HiddenFor(m => m.Id, new { value = ViewBag.Id })
     <h4>Enter verification code</h4>
     <h5>@ViewBag.Status</h5>
     <hr />

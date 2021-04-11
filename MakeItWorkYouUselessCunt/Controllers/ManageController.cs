@@ -104,8 +104,10 @@ namespace ManagementSystemVersionTwo.Controllers
 
         //
         // GET: /Manage/AddPhoneNumber
-        public ActionResult AddPhoneNumber()
+        [AllowAnonymous]
+        public ActionResult AddPhoneNumber(string id)
         {
+            ViewBag.User = id;
             return View();
         }
 
@@ -113,11 +115,12 @@ namespace ManagementSystemVersionTwo.Controllers
         // POST: /Manage/AddPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<ActionResult> AddPhoneNumber(AddPhoneNumberViewModel model)
         {
             if (ModelState.IsValid && PhoneValidation.CheckPhone(model.Number))
             {
-                var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), model.Number);
+                var code = await UserManager.GenerateChangePhoneNumberTokenAsync(model.Id, model.Number);
                 if (UserManager.SmsService != null)
                 {
                     var message = new IdentityMessage
@@ -127,7 +130,7 @@ namespace ManagementSystemVersionTwo.Controllers
                     };
                     await UserManager.SmsService.SendAsync(message);
                 }
-                return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number });
+                return RedirectToAction("VerifyPhoneNumber", new { PhoneNumber = model.Number, Id = model.Id });
                 
             }
             ViewBag.Error = "Phone Number is not valid";
@@ -168,9 +171,11 @@ namespace ManagementSystemVersionTwo.Controllers
 
         //
         // GET: /Manage/VerifyPhoneNumber
-        public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber)
+        [AllowAnonymous]
+        public async Task<ActionResult> VerifyPhoneNumber(string phoneNumber, string id)
         {
-            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(User.Identity.GetUserId(), phoneNumber);
+            var code = await UserManager.GenerateChangePhoneNumberTokenAsync(id, phoneNumber);
+            ViewBag.Id = id;
             // Send an SMS through the SMS provider to verify the phone number
             return phoneNumber == null ? View("Error") : View(new VerifyPhoneNumberViewModel { PhoneNumber = phoneNumber });
         }
@@ -179,16 +184,17 @@ namespace ManagementSystemVersionTwo.Controllers
         // POST: /Manage/VerifyPhoneNumber
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [AllowAnonymous]
         public async Task<ActionResult> VerifyPhoneNumber(VerifyPhoneNumberViewModel model)
         {
             if (!ModelState.IsValid)
             {
                 return View(model);
             }
-            var result = await UserManager.ChangePhoneNumberAsync(User.Identity.GetUserId(), model.PhoneNumber, model.Code);
+            var result = await UserManager.ChangePhoneNumberAsync(model.Id, model.PhoneNumber, model.Code);
             if (result.Succeeded)
             {
-                var user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                var user = await UserManager.FindByIdAsync(model.Id);
                 if (user != null)
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);

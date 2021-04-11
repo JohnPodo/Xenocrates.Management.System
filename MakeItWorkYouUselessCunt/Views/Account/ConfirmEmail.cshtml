@@ -5,6 +5,6 @@
 <h2>@ViewBag.Title.</h2>
 <div>
     <p>
-        Thank you for confirming your email. Please Click Here <h1> @Html.ActionLink("Add phone:", "AddPhoneNumber", "Manage")</h1>
+        Thank you for confirming your email. Please Click Here <h1> @Html.ActionLink("Add phone:", "AddPhoneNumber", "Manage", new { id = ViewBag.User}, null)</h1>
     </p>
 </div>
