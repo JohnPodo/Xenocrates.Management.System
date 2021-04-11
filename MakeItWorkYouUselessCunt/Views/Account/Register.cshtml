@@ -23,6 +23,7 @@
                         @using (Html.BeginForm("Register", "Account", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
                         {
                             @Html.AntiForgeryToken()
+                            @ViewBag.Email
                                 <div class="form-group">
                                     @Html.ValidationSummary("", new { @class = "text-danger" })
                                     <div class="input-group">
