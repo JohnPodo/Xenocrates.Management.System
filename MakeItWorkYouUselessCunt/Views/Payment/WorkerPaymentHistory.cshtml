@@ -1,6 +1,6 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Worker>
 @{
-    ViewBag.Title = "WorkerPaymentHistory";
+    ViewBag.Title = "Payment History";
 }
 <div>
     <div>
@@ -50,7 +50,7 @@
                     @foreach (var payment in wo.Payments)
                     {
                         <tr>
-                            <td style="padding:8px; font-size:15px;">@payment.Amount</td>
+                            <td style="padding:8px; font-size:15px;">@payment.Amount &euro;</td>
                             <td style="padding:8px; font-size:15px;">@payment.Date.Date.ToString("yyyy-MM-dd")</td>
                         </tr>
                     }

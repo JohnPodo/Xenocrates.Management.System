@@ -72,12 +72,13 @@ namespace ManagementSystemVersionTwo.Services.ViewBags
             listItems.Add(new SelectListItem
             {
                 Text = "Count ⯅",
-                Value = "High-Low"
+                Value = "Low-High"
             });
+
             listItems.Add(new SelectListItem
             {
                 Text = "Count ⯆",
-                Value = "Low-High"
+                Value = "High-Low"
             });
             return listItems;
         }
@@ -91,13 +92,13 @@ namespace ManagementSystemVersionTwo.Services.ViewBags
             List<SelectListItem> listItems = new List<SelectListItem>();
             listItems.Add(new SelectListItem
             {
-                Text = "Salary ⯆",
-                Value = "Salary Desc"
+                Text = "Salary ⯅",
+                Value = "Salary Asc"
             });
             listItems.Add(new SelectListItem
             {
-                Text = "Salary ⯅",
-                Value = "Salary Asc"
+                Text = "Salary ⯆",
+                Value = "Salary Desc"
             });
             return listItems;
         }
@@ -122,12 +123,12 @@ namespace ManagementSystemVersionTwo.Services.ViewBags
             listItems.Add(new SelectListItem
             {
                 Text = "Count ⯅",
-                Value = "High-Low"
+                Value = "Low-High"
             });
             listItems.Add(new SelectListItem
             {
                 Text = "Count ⯆",
-                Value = "Low-High"
+                Value = "High-Low"
             });
             return listItems;
         }

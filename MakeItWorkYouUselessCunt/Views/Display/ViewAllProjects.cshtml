@@ -1,6 +1,6 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Project>
 @{
-    ViewBag.Title = "ViewAllProjects";
+    ViewBag.Title = "Projects";
 }
 @if (ViewBag.Admin)
 {
@@ -12,7 +12,7 @@
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Projects</h3>
-                        <p class="views-comments">Here you can view all Projects in your Department.</p>
+                        <p class="views-comments">Here you can view all the projects of the company.</p>
                         <hr />
                         <div>
                             @using (Html.BeginForm())
@@ -124,7 +124,7 @@ else if (ViewBag.Supervisor)
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Projects</h3>
-                        <p class="views-comments">Here you can view all Projects in your Department.</p>
+                        <p class="views-comments">Here you can view all the projects in your department.</p>
                         <hr />
                         <div>
                             @using (Html.BeginForm())
@@ -230,7 +230,7 @@ else
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Projects</h3>
-                        <p class="views-comments">Here you can view all Projects in your Department.</p>
+                        <p class="views-comments">Here you can view all your projects.</p>
                         <hr />
                         <div>
                             @using (Html.BeginForm())

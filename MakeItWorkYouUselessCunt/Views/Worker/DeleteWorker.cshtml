@@ -1,6 +1,6 @@
 ﻿@model ManagementSystemVersionTwo.Models.ApplicationUser
 @{
-    ViewBag.Title = "DeleteWorker";
+    ViewBag.Title = "Delete Worker";
 }
 
 <h2>DeleteWorker</h2>
@@ -12,20 +12,20 @@
         <hr />
         @Html.HiddenFor(model => Model.Id)
     <dl class="dl-horizontal">
-        <dt>@Html.DisplayNameFor(model => model.UserName)</dt>
+        <dt>Username</dt>
         <dd>@Html.DisplayFor(model => model.UserName)</dd>
         <dt>@Html.DisplayNameFor(model => model.Email)</dt>
         <dd>@Html.DisplayFor(model => model.Email)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Worker.FullName)</dt>
+        <dt>Full Name</dt>
         <dd>@Html.DisplayFor(model => model.Worker.FullName)</dd>
         <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
         <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Worker.DateOfBirth)</dt>
+        <dt>Date of Birth</dt>
         <dd>@Html.DisplayFor(model => model.Worker.DateOfBirth)</dd>
         <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
         <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
         <dt>@Html.DisplayNameFor(model => model.Worker.Salary)</dt>
-        <dd>@Html.DisplayFor(model => model.Worker.Salary)</dd>
+        <dd>@Html.DisplayFor(model => model.Worker.Salary) &euro;</dd>
         <dt>@Html.DisplayNameFor(model => model.Worker.Department)</dt>
         <dd>@Html.DisplayFor(model => model.Worker.Department.City)</dd>
     </dl>
