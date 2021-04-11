@@ -1,13 +1,13 @@
 ﻿@model ManagementSystemVersionTwo.Models.Worker
 @{
-    var lastPayment = Model.Payments.Max();
+    
 }
 
-@if (lastPayment is null || (lastPayment.Date.Month < DateTime.Now.Month && lastPayment.Date.Year == DateTime.Now.Year))
+@if (ViewBag.LastPayment==0)
 {
     @Html.ActionLink("Pay","MakePayment", "Payment", new { id = Model.ID },new { @class=""})
 }
 else
 {
-    <p>Exw eidi plhrwthei</p>
+    <p>Already Paid for this Month</p>
 }

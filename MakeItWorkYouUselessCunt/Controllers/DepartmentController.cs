@@ -28,11 +28,14 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
         }
 
+        [Authorize(Roles ="Admin")]
         public ActionResult CreateDepartment()
         {
             return View();
         }
+
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public ActionResult CreateDepartment(Department department)
         {
             if (ModelState.IsValid)
@@ -43,13 +46,15 @@ namespace ManagementSystemVersionTwo.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Admin")]
         public ActionResult EditDepartment(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var department = _data.FindDepartmentByID((int)id);
+            var department = _data.Department.FindDepartmentByID((int)id);
+
             if (department == null)
             {
                 return HttpNotFound();
@@ -60,6 +65,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult EditDepartment(Department department)
         {
             if (ModelState.IsValid)
@@ -70,14 +76,14 @@ namespace ManagementSystemVersionTwo.Controllers
             return View(department);
         }
 
-        // GET: Departments/Delete/5
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteDepartment(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var department = _data.FindDepartmentByID((int)id);
+            var department = _data.Department.FindDepartmentByID((int)id);
             if (department == null)
             {
                 return HttpNotFound();
@@ -89,18 +95,19 @@ namespace ManagementSystemVersionTwo.Controllers
         // POST: Departments/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Admin")]
         public ActionResult DeleteDepartment(int id)
         {
-            var department = _data.FindDepartmentByID(id);
+            var department = _data.Department.FindDepartmentByID(id);
             _crud.DeleteDepartment(department);
             return RedirectToAction("ViewAllDepartments", "Display");
         }
 
-
+        [Authorize(Roles = "Supervisor,Employee")]
         public ActionResult Chat()
         {
             var id = User.Identity.GetUserId();
-            var user = _data.FindUserByID(id);
+            var user = _data.ApplicationUser.FindUserByID(id);
             var messages = user.Worker.Department.Messages.ToList();
             ViewBag.Name = user.Worker.FullName;
             return View(messages);

@@ -1,0 +1,452 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+
+
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/highcharts-more.js"></script>
+<script src="~/Scripts/chart/dumbbell.js"></script>
+<script src="~/Scripts/chart/export-data.js"></script>
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/accessibility.js"></script>
+<div class="jumbotron">
+    <h3 class="views-headings">Analytics</h3>
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+            This chart shows the number of departments per city.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="box"></div>
+        <p class="highcharts-description">
+            This chart shows the number of employees per department.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="salary"></div>
+        <p class="highcharts-description">
+            This chart shows the average salary of employees per department.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="age"></div>
+        <p class="highcharts-description">
+            This chart shows the average age of employees per department.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="gender"></div>
+        <p class="highcharts-description">
+            This chart shows the average age of employees per department.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="totalSalary"></div>
+        <p class="highcharts-description">
+            This chart shows the total amount of salaries per month.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="salaryPerDepartment"></div>
+        <p class="highcharts-description">
+            This chart shows the total amount of salaries per department each month.
+        </p>
+    </figure>
+</div>
+
+@section Scripts{
+
+    <script>
+
+        function statistics() {
+            return $.ajax({
+                type: "GET",
+                url: "/Display/ChartsForAdmin",
+                dataType: "json"
+            })
+
+        }
+
+        $(document).ready(function () {
+            var getdata = statistics();
+            getdata.done(function (data) {
+                var departmentchart = data[0];
+                var employeechart = data[1];
+                var salary = data[2];
+                var age = data[3];
+                var totalsalary = data[4];
+                var totalsalaryperdepartmentchart = data[5];
+                var genderperdepartment = data[6];
+                pie(departmentchart);
+                columnbar(employeechart);
+                salarychart(salary);
+                agechart(age);
+                totalsalarychart(totalsalary);
+                totalsalaryperdepartment(totalsalaryperdepartmentchart);
+                genderchart(genderperdepartment);
+            })
+        });
+
+
+
+
+        function pie(data) {
+            var dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    y: data.Count[i]
+                }
+                dataToPopulate.push(object);
+            }
+
+
+            Highcharts.chart('container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Departments Per City'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Departments',
+                    colorByPoint: true,
+                    data: dataToPopulate
+                }]
+
+            })
+        }
+
+        function columnbar(data) {
+            var dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: [data.Count[i]]
+                }
+                dataToPopulate.push(object);
+            }
+            //console.log(dataToPopulate);
+            Highcharts.chart('box', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Employees Per Department'
+                },
+
+
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of Employees'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">Employees</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y} employees</b></td></tr>',
+                    footerFormat: '</table>',
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: dataToPopulate
+            })
+        }
+
+        function salarychart(data) {
+            dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: [data.Salaries[i]]
+                }
+                dataToPopulate.push(object);
+            }
+            Highcharts.chart('salary', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Average Salary Per Department'
+                },
+
+
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Salary (Euro)'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">Salary</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.1f} euro</b></td></tr>',
+                    footerFormat: '</table>',
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: dataToPopulate
+            })
+        }
+
+        function agechart(data) {
+            dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: [Math.floor(data.AverageAge[i])]
+                }
+                dataToPopulate.push(object);
+            }
+            //console.log(dataToPopulate);
+            Highcharts.chart('age', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Average Age of Employees Per Department'
+                },
+
+
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Age'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">Age</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y} years old </b></td></tr>',
+                    footerFormat: '</table>',
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: dataToPopulate
+            })
+        }
+        function genderchart(data) {
+            dataToPopulate = [];
+            var males = {
+                name: "Male",
+                data: []
+            };
+            var females = {
+                name: "Female",
+                data: []
+            };
+            for (let i = 0; i < data.Count.length; i++) {
+                males.data.push(data.Count[i]);
+                females.data.push(data.Ages[i]);
+            }
+            dataToPopulate.push(males);
+            dataToPopulate.push(females);
+
+            Highcharts.chart('gender', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Gender Ratio By Department'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data.Names,
+                    title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of Employees',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' employees'
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 80,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                    shadow: true
+                },
+                credits: {
+                    enabled: false
+                },
+                series: dataToPopulate
+            });
+        }
+
+        function totalsalarychart(data) {
+            dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: [data.Salaries[i]]
+                }
+                dataToPopulate.push(object);
+            }
+            Highcharts.chart('totalSalary', {
+
+                chart: {
+                    type: 'column'
+                },
+
+
+                legend: {
+                    enabled: false
+                },
+
+                subtitle: {
+                    text: '2020'
+                },
+
+                title: {
+                    text: 'Total Salary Expenses Per Month For All Departments'
+                },
+
+                tooltip: {
+                    shared: true
+                },
+
+                xAxis: {
+                    categories: ['Months'],
+                    crosshair: true
+                },
+
+                yAxis: {
+                    title: {
+                        text: 'Salary (Euro)'
+                    }
+                },
+
+                series: dataToPopulate
+
+            });
+        }
+
+        function totalsalaryperdepartment(data) {
+            console.log(data);
+            dataToPopulate = [];
+            for (let i = 0; i < data.Names.length; i++) {
+                var object = {
+                    name: data.Names[i],
+                    data: data.DepartmentsPaymentsPerMonth[i]
+                }
+                
+                dataToPopulate.push(object);
+            }
+            
+            Highcharts.chart('salaryPerDepartment', {
+                chart: {
+                    type: 'column'
+                },
+                title: {
+                    text: 'Monthly Salary Expenses Per Department'
+                },
+                xAxis: {
+                    categories: [
+                        'Jan',
+                        'Feb',
+                        'Mar',
+                        'Apr',
+                        'May',
+                        'Jun',
+                        'Jul',
+                        'Aug',
+                        'Sep',
+                        'Oct',
+                        'Nov',
+                        'Dec'
+                    ],
+                    crosshair: true
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Salary (Euro)'
+                    }
+                },
+                tooltip: {
+                    headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+                    pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
+                        '<td style="padding:0"><b>{point.y:.2f} &euro;</b></td></tr>',
+                    footerFormat: '</table>',
+                    shared: true,
+                    useHTML: true
+                },
+                plotOptions: {
+                    column: {
+                        pointPadding: 0.2,
+                        borderWidth: 0
+                    }
+                },
+                series: dataToPopulate
+            });
+        }
+
+    </script>
+
+
+
+}

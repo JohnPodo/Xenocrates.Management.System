@@ -1,19 +1,21 @@
 ﻿
-@{
-    ViewBag.Title = "Calendar";
-}
 <link href="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.css"
       rel="stylesheet" />
 <h2>Calendar</h2>
-<div class="timeContainer" id="containerfortime" style="display: none">
-    <p id="selectedDays"></p>
-    <input id="time" type="time" />
-    <label for="working">Day off</label>
-    <input id="working" type="checkbox" />
-    <input type="button" id="save" value="Save" />
-    <input type="button" id="delete" value="Delete" />
-</div>
+@if (!ViewBag.Role)
+{
+    <div class="timeContainer" id="containerfortime" style="display: none">
+        <p id="selectedDays"></p>
+        <input id="time" type="time" />
+        <label for="working">Day off</label>
+        <input id="working" type="checkbox" />
+        <input type="button" id="save" value="Save" />
+        <input type="button" id="delete" value="Delete" />
+    </div>
+}
+
 <div id="calendar"></div>
+
 @section Scripts{
     <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.6.0/main.min.js"></script>
     <script>

@@ -1,32 +1,43 @@
 ﻿@model ManagementSystemVersionTwo.Models.Department
 @{
-    ViewBag.Title = "DeleteDepartment";
+    ViewBag.Title = "Delete Department";
 }
 
 <div class="row">
     <div class="col-12 grid-margin">
-        <h2>DeleteDepartment</h2>
-        @using (Html.BeginForm())
-        {
-            @Html.AntiForgeryToken()
-            <div>
-                <h4>Department</h4>
-                <hr />
-                @Html.HiddenFor(model => model.ID)
-                <dl class="dl-horizontal">
-                    <dt>@Html.DisplayNameFor(model => model.City)</dt>
-                    <dd>@Html.DisplayFor(model => model.City)</dd>
-                    <dt>@Html.DisplayNameFor(model => model.Adress)</dt>
-                    <dd>@Html.DisplayFor(model => model.Adress)</dd>
-                </dl>
-
-                <div class="form-actions no-color">
-                    <input type="submit" value="Delete" class="btn btn-default" />
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                    <h3 class="views-headings">Delete Department</h3>
+                    <p class="views-comments">Are you sure you want to delete the department of @Model.City?</p>
+                    <hr />
+                    @using (Html.BeginForm())
+                    {
+                        @Html.AntiForgeryToken()
+                        <div>
+                            @Html.HiddenFor(model => model.ID)
+                            <table class="details-departments table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th> City </th>
+                                        <th> Adrress </th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>@Html.DisplayFor(model => model.City)</td>
+                                        <td>@Html.DisplayFor(model => model.Adress)</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <div class="form-actions no-color">
+                                <input type="submit" value="Delete" class="btn btn-info btn-fw" />
+                                @Html.ActionLink("Return to List", "ViewAllDepartments", "Display", null, new { @class = "btn btn-info btn-fw" })
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-        }
-        <div>
-            @Html.ActionLink("Back to List", "../Display/ViewAllDepartments")
         </div>
-        </div>
+    </div>
 </div>

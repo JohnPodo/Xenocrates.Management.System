@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/highcharts-more.js"></script>
+<script src="~/Scripts/chart/dumbbell.js"></script>
+<script src="~/Scripts/chart/export-data.js"></script>
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/accessibility.js"></script>
+
+
+<div class="jumbotron">
+    <h3 class="views-headings">Analytics</h3>
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+            This chart shows the progress of your projects.
+        </p>
+    </figure>
+</div>
+
+
+@section Scripts{
+    <script>
+        function statistics() {
+            return $.ajax({
+                type: "GET",
+                url: "/Display/ChartsForEmployee",
+                dataType: "json"
+            })
+
+        }
+
+        $(document).ready(function () {
+            var getdata = statistics();
+            getdata.done(function (data) {
+                pie(data);
+            })
+        });
+
+        function pie(data) {
+            Highcharts.chart('container', {
+                chart: {
+                    plotBackgroundColor: null,
+                    plotBorderWidth: null,
+                    plotShadow: false,
+                    type: 'pie'
+                },
+                title: {
+                    text: 'Projects Progress'
+                },
+                tooltip: {
+                    pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+                },
+                accessibility: {
+                    point: {
+                        valueSuffix: '%'
+                    }
+                },
+                plotOptions: {
+                    pie: {
+                        allowPointSelect: true,
+                        cursor: 'pointer',
+                        dataLabels: {
+                            enabled: false
+                        },
+                        showInLegend: true
+                    }
+                },
+                series: [{
+                    name: 'Projects',
+                    colorByPoint: true,
+                    data: [{
+                        name: 'Projects Finished',
+                        y: data.MaleCount
+                    }, {
+                        name: 'Projects Active',
+                        y: data.FemaleCount
+                    }]
+                }]
+
+            })
+        }
+
+
+    </script>
+
+
+
+}
+

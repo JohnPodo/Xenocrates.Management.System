@@ -1,0 +1,163 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+}
+
+
+<script src="~/Scripts/chart/highcharts.js"></script>
+<script src="~/Scripts/chart/export-data.js"></script>
+<script src="~/Scripts/chart/exporting.js"></script>
+<script src="~/Scripts/chart/accessibility.js"></script>
+
+<div class="jumbotron">
+    <h3 class="views-headings">Analytics</h3>
+    <figure class="highcharts-figure">
+        <div id="container"></div>
+        <p class="highcharts-description">
+            This chart shows the salary of each employee.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="age"></div>
+        <p class="highcharts-description">
+            This chart shows the age of each employee.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
+        <div id="projects"></div>
+        <p class="highcharts-description">
+            This chart shows the number of projects per month for the department.
+        </p>
+    </figure>
+
+</div>
+
+@section Scripts{
+    <script>
+        function statistics() {
+            return $.ajax({
+                type: "GET",
+                url: "/Display/ChartsForSupervisor",
+                dataType: "json"
+            })
+        }
+
+        $(document).ready(function () {
+            var getdata = statistics();
+            getdata.done(function (data) {
+                var salaryperemployee = data[0];
+                var ageperemployee = data[1];
+                var projectspermonth = data[2];
+                
+
+                salarychart(salaryperemployee);
+                agechart(ageperemployee);
+                projectschart(projectspermonth);
+                
+            })
+        });
+
+        function salarychart(data) {
+            Highcharts.chart('container', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Salary Per Employee'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data.Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Salary (Euro)'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Employees',
+                    data: data.Salaries
+                }]
+            });
+        }
+
+        function agechart(data) {
+            Highcharts.chart('age', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Age Per Employee'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data.Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Salary'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Employees',
+                    data: data.Ages
+                }]
+            });
+        }
+
+        function projectschart(data) {
+            Highcharts.chart('projects', {
+                chart: {
+                    type: 'line'
+                },
+                title: {
+                    text: 'Projects Per Month'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data.Names
+                },
+                yAxis: {
+                    title: {
+                        text: 'Number of Projects'
+                    }
+                },
+                plotOptions: {
+                    line: {
+                        dataLabels: {
+                            enabled: true
+                        },
+                        enableMouseTracking: false
+                    }
+                },
+                series: [{
+                    name: 'Projects',
+                    data: data.Count
+                }]
+            });
+        }
+    </script>
+}
+

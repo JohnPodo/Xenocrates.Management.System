@@ -17,12 +17,21 @@ namespace ManagementSystemVersionTwo.Services.PaypalServices
             _db = new ApplicationDbContext();
         }
 
+        /// <summary>
+        /// Give the JsonString Response From Paypal and the Id of the Worker you paid And I will save it to Database
+        /// </summary>
+        /// <param name="task"></param>
+        /// <param name="workerID"></param>
         public void SavePayment(string task,int workerID)
         {
-            var x= _db.Workers.Find(workerID);
+            var worker= _db.Workers.Find(workerID);
+
             PaymentDetails payment = JsonConvert.DeserializeObject<PaymentDetails>(task);
-            payment.Worker = x;
+
+            payment.Worker = worker;
+
             _db.Payments.Add(payment);
+
             _db.SaveChanges();
         }
 

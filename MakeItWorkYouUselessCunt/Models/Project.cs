@@ -26,7 +26,7 @@ namespace ManagementSystemVersionTwo.Models
 
         [DataType(DataType.Date)]
         [Required(ErrorMessage = "Necessary")]
-        [ProjectEndDate(ErrorMessage ="Mipws Gamiesai?")]
+        [ProjectEndDate(ErrorMessage ="Wrong Data in Start Date or End Date")]
         public DateTime StartDate { get; set; }
 
         [DataType(DataType.Date)]

@@ -1,44 +1,56 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Worker>
 @{
-    ViewBag.Title = "Index";
+    ViewBag.Title = "Payments";
 }
 <div class="row">
     <div class="col-12 grid-margin">
         <div class="col-lg-6 grid-margin stretch-card">
             <div style="margin: auto;" class="card">
                 <div class="card-body">
-                   <div>
-    @using (Html.BeginForm())
-    {
-    <div class="row">
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-            Search Employee:@Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
-
-            <datalist id="browsers">
-                @foreach (var item in ViewBag.Names)
-                {
-                    <option value="@item" />
-                }
-            </datalist>
-        </p>
-        <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-            Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortSalary, "Value", "Text"), "None", new { @class = "" })
-        </p>
-        <p class="col-md-1">
-            <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
-            @Html.ActionLink("Reset", "Index", "Payment", new { @class = "fa fa-refresh" })
-        </p>
-    </div>
-    }
-</div>
-                    
                     <h3 class="views-headings">Payments</h3>
                     <p class="views-comments">Here you can pay every worker.</p>
                     <hr />
-                    <table class="table">
+                    <div>
+                        @using (Html.BeginForm())
+                        {
+                        <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
+                            <div class="p-2 bd-highlight">
+                                <p>
+                                    Search Employee: @Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
+
+                                    <datalist id="browsers">
+                                        @foreach (var item in ViewBag.Names)
+                                        {
+                                            <option value="@item" />
+                                        }
+                                    </datalist>
+                                </p>
+                            </div>
+                            <div class="p-2 bd-highlight">
+                                <p>
+                                    Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortSalary, "Value", "Text"), "None", new { @class = "" })
+                                </p>
+                            </div>
+                            <div class="p-2 bd-highlight">
+                                <p>
+                                    Payment Status : @Html.DropDownList("status", new SelectList(ViewBag.PaymentStatus, "Value", "Text"), "None", new { @class = "" })
+                                </p>
+                            </div>
+                            <div class="p-2 bd-highlight">
+                                <p>
+                                    <input class="btn btn-info btn-fw" type="submit" value="Search" />
+                                    @Html.ActionLink(" ", "Index", "Payment", new { @class = "resbut fa fa-times" })
+                                </p>
+                            </div>
+                        </div>
+                        }
+                   </div>
+                    <hr/>
+
+                    <table class="table all-payments table-striped">
                         <thead>
                             <tr>
-                                <th>Fullname</th>
+                                <th>Full Name</th>
                                 <th>Salary</th>
                                 <th>Pay</th>
                             </tr>
@@ -48,7 +60,7 @@
                             {
                                 <tr>
                                     <td>@wo.FullName</td>
-                                    <td>@wo.Salary</td>
+                                    <td>@wo.Salary &euro;</td>
                                     <td>
                                         @{
                                             Html.RenderAction("ShowPartial", "Payment", new { id = wo.ID });

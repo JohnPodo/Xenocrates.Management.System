@@ -1,6 +1,6 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Department>
 @{
-    ViewBag.Title = "ViewAllDepartments";
+    ViewBag.Title = "Departments";
 }
 <div>
     <a href="@Url.Action("CreateDepartment", "Department" )" style="font-size: 12px;" class="btn btn-info btn-fw">Add New Department</a>
@@ -12,12 +12,12 @@
             <div style="margin: auto;" class="card">
                 <div class="card-body">
                     <h3 class="views-headings">Departments</h3>
-                    <p class="views-comments">Here you can view all the departments of the Company.</p>
+                    <p class="views-comments">Here you can view all the departments of the company.</p>
                     <hr />
                     @using (Html.BeginForm())
                     {
-                        <div class="row">
-                            <div class="col-md-6 filters-main">
+                        <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
+                            <div class="p-2 bd-highlight">
                                 <p>Search By City: @Html.TextBox("searchString", "", new { list = "cities", @class = "uploaded-text" })</p>
                                 <datalist id="cities">
                                     @foreach (var item in ViewBag.Cities)
@@ -26,11 +26,11 @@
                                     }
                                 </datalist>
                             </div>
-                            <div class="col-md-3 filters-main">
+                            <div class="p-2 bd-highlight">
                                 <p>Order by: @Html.DropDownList("sort", new SelectList(ViewBag.SortByCity, "Value", "Text"), "", new { @class = "uploaded-text" })</p>
                             </div>
-                            <div class="col-md-3 filters-main">
-                                <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                            <div class="p-2 bd-highlight">
+                                <input class="btn btn-info btn-fw" type="submit" value="Search" />
                                 @Html.ActionLink(" ", "ViewAllDepartments", "Display", new { }, new { @class = "resbut fa fa-times" })
 
                             </div>

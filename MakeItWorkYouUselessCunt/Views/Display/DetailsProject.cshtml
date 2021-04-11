@@ -1,0 +1,62 @@
+﻿@model ManagementSystemVersionTwo.Models.Project
+@{
+    ViewBag.Title = "Details Project";
+}
+
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                    <h3 class="views-headings">Project @Model.Title Details</h3>
+                    <p class="views-comments">Here you can view the details of project @Model.Title.</p>
+                    <hr />
+                    <div class="d-flex justify-content-center">
+                        <div class="p-2 bd-highlight">
+                            <table style="padding:20px" class="table">
+                                <tr>
+                                    <td class="thead">@Html.DisplayNameFor(p => p.Title)</td>
+                                    <td class="identity"> @Html.DisplayFor(p => p.Title)</td>
+                                </tr>
+                                <tr>
+                                    <td class="thead">@Html.DisplayNameFor(p => p.Description)</td>
+                                    <td class="identity"> @Html.DisplayFor(p => p.Description)</td>
+                                </tr>
+                                <tr>
+                                    <td class="thead">Start Date</td>
+                                    <td class="identity"> @Html.DisplayFor(p => p.StartDate)</td>
+                                </tr>
+                                <tr>
+                                    <td class="thead">End Date</td>
+                                    <td class="identity"> @Html.DisplayFor(p => p.EndDate)</td>
+                                </tr>
+                                <tr>
+                                    <td class="thead">Attachments</td>
+                                    <td class="identity"><a href="@Url.Action("DownloadFile", "Project",new { fileName = Model.Attachments })">Download Attachments</a></td>
+                                </tr>
+                                <tr>
+                                    <td class="thead">Total Workers</td>
+                                    <td class="identity"> @Html.DisplayFor(p => p.WorkersInMe.Count)</td>
+                                </tr>
+                                <tr>
+                                    <td class="thead">Assigned To</td>
+                                    <td class="identity">
+                                        <dl>
+                                            @foreach (var worker in Model.WorkersInMe)
+                                            {
+                                            <dd><a href="@Url.Action("ViewAllWorkers","Display",new { searchName = worker.Worker.FullName })"> @Html.DisplayFor(p => worker.Worker.FullName)</a></dd>
+                                            }
+                                        </dl>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    @Html.ActionLink("Return to List", "ViewAllProjects", "Display", null, new { @class = "btn btn-info btn-fw" })
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+        </div>
+    </div>
+</div>
+</div>

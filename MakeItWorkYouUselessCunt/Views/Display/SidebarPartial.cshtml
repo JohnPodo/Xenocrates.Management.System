@@ -1,0 +1,152 @@
+﻿@if (ViewBag.Admin)
+{
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item nav-profile">
+                <div class="nav-link">
+                    <div class="profile-image">
+                        <img class="img-xs rounded-circle" src="~/EIKONES/admin.png" alt="profile image">
+                        <div class="dot-indicator bg-success"></div>
+                    </div>
+                    <div class="text-wrapper">
+                        <p title="Username You've Logged In" class="designation">@Html.DisplayName(User.Identity.Name)</p>
+                    </div>
+                </div>
+            </li>
+            <li class="nav-item nav-category">Admin Menu</li>
+            <li class="nav-item">
+                <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
+                    <i class="menu-icon typcn typcn-document-text"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+
+            <li class="nav-item">
+                <a title="View Every Independent Active Role in the Company" class="nav-link" href="@Url.Action("ViewAllRoles", "Display" )">
+                    <i class="menu-icon typcn typcn-shopping-bag"></i>
+                    <span class="menu-title">Roles</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a title="View Everyworker In the Department In List or Card Style" class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display",new {viewType=true })">
+                    <i class="menu-icon typcn typcn-th-large-outline"></i>
+                    <span class="menu-title">Workers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a title="View Every Department of the Company" class="nav-link" href="@Url.Action("ViewAllDepartments", "Display" )">
+                    <i class="menu-icon typcn typcn-bell"></i>
+                    <span class="menu-title">Departments</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a title="View All the Projects from your Department" class="nav-link" href="@Url.Action("ViewAllProjects", "Display" )">
+                    <i class="menu-icon typcn typcn-user-outline"></i>
+                    <span class="menu-title">Projects</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false"
+                   aria-controls="ui-basic">
+                    <i class="menu-icon typcn typcn-coffee"></i>
+                    <span class="menu-title">Payments</span>
+                    <i class="menu-arrow"></i>
+                </a>
+                <div class="collapse" id="ui-basic">
+                    <ul class="nav flex-column sub-menu">
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("Index", "Payment" )">Pay Workers</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="@Url.Action("WorkerPaymentHistory","Payment")">Payments History</a>
+                        </li>
+                    </ul>
+                </div>
+            </li>
+        </ul>
+    </nav>
+}
+else if (ViewBag.Supervisor)
+{
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item nav-profile">
+                <a href="@Url.Action("Index","Manage")" class="nav-link">
+                    <div class="profile-image">
+                        <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="profile image">
+                        <div class="dot-indicator bg-success"></div>
+                    </div>
+                    <div class="text-wrapper">
+                        <p title="Username You've Logged In" class="designation">@Html.DisplayName(User.Identity.Name)</p>
+                    </div>
+                </a>
+            </li>
+            <li class="nav-item nav-category">Supervisor Menu</li>
+            <li class="nav-item">
+                <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
+                    <i class="menu-icon typcn typcn-document-text"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a title="View Everyworker In the Department In List or Card Style" class="nav-link" href="@Url.Action("ViewAllWorkers" , "Display",new {viewType=true })">
+                    <i class="menu-icon typcn typcn-th-large-outline"></i>
+                    <span class="menu-title">Workers</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a title="View All the Projects from your Department" class="nav-link" href="@Url.Action("ViewAllProjects", "Display" )">
+                    <i class="menu-icon typcn typcn-user-outline"></i>
+                    <span class="menu-title">Projects</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="btn-chat" id="livechat-compact-container" style="visibility: visible; opacity: 1;">
+        <div class="btn-holder">
+            <a onclick="parent.LC_API.open_chat_window();return false;" href="@Url.Action("Chat", "Department" )" class="link">Live Chat</a>
+        </div>
+    </div>
+}
+else
+{
+    <nav class="sidebar sidebar-offcanvas" id="sidebar">
+        <ul class="nav">
+            <li class="nav-item nav-profile">
+                <a href="@Url.Action("Index","Manage")" class="nav-link">
+                    <div class="profile-image">
+                        <img class="img-xs rounded-circle" src="~/EIKONES/employee2.png" alt="profile image">
+                        <div class="dot-indicator bg-success"></div>
+                    </div>
+                    <div class="text-wrapper">
+                        <p title="Username You've Logged In" class="designation">@Html.DisplayName(User.Identity.Name)</p>
+                    </div>
+                </a>
+            </li>
+            <li class="nav-item nav-category">Worker Menu</li>
+            <li class="nav-item">
+                <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
+                    <i class="menu-icon typcn typcn-document-text"></i>
+                    <span class="menu-title">Dashboard</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a title="Personal Calendar for Projects,Working days,Day-Offs" class="nav-link" href="@Url.Action("Calendar", "Worker" )">
+                    <i class="menu-icon typcn typcn-document-text"></i>
+                    <span class="menu-title">My Calendar</span>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a title="View All the Projects from your Department" class="nav-link" href="@Url.Action("ViewAllProjects", "Display" )">
+                    <i class="menu-icon typcn typcn-user-outline"></i>
+                    <span class="menu-title">Projects</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+    <div class="btn-chat" id="livechat-compact-container" style="visibility: visible; opacity: 1;">
+        <div class="btn-holder">
+            <a onclick="parent.LC_API.open_chat_window();return false;" href="@Url.Action("Chat", "Department" )" class="link">Live Chat</a>
+        </div>
+    </div>
+}
