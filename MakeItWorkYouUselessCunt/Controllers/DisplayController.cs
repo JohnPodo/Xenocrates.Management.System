@@ -112,17 +112,22 @@ namespace ManagementSystemVersionTwo.Controllers
 
             var data = _data.Project.AllProjects();
 
+            var userOnline = _data.ApplicationUser.FindUserByID(User.Identity.GetUserId());
+
+            if (!ViewBag.Admin)
+            {
+                data = data.Where(w => w.WorkersInMe.Any(s => s.WorkerID == userOnline.Worker.ID)).ToList();
+            }
+
             data = SortingAndFilteringData.SortAndFilterProjects(title,orderBy,depID,status,data);
            
             if (ViewBag.Supervisor)
             {
-                var user = _data.ApplicationUser.FindUserByID(User.Identity.GetUserId());
-                data = FilteringServices.FilterProjectsPerDepartment(user.Worker.DepartmentID, data);
+                data = FilteringServices.FilterProjectsPerDepartment(userOnline.Worker.DepartmentID, data);
             }
             else if (!ViewBag.Admin && !ViewBag.Supervisor)
             {
-                var user = _data.ApplicationUser.FindUserByID(User.Identity.GetUserId());
-                data = FilteringServices.FilterProjectsPerDepartment(user.Worker.DepartmentID, data);
+                data = FilteringServices.FilterProjectsPerDepartment(userOnline.Worker.DepartmentID, data);
             }
 
             ViewBag.SortOptions = _fillViewBag.GetProjectSortOptions();

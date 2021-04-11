@@ -5,7 +5,7 @@
 
 <h2>EditWorker</h2>
 
-@using (Html.BeginForm("EditWorker", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" }))
+@using (Html.BeginForm("EditWorker", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off",id= "Form" }))
 {
     @Html.AntiForgeryToken()
     @Html.HiddenFor(x => Model.UserID)
@@ -46,8 +46,8 @@
         <div class="form-group">
             @Html.LabelFor(model => model.DateOfBirth, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.TextBoxFor(model => model.DateOfBirth, "{0:dd/MM/yyyy}", new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" })
+                @Html.TextBoxFor(model => model.DateOfBirth, "{0:yyyy/MM/dd}",new { @class = "form-control",id="birth" })
+                @Html.ValidationMessageFor(model => model.DateOfBirth, "", new { @class = "text-danger" , id="birthError" })
             </div>
         </div>
 
@@ -129,7 +129,7 @@
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                <input id="submit-btn" type="button" value="Save" class="btn btn-default" />
             </div>
         </div>
 
@@ -139,3 +139,25 @@
 <div>
     @Html.ActionLink("Back to List", "../Display/ViewAllWorkers")
 </div>
+
+<script>
+    const birthDate = document.getElementById("birth");
+    const birthError = document.getElementById("birthError");
+    const btn = document.getElementById("submit-btn");
+    var year = new Date().getFullYear();
+    var birth = Date.parse(birthDate);
+
+    btn.addEventListener('click', (event) => {
+        event.preventDefault();
+        console.log(year);
+        console.log(birth);
+        if (new Date(birthDate) <= new Date("2002/01/01")) {
+            document.getElementById("Form").submit();
+        }
+        else {
+            birthError.innerText = "Must be an Adult";
+        }
+
+    });
+
+</script>
