@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewBag.Title = "AdminDashboard";
+    ViewBag.Title = "Dashboard";
 }
 
 
@@ -52,7 +52,7 @@
     <figure class="highcharts-figure">
         <div id="salaryPerDepartment"></div>
         <p class="highcharts-description">
-            This chart shows the total amount of salaries per month.
+            This chart shows the total amount of salaries per department each month.
         </p>
     </figure>
 </div>
@@ -204,7 +204,7 @@
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'Salary'
+                        text: 'Salary (Euro)'
                     }
                 },
                 tooltip: {
@@ -376,7 +376,7 @@
 
                 yAxis: {
                     title: {
-                        text: 'Salary'
+                        text: 'Salary (Euro)'
                     }
                 },
 
@@ -430,7 +430,7 @@
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} euro</b></td></tr>',
+                        '<td style="padding:0"><b>{point.y:.2f} &euro;</b></td></tr>',
                     footerFormat: '</table>',
                     shared: true,
                     useHTML: true
