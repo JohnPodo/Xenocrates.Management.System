@@ -69,8 +69,6 @@
                                             <th> Assign </th>
                                             <th> Picture </th>
                                             <th> Full Name </th>
-                                            <th> Amount </th>
-                                            <th> Active Projects </th>
                                             <th> CV </th>
                                         </tr>
                                     </thead>
@@ -93,12 +91,7 @@
                                                     <img src="~/ProfPics/@Model.Users[i].Pic" alt="image" />
                                                 </td>
                                                 <td> @Html.DisplayFor(m => m.Users[i].Fullname) </td>
-                                                <td>
-                                                    <div class="progress">
-                                                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
-                                                    </div>
-                                                </td>
-                                                <td>  </td>
+                                                
                                                 <td> <a href="~/CVs/@Model.Users[i].CV" target="_blank">CV Details</a> </td>
                                             </tr>
                                         }
