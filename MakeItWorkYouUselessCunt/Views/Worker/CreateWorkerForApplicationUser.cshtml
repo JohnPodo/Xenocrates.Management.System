@@ -11,7 +11,7 @@
                 <h2 style="text-align: center;">Add New Person</h2>
 
                 <img src="" alt="Profile Pic" style="display: block; margin-left: auto; margin-right: auto; width: 250px; border: 2px solid #00ff21; border-radius: 4px;" class="" id="pic">
-                @using (Html.BeginForm("CreateWorkerForApplicationUser", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" , onsubmit= "validateJPG() && validatePDF();" }))
+                @using (Html.BeginForm("CreateWorkerForApplicationUser", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" , id="forma"  }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.userID)
@@ -53,6 +53,7 @@
                                     <div class="col-sm-9">
                                         @Html.EditorFor(m => Model.DateOfBirth, new { @class = "form-control" })
                                         @Html.ValidationMessageFor(m => Model.DateOfBirth, "", new { @class = "text-danger" })
+                                        <div id= "dateError" style="margin-top:10px;" class="text-danger"></div>
                                     </div>
                                 </div>
                             </div>
@@ -120,8 +121,8 @@
                                     <input type="file" name="img[]" class="file-upload-default">
                                     <div class="input-group col-md-12">
 
-                                        @Html.TextBoxFor(m => Model.CV, new { type = "file", accept = "application/pdf", @class = "form-control file-upload-info", id = "filePDF" })
-                                        @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "text-danger", id = "errorPDF" })
+                                        @Html.TextBoxFor(m => Model.CV, new { type = "file", accept = "application/pdf", @class = "form-control file-upload-info", id = "filePDF1" })
+                                        @Html.ValidationMessageFor(m => Model.CV, "", new { @class = "text-danger", id = "errorPDF1" })
 
                                     </div>
                                 </div>
@@ -132,7 +133,7 @@
                                     <input type="file" name="img[]" class="file-upload-default">
                                     <div class="input-group col-md-12">
                                         @Html.TextBoxFor(m => Model.ContractOfEmployment, new {   type = "file", accept = "application/pdf", @class = "form-control file-upload-info" , id="filePDF" })
-                                        @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "text-danger",id= "errorPDF" })
+                                        @Html.ValidationMessageFor(m => Model.ContractOfEmployment, "", new { @class = "text-danger", id = "errorPDF" })
                                     </div>
                                 </div>
                             </div>
@@ -141,14 +142,14 @@
                                     <label>Profile Picture</label>
                                     <input type="file" name="img[]" class="file-upload-default">
                                     <div class="input-group col-md-12">
-                                        @Html.TextBoxFor(m => Model.ProfilePicture, new { onchange = "ChangePic(this)", type = "file", accept = "image/jpeg", @class = "form-control file-upload-info", id = "fileJPG" })
-                                        @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "text-danger"})
+                                        @Html.TextBoxFor(m => Model.ProfilePicture, new {  type = "file", accept = "image/jpeg", @class = "form-control file-upload-info", id = "fileJPG" })
+                                        @Html.ValidationMessageFor(m => Model.ProfilePicture, "", new { @class = "text-danger", id = "errorJPG" })
                                     </div>
                                 </div>
                             </div>
                         </div>
                         <div style="justify-content: center;" class="row col-md-12">
-                            <button type="submit" class="btn btn-success mr-2">Submit</button>
+                            <button type="button" class="btn btn-success mr-2" id="mpouton">Submit</button>
                             <button class="btn btn-light">Cancel</button>
                         </div>
 
@@ -160,6 +161,21 @@
     </div>
 </div>
 <script>
+
+
+    const err1 = document.getElementById('errorPDF1');
+    const fil1 = document.getElementById('filePDF1');
+    const err = document.getElementById('errorPDF');
+    const fil = document.getElementById('filePDF');
+    const err2 = document.getElementById('errorJPG');
+    const fil2 = document.getElementById('fileJPG');
+    const btn = document.getElementById('mpouton');
+
+    btn.addEventListener('click', () => {
+        if (validateJPG() && validatePDF() && validatePDF1() && birthVal()) {
+            document.getElementById('forma').submit();
+        }
+    });
 
 
     //Birth
@@ -177,9 +193,6 @@
     }
 
     //PDF
-    var err = document.getElementById('errorPDF');
-    var fil = document.getElementById('filePDF');
-
     function validatePDF() {
         var file = fil.value;
         var len = file.length;
@@ -188,44 +201,39 @@
             return true;
         }
         else {
+            err.innerText = "Only PDF files allowed.";
             return false;
-            err.innerHTML = "Only PDF files allowed.";
         }
     }
 
-    function formOK() {
-        if (validatePDF() === false) {
-            return false;
-        } else {
+    function validatePDF1() {
+        var file = fil1.value;
+        var len = file.length;
+        var ext = file.slice(len - 4, len);
+        if (ext.toUpperCase() == ".PDF") {
             return true;
+        }
+        else {
+            err1.innerText = "Only PDF files allowed.";
+            return false;
         }
     }
 
 
     //JPG
-    var err1 = document.getElementById('errorJPG');
-    var fil1 = document.getElementById('fileJPG');
-
     function validateJPG() {
-        var file = fil1.value;
+        var file = fil2.value;
         var len = file.length;
         var ext = file.slice(len - 4, len);
         if (ext.toUpperCase() == ".JPG") {
             return true;
         }
         else {
+            err2.innerText = "Only JPG files allowed.";
             return false;
-            err1.innerHTML = "Only JPEG files allowed.";
         }
     }
 
-    function formOK1() {
-        if (validateJPG() === false) {
-            return false;
-        } else {
-            return true;
-        }
-    }
 
     //Pic
     document.getElementById("pic").style.display = "none";
