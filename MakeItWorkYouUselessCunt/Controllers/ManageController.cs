@@ -197,7 +197,7 @@ namespace ManagementSystemVersionTwo.Controllers
             }
             // If we got this far, something failed, redisplay form
             ModelState.AddModelError("", "Failed to verify phone");
-            return View(model);
+            return RedirectToAction("Login","Account");
         }
 
         //
