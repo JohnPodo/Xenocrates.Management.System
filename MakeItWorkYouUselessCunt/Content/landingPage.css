@@ -2,9 +2,9 @@
 
 /* Animation Mixins */
 
-.fixed-top {
+/*.fixed-top {
     position:unset !important ;
-  }
+  }*/
 
 
 .navbar a {
@@ -619,3 +619,6 @@
     border-radius:10px;
 }
 /*# sourceMappingURL=style.css.map */
+.navforlanding{
+   z-index:1;
+}

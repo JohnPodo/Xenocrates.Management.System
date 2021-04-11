@@ -4,29 +4,48 @@
     Layout = null;
 }
 
-<h2>@ViewBag.Title.</h2>
+@Styles.Render("~/Content/materialdesignicons.min.css")
+@Styles.Render("~/Content/ionicons.css")
+@Styles.Render("~/Content/flag-icon.min.css")
+@Styles.Render("~/Content/vendor.bundle.base.css")
+@Styles.Render("~/Content/vendor.bundle.addons.css")
+@Styles.Render("~/Content/style.css")
+@Styles.Render("~/Content/style1.css")
+@Styles.Render("~/Content/favicon.ico")
+<div class="container-scroller">
+    <div class="container-fluid page-body-wrapper full-page-wrapper">
+        <div style="background-image:url(../../EIKONES/login_1.jpg)" class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
+            <div class="row w-100">
+                <div class="col-lg-4 mx-auto">
+                    @using (Html.BeginForm("AddPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
+                    {
+                        <div class="auto-form-wrapper">
+                            @Html.AntiForgeryToken()
+                            @Html.HiddenFor(m => m.Id, new { value = ViewBag.User })
+                            @ViewBag.Error
+                            @Html.ValidationSummary("", new { @class = "text-danger" })
+                            <h3 class="views-headings">Register Process</h3>
+                            <p class="views-comments">Add Your Phone Number</p>
+                            <div style="padding:30px" class="text-center">
 
-@using (Html.BeginForm("AddPhoneNumber", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
-{
-    @Html.AntiForgeryToken()
-    @Html.HiddenFor(m=>m.Id, new { value = ViewBag.User})
-    @ViewBag.Error
-    <h4>Add a phone number</h4>
-    <hr />
-    @Html.ValidationSummary("", new { @class = "text-danger" })
-    <div class="form-group">
-        @Html.LabelFor(m => m.Number, new { @class = "col-md-2 control-label" })
-        <div class="col-md-10">
-            @Html.TextBoxFor(m => m.Number, new { @class = "form-control" })
+                                <h2> @Html.TextBoxFor(m => m.Number, new { @class = "form-control" }) </h2>
+                            </div>
+                            <div style="padding-bottom:30px" class="form-group">
+                                <input type="submit" class="btn btn-primary submit-btn btn-block" value="Submit" />
+                            </div>
+                        </div>
+                        <p class="footer-text text-center">Copyright © 2021 Xenocrates. All rights reserved.</p>
+                    }
+                </div>
+            </div>
         </div>
     </div>
-    <div class="form-group">
-        <div class="col-md-offset-2 col-md-10">
-            <input type="submit" class="btn btn-default" value="Submit" />
-        </div>
-    </div>
-}
-
+</div>
 @section Scripts {
     @Scripts.Render("~/bundles/jqueryval")
+    @Scripts.Render("~/Scripts/vendor.bundle.base.js")
+    @Scripts.Render("~/Scripts/vendor.bundle.addons.js")
+    @Scripts.Render("~/Scripts/off-canvas.js")
+    @Scripts.Render("~/Scripts/misc.js")
+    @Scripts.Render("~/Scripts/jquery.cookie.js")
 }

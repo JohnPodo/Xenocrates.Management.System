@@ -1,17 +1,56 @@
 ﻿@{
     ViewBag.Title = "Contact"; Layout = null;
 }
-<h2>@ViewBag.Title.</h2>
-<h3>@ViewBag.Message</h3>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Xenocrates</title>
+    @Styles.Render("~/Content/font-awesome.css")
+    @Styles.Render("~/Content/materialdesignicons.min.css")
+    @Styles.Render("~/Content/ionicons.css")
+    @Styles.Render("~/Content/style.css")
+    @Styles.Render("~/Content/landingPage.css")
+</head>
+<body>
+    <div class="container-scroller">
+        <div class="container-fluid page-body-wrapper full-page-wrapper">
+            <div class="navbar default-layout col-lg-12 col-12 p-0 fixed-top d-flex flex-row">
+                <div class="login-button d-flex bd-highlight mb-3">
+                    <div class="navbar d-flex bd-highlight mb-3">
+                        <a class="me-auto p-2 bd-highlight" href="@Url.Action("Login","Account")">Login</a>
+                        @Html.ActionLink("Contact", "Contact", "Home", new { @class = "p-2 bd-highlight" })
+                        @Html.ActionLink("About", "About", "Home", new { @class = "p-2 bd-highlight" })
+                    </div>
+                    </div>
 
-<address>
-    Athens , Greece<br />
-    Dimitrakopoyloy 54<br />
-    <abbr title="Phone">HOTLINE: 6981234218</abbr>
-    teampyravlos@gmail.com
-</address>
 
-<address>
-    <strong>Support:</strong>   <a href="mailto:Support@example.com">Support@example.com</a><br />
-    <strong>Marketing:</strong> <a href="mailto:Marketing@example.com">Marketing@example.com</a>
-</address>
+
+                <div class="container-fluid page-body-wrapper">
+                    <div class="row">
+                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3144.849346736142!2d23.730138016089676!3d37.98064500805987!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14a1bdfa2a011fbb%3A0xae9a4f85e0cc2020!2sPeopleCert%20Education!5e0!3m2!1sel!2sgr!4v1618179022456!5m2!1sel!2sgr" width="600" height="450" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+
+                        <address>
+                            Athens , Greece<br />
+                            Panepisthmioy 39<br />
+                            <abbr title="Phone">Phone: +302103729070</abbr>
+                            teampyravlos@gmail.com
+                        </address>
+                        <address>
+                            <strong>Support:</strong>   <a href="mailto:teampyravlos@gmail.com">teampyravlos@gmail.com</a>
+                        </address>
+                    </div>
+                    </div>
+                </div>
+                </div>
+            </div>
+            @Scripts.Render("~/bundles/modernizr")
+            @Scripts.Render("~/bundles/jquery")
+            @Scripts.Render("~/bundles/bootstrap")
+
+            @Scripts.Render("~/bundles/jqueryval")
+            @Scripts.Render("~/Scripts/off-canvas.js")
+            @Scripts.Render("~/Scripts/misc.js")
+</body>
+</html>

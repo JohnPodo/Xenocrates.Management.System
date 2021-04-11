@@ -310,6 +310,9 @@
     <Content Include="EIKONES\boss.png" />
     <Content Include="EIKONES\dark_pattern-wallpaper-1920x1080.jpg" />
     <Content Include="EIKONES\employee2.png" />
+    <Content Include="EIKONES\george.jpg" />
+    <Content Include="EIKONES\giannis.jpg" />
+    <Content Include="EIKONES\iliana.jpg" />
     <Content Include="EIKONES\lagos-it.jpg" />
     <Content Include="EIKONES\lagos.jpg" />
     <Content Include="EIKONES\login_1.jpg" />
@@ -318,8 +321,10 @@
     <Content Include="EIKONES\logo.png" />
     <Content Include="EIKONES\register.jpg" />
     <Content Include="EIKONES\register_2.jpg" />
+    <Content Include="EIKONES\spuros.jpg" />
     <Content Include="EIKONES\Xenocrates.png" />
     <Content Include="EIKONES\Xenocrates2.png" />
+    <Content Include="EIKONES\xristos.jpg" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="fonts\materialdesignicons-webfont.svg" />
     <Content Include="Global.asax" />

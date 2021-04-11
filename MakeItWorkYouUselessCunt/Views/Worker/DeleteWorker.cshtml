@@ -2,39 +2,47 @@
 @{
     ViewBag.Title = "Delete Worker";
 }
-
-<h2>DeleteWorker</h2>
-@using (Html.BeginForm("DeleteWorkerConfirmed","Worker",FormMethod.Post))
-{
-    @Html.AntiForgeryToken()
-    <div>
-        <h4>Worker</h4>
-        <hr />
-        @Html.HiddenFor(model => Model.Id)
-    <dl class="dl-horizontal">
-        <dt>Username</dt>
-        <dd>@Html.DisplayFor(model => model.UserName)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Email)</dt>
-        <dd>@Html.DisplayFor(model => model.Email)</dd>
-        <dt>Full Name</dt>
-        <dd>@Html.DisplayFor(model => model.Worker.FullName)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
-        <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
-        <dt>Date of Birth</dt>
-        <dd>@Html.DisplayFor(model => model.Worker.DateOfBirth)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
-        <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
-        <dt>@Html.DisplayNameFor(model => model.Worker.Salary)</dt>
-        <dd>@Html.DisplayFor(model => model.Worker.Salary) &euro;</dd>
-        <dt>@Html.DisplayNameFor(model => model.Worker.Department)</dt>
-        <dd>@Html.DisplayFor(model => model.Worker.Department.City)</dd>
-    </dl>
-
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" />
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                    <h3 class="views-headings">Delete Worker</h3>
+                    <p class="views-comments">Are you sure you want to delete the company worker?</p>
+                    <hr />
+                    <div>
+                        @using (Html.BeginForm("DeleteWorkerConfirmed", "Worker", FormMethod.Post))
+                        {
+                            @Html.AntiForgeryToken()
+                            <div>
+                                @Html.HiddenFor(model => Model.Id)
+                                <dl class="dl-horizontal">
+                                    <dt>Username</dt>
+                                    <dd>@Html.DisplayFor(model => model.UserName)</dd>
+                                    <dt>@Html.DisplayNameFor(model => model.Email)</dt>
+                                    <dd>@Html.DisplayFor(model => model.Email)</dd>
+                                    <dt>Full Name</dt>
+                                    <dd>@Html.DisplayFor(model => model.Worker.FullName)</dd>
+                                    <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
+                                    <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
+                                    <dt>Date of Birth</dt>
+                                    <dd>@Html.DisplayFor(model => model.Worker.DateOfBirth , "{0:dd/MM/yyyy}")</dd>
+                                    <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
+                                    <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
+                                    <dt>@Html.DisplayNameFor(model => model.Worker.Salary)</dt>
+                                    <dd>@Html.DisplayFor(model => model.Worker.Salary) &euro;</dd>
+                                    <dt>@Html.DisplayNameFor(model => model.Worker.Department)</dt>
+                                    <dd>@Html.DisplayFor(model => model.Worker.Department.City)</dd>
+                                </dl>
+                                <div class="form-actions no-color">
+                                    <input type="submit" value="Delete" class="btn btn-info btn-fw" />
+                                    @Html.ActionLink("Return to List", "ViewAllWorkers", "Display", null, new { @class = "btn btn-info btn-fw" })
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
-}
-<div>
-    @Html.ActionLink("Back to List", "../Display/ViewAllWorkers")
 </div>

@@ -28,7 +28,7 @@ namespace ManagementSystemVersionTwo.Controllers
 
             return View();
         }
-        [AllowAnonymous]
+        
         public ActionResult Contact()
         {
             ViewBag.Message = "Your contact page.";
