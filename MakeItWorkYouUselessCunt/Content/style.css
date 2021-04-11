@@ -1238,7 +1238,7 @@ pre {
 
     .col-md-6 {
         flex: 0 0 50%;
-        max-width: 50%;
+        
     }
 
     .col-md-7 {
@@ -2316,6 +2316,10 @@ textarea.form-control {
 .form-text {
     display: block;
     margin-top: 0.25rem;
+}
+
+.worker-details{
+    padding-top:100px;
 }
 
 .form-row {
