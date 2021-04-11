@@ -1,56 +1,53 @@
 ﻿@model ManagementSystemVersionTwo.Models.Project
 
 @{
-    ViewBag.Title = "DeleteProject";
+    ViewBag.Title = "Delete Project";
 }
 
-<h2>DeleteProject</h2>
+<div class="row">
+    <div class="col-12 grid-margin">
+        <div class="col-lg-6 grid-margin stretch-card">
+            <div style="margin: auto;" class="card">
+                <div class="card-body">
+                    <h3 class="views-headings">Delete Project</h3>
+                    <p class="views-comments">Are you sure you want to delete project @Model.Title.</p>
+                    <hr />
+                    <div>
+                        <div class="d-flex justify-content-center">
+                            <div class="p-2 bd-highlight">
+                                <table style="padding:20px" class="table">
+                                    <tr>
+                                        <td class="thead">@Html.DisplayNameFor(p => p.Title)</td>
+                                        <td class="identity"> @Html.DisplayFor(p => p.Title)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="thead">@Html.DisplayNameFor(p => p.Description)</td>
+                                        <td class="identity"> @Html.DisplayFor(p => p.Description)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="thead">Start Date</td>
+                                        <td class="identity"> @Html.DisplayFor(p => p.StartDate)</td>
+                                    </tr>
+                                    <tr>
+                                        <td class="thead">End Date</td>
+                                        <td class="identity"> @Html.DisplayFor(p => p.EndDate)</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            </div>
 
-<h3>Are you sure you want to delete this?</h3>
-<div>
-    <h4>Project</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>
-            @Html.DisplayNameFor(model => model.Title)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Title)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.Description)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.Description)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.StartDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.StartDate)
-        </dd>
-
-        <dt>
-            @Html.DisplayNameFor(model => model.EndDate)
-        </dt>
-
-        <dd>
-            @Html.DisplayFor(model => model.EndDate)
-        </dd>
-
-    </dl>
-
-    @using (Html.BeginForm()) {
-        @Html.AntiForgeryToken()
-        @Html.HiddenFor(s=>s.ID)
-        <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "ViewAllProjects","Display")
+                                    @using (Html.BeginForm())
+                                    {
+                                        @Html.AntiForgeryToken()
+                                        @Html.HiddenFor(s => s.ID)
+                                        <div class="d-flex flex-row bd-highlight mb-3">
+                                            <input type="submit" class="btn btn-info btn-fw" value="Delete" />
+                                            <a class="p-2 bd-highlight">@Html.ActionLink("Back to List", "ViewAllProjects", "Display", null, new { @class = "btn btn-info btn-fw" })</a>
+                                        </div>
+                                    }
+                            </div>
+                    </div>
+            </div>
         </div>
-    }
+    </div>
 </div>

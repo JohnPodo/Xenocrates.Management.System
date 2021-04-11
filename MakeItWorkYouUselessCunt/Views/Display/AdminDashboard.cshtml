@@ -1,18 +1,18 @@
 ﻿
 @{
-    ViewBag.Title = "AdminDashboard";
+    ViewBag.Title = "Dashboard";
 }
 
-<h2>AdminDashboard</h2>
+
 
 <script src="~/Scripts/chart/highcharts.js"></script>
 <script src="~/Scripts/chart/highcharts-more.js"></script>
 <script src="~/Scripts/chart/dumbbell.js"></script>
 <script src="~/Scripts/chart/export-data.js"></script>
-<script src="~/Scripts/chart/lollipop.js"></script>
 <script src="~/Scripts/chart/exporting.js"></script>
 <script src="~/Scripts/chart/accessibility.js"></script>
 <div class="jumbotron">
+    <h3 class="views-headings">Analytics</h3>
     <figure class="highcharts-figure">
         <div id="container"></div>
         <p class="highcharts-description">
@@ -38,6 +38,12 @@
         </p>
     </figure>
     <figure class="highcharts-figure">
+        <div id="gender"></div>
+        <p class="highcharts-description">
+            This chart shows the average age of employees per department.
+        </p>
+    </figure>
+    <figure class="highcharts-figure">
         <div id="totalSalary"></div>
         <p class="highcharts-description">
             This chart shows the total amount of salaries per month.
@@ -46,7 +52,7 @@
     <figure class="highcharts-figure">
         <div id="salaryPerDepartment"></div>
         <p class="highcharts-description">
-            This chart shows the total amount of salaries per month.
+            This chart shows the total amount of salaries per department each month.
         </p>
     </figure>
 </div>
@@ -73,12 +79,14 @@
                 var age = data[3];
                 var totalsalary = data[4];
                 var totalsalaryperdepartmentchart = data[5];
+                var genderperdepartment = data[6];
                 pie(departmentchart);
                 columnbar(employeechart);
                 salarychart(salary);
                 agechart(age);
                 totalsalarychart(totalsalary);
                 totalsalaryperdepartment(totalsalaryperdepartmentchart);
+                genderchart(genderperdepartment);
             })
         });
 
@@ -196,7 +204,7 @@
                 yAxis: {
                     min: 0,
                     title: {
-                        text: 'Salary'
+                        text: 'Salary (Euro)'
                     }
                 },
                 tooltip: {
@@ -257,6 +265,77 @@
                 series: dataToPopulate
             })
         }
+        function genderchart(data) {
+            dataToPopulate = [];
+            var males = {
+                name: "Male",
+                data: []
+            };
+            var females = {
+                name: "Female",
+                data: []
+            };
+            for (let i = 0; i < data.Count.length; i++) {
+                males.data.push(data.Count[i]);
+                females.data.push(data.Ages[i]);
+            }
+            dataToPopulate.push(males);
+            dataToPopulate.push(females);
+
+            Highcharts.chart('gender', {
+                chart: {
+                    type: 'bar'
+                },
+                title: {
+                    text: 'Gender Ratio By Department'
+                },
+                subtitle: {
+                    text: ''
+                },
+                xAxis: {
+                    categories: data.Names,
+                    title: {
+                        text: null
+                    }
+                },
+                yAxis: {
+                    min: 0,
+                    title: {
+                        text: 'Number of Employees',
+                        align: 'high'
+                    },
+                    labels: {
+                        overflow: 'justify'
+                    }
+                },
+                tooltip: {
+                    valueSuffix: ' employees'
+                },
+                plotOptions: {
+                    bar: {
+                        dataLabels: {
+                            enabled: true
+                        }
+                    }
+                },
+                legend: {
+                    layout: 'vertical',
+                    align: 'right',
+                    verticalAlign: 'top',
+                    x: -40,
+                    y: 80,
+                    floating: true,
+                    borderWidth: 1,
+                    backgroundColor:
+                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+                    shadow: true
+                },
+                credits: {
+                    enabled: false
+                },
+                series: dataToPopulate
+            });
+        }
 
         function totalsalarychart(data) {
             dataToPopulate = [];
@@ -270,7 +349,7 @@
             Highcharts.chart('totalSalary', {
 
                 chart: {
-                    type: 'lollipop'
+                    type: 'column'
                 },
 
 
@@ -283,7 +362,7 @@
                 },
 
                 title: {
-                    text: 'Total Amount of Salaries Per Month'
+                    text: 'Total Salary Expenses Per Month For All Departments'
                 },
 
                 tooltip: {
@@ -291,12 +370,13 @@
                 },
 
                 xAxis: {
-                    type: 'category'
+                    categories: ['Months'],
+                    crosshair: true
                 },
 
                 yAxis: {
                     title: {
-                        text: 'Salary'
+                        text: 'Salary (Euro)'
                     }
                 },
 
@@ -322,7 +402,7 @@
                     type: 'column'
                 },
                 title: {
-                    text: 'Monthly Salary Per Department'
+                    text: 'Monthly Salary Expenses Per Department'
                 },
                 xAxis: {
                     categories: [
@@ -350,7 +430,7 @@
                 tooltip: {
                     headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
                     pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>' +
-                        '<td style="padding:0"><b>{point.y:.1f} euro</b></td></tr>',
+                        '<td style="padding:0"><b>{point.y:.2f} &euro;</b></td></tr>',
                     footerFormat: '</table>',
                     shared: true,
                     useHTML: true

@@ -1,6 +1,6 @@
 ﻿@model List<ManagementSystemVersionTwo.Models.Project>
 @{
-    ViewBag.Title = "ViewAllProjects";
+    ViewBag.Title = "Projects";
 }
 @if (ViewBag.Admin)
 {
@@ -12,39 +12,49 @@
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Projects</h3>
-                        <p class="views-comments">Here you can view all Projects in your Department.</p>
+                        <p class="views-comments">Here you can view all the projects of the company.</p>
                         <hr />
                         <div>
                             @using (Html.BeginForm())
                             {
-                                <div class="row">
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        Search Project by Title:@Html.TextBox("title", "", new { list = "browsers", @class = "" })
+                                <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                                        <div class="p-2 bd-highlight">
+                                            <p>
+                                                Search Project by Title: @Html.TextBox("title", "", new { list = "browsers", @class = "uploaded-text" })
 
-                                        <datalist id="browsers">
-                                            @foreach (var item in ViewBag.Names)
-                                            {
-                                                <option value="@item" />
-                                            }
-                                        </datalist>
-                                    </p>
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
-                                    </p>
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        Status : @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
-                                    </p>
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        See Projects in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "" }) Departments
-                                    </p>
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-2">
-                                        <input type="submit" value="Search" />
-                                        @Html.ActionLink("Reset", "ViewAllProjects", "Display", new { @class = "btn btn-info" })
-                                    </p>
+                                                <datalist id="browsers">
+                                                    @foreach (var item in ViewBag.Names)
+                                                    {
+                                                        <option value="@item" />
+                                                    }
+                                                </datalist>
+                                            </p>
+                                        </div>
+                                        <div class="p-2 bd-highlight">
+                                            <p>
+                                                Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
+                                            </p>
+                                        </div>
+                                        <div class="p-2 bd-highlight">
+                                            <p>
+                                                Status: @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
+                                            </p>
+                                         </div>
+                                        <div class="p-2 bd-highlight">
+                                            <p>
+                                                See Projects in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "uploaded-text" }) Departments
+                                            </p>
+                                        </div>
+                                        <div class="p-2 bd-highlight">
+                                            <p>
+                                                <input class="btn btn-info btn-fw" type="submit" value="Search" />
+                                                @Html.ActionLink(" ", "ViewAllProjects", "Display", new { @class = "resbut fa fa-times" })
+                                            </p>
+                                        </div>
                                 </div>
-                            }
-                        </div>
-                        <table class="table table-striped">
+                              }
+                            </div>
+                        <table class="all-projects table table-striped col-md-12">
                             <thead>
                                 <tr>
                                     <th>Title</th>
@@ -67,10 +77,10 @@
                                             @pro.Description
                                         </td>
                                         <td style="overflow:hidden">
-                                            @pro.StartDate
+                                            @pro.StartDate.ToString("dd-MM-yyyy")
                                         </td>
                                         <td style="overflow:hidden">
-                                            @pro.EndDate
+                                            @pro.EndDate.ToString("dd-MM-yyyy")
                                         </td>
                                         <td style="overflow:hidden">
                                             @if (pro.Finished)
@@ -91,7 +101,6 @@
                                         </td>
                                         <td>
                                             @Html.ActionLink("Details", "DetailsProject", "Display", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
-
                                         </td>
                                     </tr>
                                 }
@@ -115,36 +124,43 @@ else if (ViewBag.Supervisor)
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Projects</h3>
-                        <p class="views-comments">Here you can view all Projects in your Department.</p>
+                        <p class="views-comments">Here you can view all the projects in your department.</p>
                         <hr />
                         <div>
                             @using (Html.BeginForm())
                             {
-                                <div class="row">
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        Search Project by Title:@Html.TextBox("title", "", new { list = "browsers", @class = "" })
-
-                                        <datalist id="browsers">
-                                            @foreach (var item in ViewBag.Names)
-                                            {
-                                                <option value="@item" />
-                                            }
-                                        </datalist>
-                                    </p>
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
-                                    </p>
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        Status : @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
-                                    </p>
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-2">
-                                        <input type="submit" value="Search" />
-                                        @Html.ActionLink("Reset", "ViewAllProjects", "Display", new { @class = "btn btn-info" })
-                                    </p>
+                                <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                                    <div class="p-2 bd-highlight">
+                                        <p>
+                                            Search Project by Title: @Html.TextBox("title", "", new { list = "browsers", @class = "" })
+                                            <datalist id="browsers">
+                                                @foreach (var item in ViewBag.Names)
+                                                {
+                                                    <option value="@item" />
+                                                }
+                                            </datalist>
+                                        </p>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <p>
+                                            Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
+                                        </p>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <p>
+                                            Status: @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
+                                        </p>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <p>
+                                            <input class="btn btn-info btn-fw" type="submit" value="Search" />
+                                            @Html.ActionLink(" ", "ViewAllProjects", "Display", new { @class = "resbut fa fa-times" })
+                                        </p>
+                                    </div>
                                 </div>
                             }
                         </div>
-                        <table class="table table-striped">
+                        <table class="all-projects table table-striped col-md-12">
                             <thead>
                                 <tr>
                                     <th>Title</th>
@@ -167,10 +183,10 @@ else if (ViewBag.Supervisor)
                                             @pro.Description
                                         </td>
                                         <td style="overflow:hidden">
-                                            @pro.StartDate
+                                            @pro.StartDate.ToString("dd-MM-yyyy")
                                         </td>
                                         <td style="overflow:hidden">
-                                            @pro.EndDate
+                                            @pro.EndDate.ToString("dd-MM-yyyy")
                                         </td>
                                         <td style="overflow:hidden">
                                             @if (pro.Finished)
@@ -190,9 +206,9 @@ else if (ViewBag.Supervisor)
                                             @pro.WorkersInMe.Count
                                         </td>
                                         <td>
+                                            @Html.ActionLink("Details", "DetailsProject", "Display", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
                                             @Html.ActionLink("Edit", "EditProject", "Project", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
-                                            @Html.ActionLink("Delete", "DeleteProject", "Project", new { id = pro.ID }, new { @class = "btn-sm btn-sm-project btn-info btn-fw" })
-
+                                            @Html.ActionLink("Delete", "DeleteProject", "Project", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
                                         </td>
                                     </tr>
                                 }
@@ -214,37 +230,43 @@ else
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Projects</h3>
-                        <p class="views-comments">Here you can view all Projects in your Department.</p>
+                        <p class="views-comments">Here you can view all your projects.</p>
                         <hr />
                         <div>
                             @using (Html.BeginForm())
                             {
-                                <div class="row">
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        Search Project by Title:@Html.TextBox("title", "", new { list = "browsers", @class = "" })
-
-                                        <datalist id="browsers">
-                                            @foreach (var item in ViewBag.Names)
-                                            {
-                                                <option value="@item" />
-                                            }
-                                        </datalist>
-                                    </p>
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
-                                    </p>
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-3">
-                                        Status : @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
-                                    </p>
-                                   
-                                    <p style=" padding: 6px; margin-top: 8px; margin-right: 16px; border: none; font-size: 14px;" class="col-sm-2">
-                                        <input type="submit" value="Search" />
-                                        @Html.ActionLink("Reset", "ViewAllProjects", "Display", new { @class = "btn btn-info" })
-                                    </p>
+                                <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                                    <div class="p-2 bd-highlight">
+                                        <p>
+                                            Search Project by Title: @Html.TextBox("title", "", new { list = "browsers", @class = "" })
+                                            <datalist id="browsers">
+                                                @foreach (var item in ViewBag.Names)
+                                                {
+                                                    <option value="@item" />
+                                                }
+                                            </datalist>
+                                        </p>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <p>
+                                            Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
+                                        </p>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <p>
+                                            Status: @Html.DropDownList("status", new SelectList(ViewBag.StatusOptions, "Value", "Text"), "None", new { @class = "" })
+                                        </p>
+                                    </div>
+                                    <div class="p-2 bd-highlight">
+                                        <p>
+                                            <input class="btn btn-info btn-fw" type="submit" value="Search" />
+                                            @Html.ActionLink(" ", "ViewAllProjects", "Display", new { @class = "resbut fa fa-times" })
+                                        </p>
+                                    </div>
                                 </div>
                             }
                         </div>
-                        <table class="table table-striped">
+                        <table class="all-projects table table-striped col-md-12">
                             <thead>
                                 <tr>
                                     <th>Title</th>
@@ -290,10 +312,8 @@ else
                                             @pro.WorkersInMe.Count
                                         </td>
                                         <td>
-                                            
-                                            @Html.ActionLink("Finalize", "FinalizeProject", "Display", new { id = pro.ID }, new { @class = "btn-sm btn-sm-project btn-info btn-fw" })
-                                            @Html.ActionLink("Details", "DetailsProject", "Display", new { id = pro.ID }, new { @class = "btn-sm btn-sm-project btn-info btn-fw" })
-
+                                            @Html.ActionLink("Finalize", "FinalizeProject", "Project", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
+                                            @Html.ActionLink("Details", "DetailsProject", "Display", new { id = pro.ID }, new { @class = "btn-sm-project btn-info btn-fw" })
                                         </td>
                                     </tr>
                                 }
@@ -303,4 +323,5 @@ else
                 </div>
             </div>
         </div>
-    </div>}
+    </div>
+}

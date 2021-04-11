@@ -28,50 +28,48 @@ namespace ManagementSystemVersionTwo.Controllers
             _data.Dispose();
             _external.Dispose();
         }
-        
+
+
+        [Authorize(Roles = "Supervisor")]
         public ActionResult CreateProject()
         {
-            var employees = _data.UsersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
-            var roleId = _data.FindRoleByName("Employee").Id;
-            List<DummyForProject> f3 = new List<DummyForProject>();
-            for(int i=0;i<employees.Count;i++)
-            {
-                if (!(employees[i].Roles.SingleOrDefault(r=>r.RoleId==roleId)==null)) {
-                    f3.Add(new DummyForProject()
-                    {
-                        ID = employees[i].Id,
-                        Fullname = employees[i].Worker.FullName,
-                        CV = employees[i].Worker.CV,
-                        Pic = employees[i].Worker.Pic
-                    });
-                }
-            }
+            var employees = _data.ApplicationUser.UsersPerDepartment(_data.ApplicationUser.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+
+            var roleId = _data.Role.FindRoleByName("Employee").Id;
+
+            var f3 = _external.FillTheListOfDummies(employees, roleId);
+           
             CreateProjectViewModel f2 = new CreateProjectViewModel()
             {
                 Users=f3
             };
+
             return View(f2);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Supervisor")]
         public ActionResult CreateProject(CreateProjectViewModel f2)
         {
             if (ModelState.IsValid&&f2.Users.Count!=0)
             {
                 _external.CreateProject(f2,User.Identity.GetUserId());
+
                 return RedirectToAction("ViewAllProjects", "Display");
             }
             return RedirectToAction("CreateProject");
         }
 
+
+        [Authorize(Roles = "Supervisor")]
         public ActionResult DeleteProject(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var pro = _data.FindProjectById((int)id);
+            var pro = _data.Project.FindProjectById((int)id);
             if (pro == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
@@ -81,82 +79,87 @@ namespace ManagementSystemVersionTwo.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Supervisor")]
         public ActionResult DeleteProject(int id)
         {
             _external.DeleteProject(id);
+
             return RedirectToAction("ViewAllProjects","Display");
         }
 
+
+        [Authorize(Roles = "Supervisor")]
         public ActionResult EditProject(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var pro = _data.FindProjectById((int)id);
-            if (pro == null)
+
+            var projectToEdit = _data.Project.FindProjectById((int)id);
+
+            if (projectToEdit == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            var employees = _data.UsersPerDepartment(_data.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
-            var roleId = _data.FindRoleByName("Employee").Id;
-            List<DummyForProject> f3 = new List<DummyForProject>();
-            for(int i=0;i<employees.Count;i++)
-            {
-                if (employees[i].Roles.SingleOrDefault(r => r.RoleId == roleId) == null)
-                {
-                    employees.Remove(employees[i]);
-                }
-                else
-                {
-                    if (pro.WorkersInMe.FirstOrDefault(s=>s.WorkerID== employees[i].Worker.ID)!=null)
-                    {
-                        f3.Add(new DummyForProject()
-                        {
-                            ID = employees[i].Id,
-                            Fullname = employees[i].Worker.FullName,
-                            CV = employees[i].Worker.CV,
-                            Pic = employees[i].Worker.Pic,
-                            IsSelected = true
-                        });
-                    }
-                    else
-                    {
-                        f3.Add(new DummyForProject()
-                        {
-                            ID = employees[i].Id,
-                            Fullname = employees[i].Worker.FullName,
-                            CV = employees[i].Worker.CV,
-                            Pic = employees[i].Worker.Pic,
-                            IsSelected = false
-                        });
-                    }
-                }
-            }
+
+            var employees = _data.ApplicationUser.UsersPerDepartment(_data.ApplicationUser.FindUserByID(User.Identity.GetUserId()).Worker.DepartmentID);
+            
+            var roleId = _data.Role.FindRoleByName("Employee").Id;
+            
+            var f3 = _external.FillTheListOfDummiesForEdit(employees, roleId, projectToEdit);
+           
             EditProjectViewModel f2 = new EditProjectViewModel()
             {
                 Users =new List<DummyForProject>()
             };
-            f2.Project = pro;
+
+            f2.Project = projectToEdit;
+
             f2.Users = f3;
+
             return View(f2);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Supervisor")]
         public ActionResult EditProject(EditProjectViewModel f2)
         {
             if (ModelState.IsValid && f2.Users.Count != 0)
             {
                 _external.EditProject(f2);
+
                 return RedirectToAction("ViewAllProjects", "Display");
             }
             return View(f2);
         }
 
+
+        [Authorize(Roles = "Employee")]
+        public ActionResult FinalizeProject(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            var projectToFinalize = _data.Project.FindProjectById((int)id);
+
+            if (projectToFinalize is null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+
+            _external.FinalizeProject(projectToFinalize);
+
+            return RedirectToAction("ViewAllProjects", "Display");
+        }
+
         public FileResult DownloadFile(string fileName)
         {
             string path = HttpContext.Server.MapPath("~/ProjectFiles/" + fileName);
+
             return File(path,"application/force-download",Path.GetFileName(path));
         }
     }

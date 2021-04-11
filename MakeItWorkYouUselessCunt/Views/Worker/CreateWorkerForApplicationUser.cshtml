@@ -1,6 +1,6 @@
 ﻿@model ManagementSystemVersionTwo.ViewModels.CreateWorker
 @{
-    ViewBag.Title = "CreateWorkerForApplicationUser";
+    ViewBag.Title = "Create Worker";
 
 }
 
@@ -11,11 +11,11 @@
                 <h2 style="text-align: center;">Add New Person</h2>
 
                 <img src="" alt="Profile Pic" style="display: block; margin-left: auto; margin-right: auto; width: 250px; border: 2px solid #00ff21; border-radius: 4px;" class="" id="pic">
-                @using (Html.BeginForm("CreateWorkerForApplicationUser", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" , onsubmit= "return birthVal() && formOK1() && formOK();" }))
+                @using (Html.BeginForm("CreateWorkerForApplicationUser", "Worker", FormMethod.Post, new { enctype = "multipart/form-data", autocomplete = "off" , onsubmit= "validateJPG() && validatePDF();" }))
                 {
                     @Html.AntiForgeryToken()
                     @Html.HiddenFor(m => m.userID)
-                    <form class="form-sample">
+                    <div class="form-sample">
                         <h4 class="card-description"> Personal info </h4>
                         <div class="row">
                             <div class="col-md-6">
@@ -153,7 +153,7 @@
                         </div>
 
 
-                    </form>
+                    </div>
                 }
             </div>
         </div>
@@ -180,7 +180,7 @@
     var err = document.getElementById('errorPDF');
     var fil = document.getElementById('filePDF');
 
-    function validatePDF(fil) {
+    function validatePDF() {
         var file = fil.value;
         var len = file.length;
         var ext = file.slice(len - 4, len);
@@ -194,7 +194,7 @@
     }
 
     function formOK() {
-        if (validatePDF(fil) === false) {
+        if (validatePDF() === false) {
             return false;
         } else {
             return true;
@@ -206,8 +206,7 @@
     var err1 = document.getElementById('errorJPG');
     var fil1 = document.getElementById('fileJPG');
 
-    function validateJPG(fil1) {
-        console.log("Eimai o validator jpg");
+    function validateJPG() {
         var file = fil1.value;
         var len = file.length;
         var ext = file.slice(len - 4, len);
@@ -221,7 +220,7 @@
     }
 
     function formOK1() {
-        if (validateJPG(fil1) === false) {
+        if (validateJPG() === false) {
             return false;
         } else {
             return true;

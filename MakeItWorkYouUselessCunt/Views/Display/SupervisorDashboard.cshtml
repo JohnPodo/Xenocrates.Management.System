@@ -1,15 +1,16 @@
 ﻿
 @{
-    ViewBag.Title = "SupervisorDashboard";
+    ViewBag.Title = "Dashboard";
 }
 
-<h2>SupervisorDashboard</h2>
+
 <script src="~/Scripts/chart/highcharts.js"></script>
 <script src="~/Scripts/chart/export-data.js"></script>
 <script src="~/Scripts/chart/exporting.js"></script>
 <script src="~/Scripts/chart/accessibility.js"></script>
 
 <div class="jumbotron">
+    <h3 class="views-headings">Analytics</h3>
     <figure class="highcharts-figure">
         <div id="container"></div>
         <p class="highcharts-description">
@@ -23,11 +24,12 @@
         </p>
     </figure>
     <figure class="highcharts-figure">
-        <div id="gender"></div>
+        <div id="projects"></div>
         <p class="highcharts-description">
-            This chart shows the number of male and female employees per department.
+            This chart shows the number of projects per month for the department.
         </p>
     </figure>
+
 </div>
 
 @section Scripts{
@@ -45,11 +47,13 @@
             getdata.done(function (data) {
                 var salaryperemployee = data[0];
                 var ageperemployee = data[1];
-                var genderperdepartment = data[2];
+                var projectspermonth = data[2];
+                
 
                 salarychart(salaryperemployee);
                 agechart(ageperemployee);
-                genderchart(genderperdepartment);
+                projectschart(projectspermonth);
+                
             })
         });
 
@@ -69,7 +73,7 @@
                 },
                 yAxis: {
                     title: {
-                        text: 'Salary'
+                        text: 'Salary (Euro)'
                     }
                 },
                 plotOptions: {
@@ -121,86 +125,39 @@
             });
         }
 
-        function genderchart(data) {
-            dataToPopulate = [];
-            var males = {
-                name: "Male",
-                data: []
-            };
-            var females = {
-                name: "Female",
-                data: []
-            };
-            for (let i = 0; i < data.Count.length; i++) {
-                males.data.push(data.Count[i]);
-                females.data.push(data.Ages[i]);
-            }
-            dataToPopulate.push(males);
-            dataToPopulate.push(females);
-
-            Highcharts.chart('gender', {
+        function projectschart(data) {
+            Highcharts.chart('projects', {
                 chart: {
-                    type: 'bar'
+                    type: 'line'
                 },
                 title: {
-                    text: 'Gender Ratio By Department'
+                    text: 'Projects Per Month'
                 },
                 subtitle: {
                     text: ''
                 },
                 xAxis: {
-                    categories: data.Names,
-                    title: {
-                        text: null
-                    }
+                    categories: data.Names
                 },
                 yAxis: {
-                    min: 0,
                     title: {
-                        text: 'Number of Employees',
-                        align: 'high'
-                    },
-                    labels: {
-                        overflow: 'justify'
+                        text: 'Number of Projects'
                     }
-                },
-                tooltip: {
-                    valueSuffix: ' employees'
                 },
                 plotOptions: {
-                    bar: {
+                    line: {
                         dataLabels: {
                             enabled: true
-                        }
+                        },
+                        enableMouseTracking: false
                     }
                 },
-                legend: {
-                    layout: 'vertical',
-                    align: 'right',
-                    verticalAlign: 'top',
-                    x: -40,
-                    y: 80,
-                    floating: true,
-                    borderWidth: 1,
-                    backgroundColor:
-                        Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
-                    shadow: true
-                },
-                credits: {
-                    enabled: false
-                },
-                series: dataToPopulate
+                series: [{
+                    name: 'Projects',
+                    data: data.Count
+                }]
             });
         }
-
-
     </script>
-
-
-
-
-
-
-
 }
 

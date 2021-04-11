@@ -1,14 +1,14 @@
 ﻿@model IEnumerable<ManagementSystemVersionTwo.Models.Worker>
 
 @{
-    ViewBag.Title = "ViewAllWorkersList";
+    ViewBag.Title = "Workers";
 }
 @if (ViewBag.Supervisor)
 {
-    <div>
-        <div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { viewType = "List" })">List View</a></div>
-        <div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw  btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3]})">Card View</a></div>
-    </div>
+<div>
+    <a href="@Url.Action("ViewAllWorkers" , "Display",new { viewType = "List",searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3] })" style="margin:4px; float:right" class="btn btn-inverse-info btn-fw">List View</a>
+    <a href="@Url.Action("ViewAllWorkers" , "Display")" style="margin:4px; float:right" class="btn btn-info btn-fw">Card View</a>
+</div>
     <br />
     <br />
     <br />
@@ -19,30 +19,30 @@
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Employees</h3>
-                        <p class="views-comments">Here you can view all the Employees working for the Company.</p>
+                        <p class="views-comments">Here you can view all the employees working in your department.</p>
                         <hr />
                         @using (Html.BeginForm())
                         {
-                            <div style="width:100%" class="row">
-                                <p>
-                                    Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
+                            <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                                <div class="p-2 bd-highlight">
+                                    Search Worker By Fullname: @Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
                                     <datalist id="browsers">
                                         @foreach (var item in ViewBag.Names)
                                         {
                                             <option value="@item" />
                                         }
                                     </datalist>
-                                </p>
-                                <p>
-                                    Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
-                                </p>
-                                <p>
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
+                                </div>
+                                <div class="p-2 bd-highlight">
                                     See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "uploaded-text" })
-                                </p>
-                                <p style="float:left">
-                                    <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <input class="btn btn-info btn-fw" type="submit" value="Search" />
                                     @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "resbut fa fa-times" })
-                                </p>
+                                </div>
                             </div>
                         }
                         <hr />
@@ -52,13 +52,13 @@
                                     @Html.DisplayNameFor(model => model.Department.City)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.FirstName)
+                                    First Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.LastName)
+                                    Last Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                                    Date Of Birth
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Gender)
@@ -67,12 +67,14 @@
                                     @Html.DisplayNameFor(model => model.Address)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.BankAccount)
+                                    Bank Account
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Salary)
                                 </th>
-                                <th></th>
+                                <th>
+                                    Actions
+                                </th>
                             </tr>
 
                             @foreach (var worker in Model)
@@ -88,7 +90,7 @@
                                         @Html.DisplayFor(modelItem => worker.LastName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => worker.DateOfBirth)
+                                        @worker.DateOfBirth.ToString("dd-MM-yyyy")
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => worker.Gender)
@@ -100,7 +102,7 @@
                                         @Html.DisplayFor(modelItem => worker.BankAccount)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => worker.Salary)
+                                        @Html.DisplayFor(modelItem => worker.Salary) &euro;
                                     </td>
                                     <td>
                                         @Html.ActionLink("Details", "DetailsWorker", "Display", new { id = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" })
@@ -120,8 +122,8 @@ else
 {
     <div>
         <a href="@Url.Action("Register", "Account")" style="font-size: 12px;" class="btn btn-info btn-fw">Create New Worker</a>
-        <div style="margin:4px; float:right" class="btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { viewType = "List" })">List View</a></div>
-        <div style="margin:4px; float:right" class="btn btn-inverse-info btn-fw  btn btn-info btn-fw"><a href="@Url.Action("ViewAllWorkers", "Display", new { searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3]})">Card View</a></div>
+        <a href="@Url.Action("ViewAllWorkers", "Display", new { viewType = "List" })" class="btn btn-inverse-info btn-fw" style="margin:4px; float:right">List View</a>
+        <a href="@Url.Action("ViewAllWorkers", "Display", new { searchName=ViewBag.Parameters[0],orderBy=ViewBag.Parameters[1],roleSpec=ViewBag.Parameters[2],depID=ViewBag.Parameters[3]})" style="margin:4px; float:right" class="btn btn-info btn-fw  btn btn-info btn-fw">Card View</a>
     </div>
     <br />
     <div class="row">
@@ -130,30 +132,30 @@ else
                 <div style="margin: auto;" class="card">
                     <div class="card-body">
                         <h3 class="views-headings">Employees</h3>
-                        <p class="views-comments">Here you can view all the Employees working for the Company.</p>
+                        <p class="views-comments">Here you can view all the employees working for the company.</p>
                         <hr />
                         @using (Html.BeginForm())
                         {
-                            <div style="width:100%" class="row">
-                                <p>
-                                    Search Worker By Fullname:@Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
+                            <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
+                                <div class="p-2 bd-highlight">
+                                    Search Worker By Fullname: @Html.TextBox("searchName", "", new { list = "browsers", @class = "uploaded-text" })
                                     <datalist id="browsers">
                                         @foreach (var item in ViewBag.Names)
                                         {
                                             <option value="@item" />
                                         }
                                     </datalist>
-                                </p>
-                                <p>
-                                    Order By : @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
-                                </p>
-                                <p>
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "uploaded-text" })
+                                </div>
+                                <div class="p-2 bd-highlight">
                                     See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "uploaded-text" }) in @Html.DropDownList("depID", new SelectList(ViewBag.DepartmentOptions, "Value", "Text"), "All", new { @class = "uploaded-text" }) Departments
-                                </p>
-                                <p style="float:left">
-                                    <input class="btn-inverse-info btn-fw" type="submit" value="Search" />
+                                </div>
+                                <div class="p-2 bd-highlight">
+                                    <input class="btn btn-info btn-fw" type="submit" value="Search" />
                                     @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "resbut fa fa-times" })
-                                </p>
+                                </div>
                             </div>
                         }
                         <hr />
@@ -163,13 +165,13 @@ else
                                     @Html.DisplayNameFor(model => model.Department.City)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.FirstName)
+                                   First Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.LastName)
+                                    Last Name
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.DateOfBirth)
+                                   Date Of Birth
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Gender)
@@ -178,12 +180,14 @@ else
                                     @Html.DisplayNameFor(model => model.Address)
                                 </th>
                                 <th>
-                                    @Html.DisplayNameFor(model => model.BankAccount)
+                                   Bank Account
                                 </th>
                                 <th>
                                     @Html.DisplayNameFor(model => model.Salary)
                                 </th>
-                                <th></th>
+                                <th>
+                                    Actions
+                                </th>
                             </tr>
 
                             @foreach (var worker in Model)
@@ -199,7 +203,7 @@ else
                                         @Html.DisplayFor(modelItem => worker.LastName)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => worker.DateOfBirth)
+                                        @worker.DateOfBirth.ToString("dd-MM-yyyy")
                                     </td>
                                     <td>
                                         @Html.DisplayFor(modelItem => worker.Gender)
@@ -211,7 +215,7 @@ else
                                         @Html.DisplayFor(modelItem => worker.BankAccount)
                                     </td>
                                     <td>
-                                        @Html.DisplayFor(modelItem => worker.Salary)
+                                        @Html.DisplayFor(modelItem => worker.Salary) &euro;
                                     </td>
                                     <td>
                                         @Html.ActionLink("Edit", "EditWorker", "Worker", new { userID = worker.ApplicationUser.Id }, new { @class = "btn btn-info btn-fw" })
