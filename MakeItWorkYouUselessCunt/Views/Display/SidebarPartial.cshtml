@@ -3,7 +3,7 @@
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item nav-profile">
-                <a href="#" class="nav-link">
+                <div class="nav-link">
                     <div class="profile-image">
                         <img class="img-xs rounded-circle" src="~/EIKONES/admin.png" alt="profile image">
                         <div class="dot-indicator bg-success"></div>
@@ -11,10 +11,9 @@
                     <div class="text-wrapper">
                         <p title="Username You've Logged In" class="designation">@Html.DisplayName(User.Identity.Name)</p>
                     </div>
-                </a>
+                </div>
             </li>
             <li class="nav-item nav-category">Admin Menu</li>
-            <br />
             <li class="nav-item">
                 <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
                     <i class="menu-icon typcn typcn-document-text"></i>
@@ -72,7 +71,7 @@ else if (ViewBag.Supervisor)
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item nav-profile">
-                <a href="#" class="nav-link">
+                <a href="@Url.Action("Index","Manage")" class="nav-link">
                     <div class="profile-image">
                         <img class="img-xs rounded-circle" src="~/EIKONES/boss.png" alt="profile image">
                         <div class="dot-indicator bg-success"></div>
@@ -83,7 +82,6 @@ else if (ViewBag.Supervisor)
                 </a>
             </li>
             <li class="nav-item nav-category">Supervisor Menu</li>
-            <br />
             <li class="nav-item">
                 <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
                     <i class="menu-icon typcn typcn-document-text"></i>
@@ -115,7 +113,7 @@ else
     <nav class="sidebar sidebar-offcanvas" id="sidebar">
         <ul class="nav">
             <li class="nav-item nav-profile">
-                <a href="#" class="nav-link">
+                <a href="@Url.Action("Index","Manage")" class="nav-link">
                     <div class="profile-image">
                         <img class="img-xs rounded-circle" src="~/EIKONES/employee2.png" alt="profile image">
                         <div class="dot-indicator bg-success"></div>
@@ -126,7 +124,6 @@ else
                 </a>
             </li>
             <li class="nav-item nav-category">Worker Menu</li>
-            <br />
             <li class="nav-item">
                 <a title="Analytics and Graphic Represantations" class="nav-link" href="@Url.Action("Dashboard", "Display" )">
                     <i class="menu-icon typcn typcn-document-text"></i>

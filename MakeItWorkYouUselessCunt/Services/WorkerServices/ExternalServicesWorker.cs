@@ -370,15 +370,19 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
         public List<WorkingDays> FillProjectsOfWorkerForCalendar(List<Project> projects)
         {
             List<WorkingDays> ListOfWorkingDays = new List<WorkingDays>();
-            foreach (var p in projects)
+            if (projects.Count != 0)
             {
-                ListOfWorkingDays.Add(new WorkingDays()
+                for (int i = 0; i < projects.Count; i++)
                 {
-                    Start = p.StartDate.Date.ToString("yyyy-MM-dd"),
-                    End = p.EndDate.Date.ToString("yyyy-MM-dd"),
-                    Title = p.Title
-                });
+                    ListOfWorkingDays.Add(new WorkingDays()
+                    {
+                        Start = projects[i].StartDate.Date.ToString("yyyy-MM-dd"),
+                        End = projects[i].EndDate.Date.ToString("yyyy-MM-dd"),
+                        Title = projects[i].Title
+                    });
+                }
             }
+           
             return ListOfWorkingDays;
 
         }
@@ -391,17 +395,20 @@ namespace ManagementSystemVersionTwo.Services.WorkerServices
         public List<WorkingDays> FillWorkingDaysOfWorkerForCalendar(List<WorkingDays> days)
         {
             List<WorkingDays> ListOfWorkingDays = new List<WorkingDays>();
-            foreach (var day in days)
+            if (days.Count != 0)
             {
-                days.Add(new WorkingDays
+                for (int i = 0; i < days.Count; i++)
                 {
-                    Start = day.Start,
-                    Title = day.Title,
-                    Display = day.Display,
-                    BackgroundColor = day.BackgroundColor,
-                    ID = day.ID,
-                    End = day.End
-                });
+                    ListOfWorkingDays.Add(new WorkingDays
+                    {
+                        Start = days[i].Start,
+                        Title = days[i].Title,
+                        Display = days[i].Display,
+                        BackgroundColor = days[i].BackgroundColor,
+                        ID = days[i].ID,
+                        End = days[i].End
+                    });
+                }
             }
             return ListOfWorkingDays;
 

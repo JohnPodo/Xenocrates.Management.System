@@ -43,7 +43,7 @@
             </div>
             <div class="bottom-bar">
                 <div class="chat">
-                    <input type="text" id="message" placeholder="Type a message..." />
+                    <input type="text" id="message" placeholder="Type a message..." style="padding-bottom:10px;"/>
                     <button type="submit" id="sendmessage"><i class="fa fa-paper-plane"></i></button>
                     <input type="hidden" id="displayname" value="@ViewBag.Name" />
                 </div>
@@ -84,17 +84,24 @@
             $('#message').focus();
             // Start the connection.
             $.connection.hub.start().done(function () {
-                $('#sendmessage').keyup(function (event) {
-                    if (event.keyCode === 13) {
-                        event.preventDefault();
-                        $('#sendmessage').click();
-                    }
-                })
                 $('#sendmessage').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.send($('#displayname').val(), $('#message').val());
-                    // Clear text box and reset focus for next comment.
+                    if ($('#message').val().trim() != "") {
+                        chat.server.send($('#displayname').val(), $('#message').val());
+                        // Clear text box and reset focus for next comment.
+                        $('#message').val('').focus();
+                    }
                     $('#message').val('').focus();
+                });
+                window.addEventListener('keypress', function (e) {
+                    if (e.key === 'Enter') {
+                        if ($('#message').val().trim() != "") {
+                            chat.server.send($('#displayname').val(), $('#message').val());
+                            // Clear text box and reset focus for next comment.
+                            $('#message').val('').focus();
+                        }
+                        $('#message').val('').focus();
+                    }
                 });
             });
         });

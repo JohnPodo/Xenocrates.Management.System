@@ -24,7 +24,6 @@
                         {
 
                             @Html.AntiForgeryToken()
-                            <form action="#">
                                 <div class="form-group">
                                     @ViewBag.errorMessage
                                     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
@@ -52,7 +51,6 @@
                                 <div class="form-group">
                                     <button class="btn btn-primary submit-btn btn-block">Login</button>
                                 </div>
-                            </form>
                         }
                         </div>
                     <p class="footer-text text-center">copyright © 2021 Xenocrates. All rights reserved.</p>
