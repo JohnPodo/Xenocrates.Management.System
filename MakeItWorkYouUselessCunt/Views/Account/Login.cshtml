@@ -3,15 +3,7 @@
 @{
     ViewBag.Title = "Log in"; Layout = null;
 }
-@Styles.Render("~/Content/materialdesignicons.min.css")
-@Styles.Render("~/Content/ionicons.css")
-@Styles.Render("~/Content/flag-icon.min.css")
-@Styles.Render("~/Content/vendor.bundle.base.css")
-@Styles.Render("~/Content/vendor.bundle.addons.css")
 @Styles.Render("~/Content/style.css")
-@Styles.Render("~/Content/style1.css")
-@Styles.Render("~/Content/favicon.ico")
-
 <div class="container-scroller">
     <div class="container-fluid page-body-wrapper full-page-wrapper">
         <div style="background-image:url(../../EIKONES/login_1.jpg)" class="content-wrapper d-flex align-items-center auth auth-bg-1 theme-one">
@@ -20,60 +12,44 @@
                     <div class="auto-form-wrapper">
                         @using (Html.BeginForm("Login", "Account", new { ReturnUrl = ViewBag.ReturnUrl }, FormMethod.Post, new { @class = "", role = "form" }))
                         {
-
                             @Html.AntiForgeryToken()
-                                <div class="form-group">
-                                    @ViewBag.errorMessage
-                                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
-                                    <label class="label">Username</label>
-                                    <div class="input-group">
-                                        @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Enter your name" })
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">
-                                            </span>
-                                        </div>
+                            <div class="form-group">
+                                @ViewBag.errorMessage
+                                @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+                                <label class="label">Username</label>
+                                <div class="input-group">
+                                    @Html.TextBoxFor(m => m.Username, new { @class = "form-control", placeholder = "Enter your name" })
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                        </span>
                                     </div>
-                                    @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-group">
-                                    <label class="label">Password</label>
-                                    <div class="input-group">
-                                        @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter your password" })
-                                        <div class="input-group-append">
-                                            <span class="input-group-text">
-                                            </span>
-                                        </div>
+                                @Html.ValidationMessageFor(m => m.Username, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <label class="label">Password</label>
+                                <div class="input-group">
+                                    @Html.PasswordFor(m => m.Password, new { @class = "form-control", placeholder = "Enter your password" })
+                                    <div class="input-group-append">
+                                        <span class="input-group-text">
+                                        </span>
                                     </div>
-                                    @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
                                 </div>
-                                <div class="form-group">
-                                    <button class="btn btn-primary submit-btn btn-block">Login</button>
-                                </div>
+                                @Html.ValidationMessageFor(m => m.Password, "", new { @class = "text-danger" })
+                            </div>
+                            <div class="form-group">
+                                <button class="btn btn-primary submit-btn btn-block">Login</button>
+                            </div>
                         }
-                        </div>
+                    </div>
                     <p class="footer-text text-center">Copyright © 2021 Xenocrates. All rights reserved.</p>
-
                 </div>
             </div>
         </div>
-        <!-- content-wrapper ends -->
     </div>
-    <!-- page-body-wrapper ends -->
 </div>
-
-
-
-
-
-
-
-
-
 @section Scripts {
+    @Scripts.Render("~/bundles/bootstrap")
     @Scripts.Render("~/bundles/jqueryval")
-    @Scripts.Render("~/Scripts/vendor.bundle.base.js")
-    @Scripts.Render("~/Scripts/vendor.bundle.addons.js")
     @Scripts.Render("~/Scripts/off-canvas.js")
-    @Scripts.Render("~/Scripts/misc.js")
-    @Scripts.Render("~/Scripts/jquery.cookie.js")
 }

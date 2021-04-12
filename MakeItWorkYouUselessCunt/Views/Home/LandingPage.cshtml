@@ -5,9 +5,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Xenocrates</title>
-    @Styles.Render("~/Content/font-awesome.css")
-    @Styles.Render("~/Content/materialdesignicons.min.css")
-    @Styles.Render("~/Content/ionicons.css")
     @Styles.Render("~/Content/style.css")
     @Styles.Render("~/Content/landingPage.css")
 </head>
@@ -18,8 +15,8 @@
                 <div class="login-button d-flex bd-highlight mb-3">
                     <div class="navbar d-flex bd-highlight mb-3">
                         <a class="me-auto p-2 bd-highlight" href="@Url.Action("Login","Account")">Login</a>
-                        @Html.ActionLink("Contact", "Contact", "Home", new { @class = "p-2 bd-highlight" })
                         @Html.ActionLink("About", "About", "Home", new { @class = "p-2 bd-highlight" })
+                        @Html.ActionLink("Contact", "Contact", "Home", new { @class = "p-2 bd-highlight" })
                     </div>
                 </div>
             </div>
@@ -43,6 +40,5 @@
 
         @Scripts.Render("~/bundles/jqueryval")
         @Scripts.Render("~/Scripts/off-canvas.js")
-        @Scripts.Render("~/Scripts/misc.js")
 </body>
 </html>

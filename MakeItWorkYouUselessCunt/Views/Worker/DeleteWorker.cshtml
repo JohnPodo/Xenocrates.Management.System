@@ -26,13 +26,14 @@
                                     <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
                                     <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
                                     <dt>Date of Birth</dt>
-                                    <dd>@Html.DisplayFor(model => model.Worker.DateOfBirth , "{0:dd/MM/yyyy}")</dd>
+                                    <dd>@Model.Worker.DateOfBirth.ToString("dd/MM/yyyy")</dd>
                                     <dt>@Html.DisplayNameFor(model => model.Worker.Address)</dt>
                                     <dd>@Html.DisplayFor(model => model.Worker.Address)</dd>
                                     <dt>@Html.DisplayNameFor(model => model.Worker.Salary)</dt>
                                     <dd>@Html.DisplayFor(model => model.Worker.Salary) &euro;</dd>
                                     <dt>@Html.DisplayNameFor(model => model.Worker.Department)</dt>
                                     <dd>@Html.DisplayFor(model => model.Worker.Department.City)</dd>
+
                                 </dl>
                                 <div class="form-actions no-color">
                                     <input type="submit" value="Delete" class="btn btn-info btn-fw" />

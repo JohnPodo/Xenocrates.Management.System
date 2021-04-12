@@ -8,8 +8,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@ViewBag.Title - Xenocrates</title>
     @Styles.Render("~/Content/font-awesome.css")
-    @Styles.Render("~/Content/materialdesignicons.min.css")
-    @Styles.Render("~/Content/ionicons.css")
     @Styles.Render("~/Content/style.css")
     @Styles.Render("~/Content/landingPage.css")
 </head>
@@ -17,87 +15,88 @@
     <div class="container-scroller">
         <div class="navbar navbar-expand-lg navbar-light bg-light">
             <a class="me-auto p-2 bd-highlight" href="@Url.Action("Login","Account")">Login</a>
-            @Html.ActionLink("Contact", "Contact", "Home", new { @class = "p-2 bd-highlight" })
             @Html.ActionLink("About", "About", "Home", new { @class = "p-2 bd-highlight" })
+            @Html.ActionLink("Contact", "Contact", "Home", new { @class = "p-2 bd-highlight" })
         </div>
-            <figure class="quote-xenocrates text-center">
-                <blockquote class="blockquote-footer">
-                    <p style="font-size:20px; font-weight:500;" >"Happiness is the possession of the excellence proper to us,<br /> and of the power subservient to it."</p>
-                </blockquote>
-                <figcaption style="color:honeydew" class="blockquote-footer">
-                    <cite title="Source Title">Xenocrates</cite>
-                </figcaption>
-            </figure>
-            <header class="text-center py-5 mb-4">
-                <div class="container">
-                    <h1 class="font-weight-light text-white">About Team Pyravlos</h1>
-                </div>
-            </header>
-            <figure class="quote-xenocrates text-center">
-                <br/>
-                <p style="font-size: 20px; font-weight: 500;">Established in 2021,<br /> Team Pyravlos emerges<br />in providing first-class Web Applications,<br /> top-notch security and loyalty to its clients.</p>
-            </figure>
-            <header class="text-center py-5 mb-4">
-                <div class="container">
-                    <h1 class="font-weight-light text-white">Meet the Team</h1>
-                </div>
-            </header>
+        <header class="text-center py-5 mb-4">
             <div class="container">
-                <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-0 shadow">
-                            <img src="~/EIKONES/george.jpg" class="card-img-top" alt="...">
-                            <div class="card-body text-center">
-                                <h5 class="card-title mb-0">George Chatziadis</h5>
-                                <div class="card-text text-black-50">Full Stack Dev</div>
-                            </div>
+                <h1 class="font-weight-light text-white">About Team Pyravlos</h1>
+            </div>
+        </header>
+        <figure class="quote-xenocrates text-center">
+            <br/>
+            <p style="font-size: 20px; font-weight: 500;">Established in 2021,<br /> Team Pyravlos emerges<br />in providing first-class Web Applications,<br /> top-notch security and loyalty to its clients.</p>
+        </figure>
+        <header class="text-center py-5 mb-4">
+            <div class="container">
+                <h1 class="font-weight-light text-white">Meet the Team</h1>
+            </div>
+        </header>
+        <div class="container">
+            <div class="d-flex flex-row bd-highlight mb-3 justify-content-center">
+                <div class="col-xl-3">
+                    <div class="card border-0 shadow">
+                        <img src="~/EIKONES/george.jpg" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-0">George Chatziadis</h5>
+                            <div class="card-text text-black-50">Back-End Developer</div>
+                            <a style="font-size:14px" href="mailto:chatziadis@gmail.com">chatziadis@gmail.com</a>
+                            <a href="https://github.com/GeorgeChatziadis">GitHub</a>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-0 shadow">
-                            <img src="~/EIKONES/giannis.jpg" class="card-img-top" alt="...">
-                            <div class="card-body text-center">
-                                <h5 class="card-title mb-0">John Podogorianiotis</h5>
-                                <div class="card-text text-black-50">Team Leader</div>
-                            </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="card border-0 shadow">
+                        <img src="~/EIKONES/giannis copy.jpg" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-0">John Podogorianiotis</h5>
+                            <div class="card-text text-black-50">Back-End Developer</div>
+                            <a style="font-size:13px" href="mailto:johnpodogorianiotis@gmail.com">johnpodogorianiotis@gmail.com</a>
+                            <a href="https://github.com/Podojohn">GitHub</a>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-0 shadow">
-                            <img src="~/EIKONES/iliana.jpg" class="card-img-top" alt="...">
-                            <div class="card-body text-center">
-                                <h5 class="card-title mb-0">Iliana Beikou</h5>
-                                <div class="card-text text-black-50">Database Developer</div>
-                            </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="card border-0 shadow">
+                        <img src="~/EIKONES/iliana.jpg" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-0">Iliana Beikou</h5>
+                            <div class="card-text text-black-50">Database Developer</div>
+                            <a style="font-size:14px" href="mailto:ilianabeikou@gmail.com">ilianabeikou@gmail.com</a>
+                            <a href="https://github.com/Iliana-Beikou">GitHub</a>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-0 shadow">
-                            <img src="~/EIKONES/spuros.jpg" class="card-img-top" alt="...">
-                            <div class="card-body text-center">
-                                <h5 class="card-title mb-0">Spyros Tsamis</h5>
-                                <div class="card-text text-black-50">UX/UI</div>
-                            </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="card border-0 shadow">
+                        <img src="~/EIKONES/spuros.jpg" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-0">Spyros Tsamis</h5>
+                            <div class="card-text text-black-50">UX/UI</div>
+                            <a style="font-size:14px" href="mailto:spyros.tsamis1@icloud.com">spyros.tsamis1@icloud.com</a>
+                            <a href="https://github.com/SpyrosTs">GitHub</a>
                         </div>
                     </div>
-                    <div class="col-xl-3 col-md-6 mb-4">
-                        <div class="card border-0 shadow">
-                            <img src="~/EIKONES/xristos.jpg" class="card-img-top" alt="...">
-                            <div class="card-body text-center">
-                                <h5 class="card-title mb-0">Christos Lagos</h5>
-                                <div class="card-text text-black-50">Front End Developer</div>
-                            </div>
+                </div>
+                <div class="col-xl-3">
+                    <div class="card border-0 shadow">
+                        <img src="~/EIKONES/xristos.jpg" class="card-img-top">
+                        <div class="card-body text-center">
+                            <h5 class="card-title mb-0">Christos Lagos</h5>
+                            <div class="card-text text-black-50">Front End Developer</div>
+                            <a style="font-size:14px" href="mailto:christoslagos.acc@gmail.com">christoslagos.acc@gmail.com</a>
+                            <a href="https://github.com/christoslago">GitHub</a>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
     @Scripts.Render("~/bundles/modernizr")
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/bootstrap")
 
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/Scripts/off-canvas.js")
-    @Scripts.Render("~/Scripts/misc.js")
 </body>
 </html>
