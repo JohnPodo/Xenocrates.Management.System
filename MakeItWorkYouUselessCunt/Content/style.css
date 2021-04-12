@@ -16008,3 +16008,14 @@ td.text-right {
         display:none;
     }
 }
+.dokimi {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 768px) {
+    .dokimi div {
+        flex: 0 1 50%;
+    }
+}

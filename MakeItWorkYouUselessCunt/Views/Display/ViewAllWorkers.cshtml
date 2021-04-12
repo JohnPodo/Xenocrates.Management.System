@@ -13,26 +13,34 @@
     <hr />
     using(Html.BeginForm())
     {
-        <div class="d-flex flex-row bd-highlight mb-3 justify-content-between">
-            <p class="p-2 bd-highlight">
-                Search Worker By Fullname: @Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
-                <datalist id="browsers">
-                    @foreach (var item in ViewBag.Names)
-                    {
-                        <option value="@item" />
-                    }
-                </datalist>
-            </p>
-            <p class="p-2 bd-highlight">
-                Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
-            </p>
-            <p class="p-2 bd-highlight">
-                See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "" })
-            </p>
-            <p class="p-2 bd-highlight">
-                <input class="btn btn-info btn-fw" type="submit" value="Search" />
-                @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "resbut fa fa-times" })
-            </p>
+        <div class="dokimi d-flex flex-row bd-highlight mb-3 justify-content-between">
+            <div class="p-2 bd-highlight">
+                <p>
+                    Search Worker By Fullname: @Html.TextBox("searchName", "", new { list = "browsers", @class = "" })
+                    <datalist id="browsers">
+                        @foreach (var item in ViewBag.Names)
+                        {
+                            <option value="@item" />
+                        }
+                    </datalist>
+                </p>
+            </div>
+            <div class="p-2 bd-highlight">
+                <p>
+                    Order By: @Html.DropDownList("orderBy", new SelectList(ViewBag.SortOptions, "Value", "Text"), "None", new { @class = "" })
+                </p>
+            </div>
+            <div class="p-2 bd-highlight">
+                <p>
+                    See @Html.DropDownList("roleSpec", new SelectList(ViewBag.RoleOptions, "Value", "Text"), "All", new { @class = "" })
+                </p>
+            </div>
+            <div class="p-2 bd-highlight">
+                <p>
+                    <input class="btn btn-info btn-fw" type="submit" value="Search" />
+                    @Html.ActionLink(" ", "ViewAllWorkers", "Display", new { @class = "resbut fa fa-times" })
+                </p>
+            </div>
         </div>
     }
     <hr />
