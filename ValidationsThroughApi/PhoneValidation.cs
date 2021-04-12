@@ -15,7 +15,7 @@ namespace ValidationsThroughApi
             var client = new RestClient("https://neutrinoapi-phone-validate.p.rapidapi.com/phone-validate");
             var request = new RestRequest(Method.POST);
             request.AddHeader("content-type", "application/x-www-form-urlencoded");
-            request.AddHeader("x-rapidapi-key", "e5daa1f4b9mshced4ea07e1ff787p17b643jsn8a14fab4315f");
+            request.AddHeader("x-rapidapi-key", "XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             request.AddHeader("x-rapidapi-host", "neutrinoapi-phone-validate.p.rapidapi.com");
             request.AddParameter("application/x-www-form-urlencoded", $"number={phone}&country-code={"GR"}", ParameterType.RequestBody);
             IRestResponse response = client.Execute(request);

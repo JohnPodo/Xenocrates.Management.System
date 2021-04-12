@@ -10,7 +10,7 @@ namespace ValidationsThroughApi
         {
             var client = new RestClient("https://zerobounce1.p.rapidapi.com/v2/validate");
             var request = new RestRequest(Method.GET);
-            request.AddHeader("x-rapidapi-key", "d97387d27amsh92f9e6f2c0d42dfp1e629fjsn0c7e722b90bf");
+            request.AddHeader("x-rapidapi-key", "XXXXXXXXXXXXXXXXXXXXXXXXXXXX");
             request.AddHeader("x-rapidapi-host", "zerobounce1.p.rapidapi.com");
             request.AddParameter("ip_address", "");
             request.AddParameter("email", email);

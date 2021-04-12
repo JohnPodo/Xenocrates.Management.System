@@ -20,7 +20,7 @@ namespace Paypal
             request.Headers.TryAddWithoutValidation("Accept", "application/json");
             request.Headers.TryAddWithoutValidation("Accept-Language", "en_US");
 
-            var base64authorization = Convert.ToBase64String(Encoding.ASCII.GetBytes("AQFDGRZsN8ulQ1ti5HnCKBYIa_-XG1Eu7KS3ewT8Yh0EJN3pntQvu-ueDGZ3DTYQmVblbBWxwb-qnK7h:EMRldqY1H1j5AO6EAZfHRl39qfZnRhQO6YoAuslKGQtIB1-LWPz8tp4qCXDR6dSBaZ6J8H-es6tBVx3e"));
+            var base64authorization = Convert.ToBase64String(Encoding.ASCII.GetBytes("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX"));
             request.Headers.TryAddWithoutValidation("Authorization", $"Basic {base64authorization}");
 
             request.Content = new StringContent("grant_type=client_credentials");
