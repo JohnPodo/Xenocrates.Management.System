@@ -42,15 +42,15 @@ namespace ManagementSystemVersionTwo.ViewModels
         public decimal Salary { get; set; }
 
         [Required(ErrorMessage = "Necessary")]
-        [CheckFileIfItIsPnG(ErrorMessage ="EIPA SYGKENTRWSOU VLAKA")]
+        [CheckFileIfItIsPnG(ErrorMessage ="File must be JPG.")]
         public HttpPostedFileBase ProfilePicture { get; set; }
 
         [Required(ErrorMessage = "Necessary")]
-        [CheckFileIfItIsPDF(ErrorMessage ="Sygkentrwsou Vlaka")]
+        [CheckFileIfItIsPDF(ErrorMessage ="File must be a PDF.")]
         public HttpPostedFileBase CV { get; set; }
 
         [Required(ErrorMessage = "Necessary")]
-        [CheckFileIfItIsPDF(ErrorMessage = "Sygkentrwsou Vlaka")]
+        [CheckFileIfItIsPDF(ErrorMessage = "File must be a PDF.")]
         public HttpPostedFileBase ContractOfEmployment { get; set; }
 
         public List<Department> AllDepartments { get; set; }
