@@ -285,7 +285,6 @@
     <Compile Include="ViewModels\EditWorker.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Content\13606-10ee503b.jpg" />
     <Content Include="Content\bootstrap-grid.css" />
     <Content Include="Content\bootstrap-grid.min.css" />
     <Content Include="Content\bootstrap-reboot.css" />
@@ -302,16 +301,14 @@
     <Content Include="Content\materialdesignicons.min.css" />
     <Content Include="Content\navStyle.css" />
     <Content Include="Content\style.css" />
-    <Content Include="EIKONES\13606-10ee503b.jpg" />
     <Content Include="EIKONES\admin.png" />
     <Content Include="EIKONES\bg-01.jpg" />
     <Content Include="EIKONES\bg-02.jpg" />
     <Content Include="EIKONES\bg-about.jpg" />
     <Content Include="EIKONES\boss.png" />
-    <Content Include="EIKONES\dark_pattern-wallpaper-1920x1080.jpg" />
     <Content Include="EIKONES\employee2.png" />
     <Content Include="EIKONES\george.jpg" />
-    <Content Include="EIKONES\giannis.jpg" />
+    <Content Include="EIKONES\giannis copy.jpg" />
     <Content Include="EIKONES\iliana.jpg" />
     <Content Include="EIKONES\lagos-it.jpg" />
     <Content Include="EIKONES\lagos.jpg" />
@@ -333,7 +330,6 @@
     <Content Include="Scripts\bootstrap.bundle.min.js" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Scripts\buttonsWorker.js" />
     <Content Include="Scripts\chart\accessibility.js" />
     <Content Include="Scripts\chart\dumbbell.js" />
     <Content Include="Scripts\chart\export-data.js" />
@@ -382,7 +378,6 @@
     <Content Include="Scripts\jquery.validate.min.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.js" />
     <Content Include="Scripts\jquery.validate.unobtrusive.min.js" />
-    <Content Include="Scripts\misc.js" />
     <Content Include="Scripts\modernizr-2.8.3.js" />
     <Content Include="Scripts\off-canvas.js" />
     <Content Include="Scripts\popper-utils.js" />
